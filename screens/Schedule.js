@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   getStartedContainer: {
-    alignSelf:'center',fontSize:20,justifyContent:'center',alignItems:'center'
+    alignSelf:'center',justifyContent:'center',alignItems:'center'
   },
   homeScreenFilename: {
     marginVertical: 7,
