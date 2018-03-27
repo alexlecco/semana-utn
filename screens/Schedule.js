@@ -1,6 +1,6 @@
 import React from 'react';
-import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
-import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
+import { Container, Header, Left, Right, Button, Text, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, } from 'react-native';
 
 import { WebBrowser } from 'expo';
 
@@ -40,7 +40,7 @@ export default class Schedule extends React.Component {
             </Header>
 
             <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> Cronograma </Text>
+              <Text style={styles.getStartedText}> [Schedule Content] </Text>
             </View>
 
           </ScrollView>
@@ -112,7 +112,9 @@ const styles = StyleSheet.create({
     marginLeft: -10,
   },
   getStartedContainer: {
-    alignSelf:'center',justifyContent:'center',alignItems:'center'
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center'
   },
   homeScreenFilename: {
     marginVertical: 7,
