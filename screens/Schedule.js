@@ -6,6 +6,8 @@ import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
 
+import TalkCard from '../TalkCard';
+
 export default class Schedule extends React.Component {
   static navigationOptions = {
     title: 'Cronograma',
@@ -26,34 +28,41 @@ export default class Schedule extends React.Component {
         <View style={styles.container}>
           <ScrollView style={styles.container} /*contentContainerStyle={styles.contentContainer}*/>
 
-            
-            <Tabs>
-              <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-                <View style={styles.getStartedContainer}>
-                  <Text style={styles.getStartedText}> [lunes content] </Text>
-                </View>
-              </Tab>
-              <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-                <View style={styles.getStartedContainer}>
-                  <Text style={styles.getStartedText}> [martes content] </Text>
-                </View>
-              </Tab>
-              <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-                <View style={styles.getStartedContainer}>
-                  <Text style={styles.getStartedText}> [miercoles content] </Text>
-                </View>
-              </Tab>
-              <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-                <View style={styles.getStartedContainer}>
-                  <Text style={styles.getStartedText}> [jueves content] </Text>
-                </View>
-              </Tab>
-              <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-                <View style={styles.getStartedContainer}>
-                  <Text style={styles.getStartedText}> [viernes content] </Text>
-                </View>
-              </Tab>
-            </Tabs>
+        <Tabs>
+          <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+          </Tab>
+          <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+          </Tab>
+          <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
+            <TalkCard />
+          </Tab>
+          <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
+            <TalkCard />
+          </Tab>
+          <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
+            <TalkCard />
+          </Tab>
+        </Tabs>
 
           </ScrollView>
         </View>
@@ -123,11 +132,6 @@ const styles = StyleSheet.create({
     marginTop: 3,
     marginLeft: -10,
   },
-  getStartedContainer: {
-    flex: 1,
-    justifyContent:'center',
-    alignItems:'center'
-  },
   homeScreenFilename: {
     marginVertical: 7,
   },
@@ -138,12 +142,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.05)',
     borderRadius: 3,
     paddingHorizontal: 4,
-  },
-  getStartedText: {
-    fontSize: 17,
-    color: 'rgba(96,100,109, 1)',
-    lineHeight: 24,
-    textAlign: 'center',
   },
   tabBarInfoContainer: {
     position: 'absolute',
