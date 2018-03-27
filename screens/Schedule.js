@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
+
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -19,15 +21,42 @@ export default class Schedule extends React.Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <Container>
+        <View style={styles.container}>
+          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-          <View style={styles.getStartedContainer}>
-            <Text style={styles.getStartedText}> Cronograma </Text>
-          </View>
+            <Header>
+              <Body>
+                <Footer>
+                  <FooterTab>
+                    <Button>
+                      <Text>lun</Text>
+                    </Button>
+                    <Button>
+                      <Text>mar</Text>
+                    </Button>
+                    <Button active>
+                      <Text>mie</Text>
+                    </Button>
+                    <Button>
+                      <Text>jue</Text>
+                    </Button>
+                    <Button>
+                      <Text>vie</Text>
+                    </Button>
+                  </FooterTab>
+                </Footer>
+              </Body>
+            </Header>
 
-        </ScrollView>
-      </View>
+            <View style={styles.getStartedContainer}>
+              <Text style={styles.getStartedText}> Cronograma </Text>
+            </View>
+
+          </ScrollView>
+        </View>
+
+      </Container>
     );
   }
 

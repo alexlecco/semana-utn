@@ -3,7 +3,7 @@ import { Platform, StatusBar, StyleSheet, View, Text} from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-import { Container, Header, Left, Right, Button, Icon, Body, Title, } from 'native-base';
+import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
 
 export default class App extends React.Component {
   async componentWillMount() {
@@ -29,23 +29,20 @@ export default class App extends React.Component {
     } else {
       return (
         <Container>
-
           <View style={styles.container}>
-
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
             <Header>
-            <Left>
-              <Button transparent>
-                <Icon name='menu' />
-              </Button>
-            </Left>
-            <Body>
-              <Title>Header</Title>
-            </Body>
-            <Right />
-          </Header>
-          <RootNavigation />
+              <Body>
+                <Title> Semana UTN </Title>
+              </Body>
+              <Right />
+            </Header>
+
+            
+
+            <RootNavigation />
+
           </View>
         </Container>
       );
