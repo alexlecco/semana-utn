@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, } from 'react-native';
 import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
 
 import { WebBrowser } from 'expo';
@@ -16,7 +8,7 @@ import { MonoText } from '../components/StyledText';
 
 export default class Schedule extends React.Component {
   static navigationOptions = {
-    header: null,
+    title: 'Cronograma',
   };
 
   render() {
