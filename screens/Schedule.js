@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Header, Left, Right, Button, Text, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
+import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, } from 'react-native';
 
 import { WebBrowser } from 'expo';
@@ -26,31 +26,34 @@ export default class Schedule extends React.Component {
         <View style={styles.container}>
           <ScrollView style={styles.container} /*contentContainerStyle={styles.contentContainer}*/>
 
-            <Header>
-              <Body>
-                <FooterTab>
-                  <Button>
-                    <Text style={styles.weekDays}>lun</Text>
-                  </Button>
-                  <Button>
-                    <Text style={styles.weekDays}>mar</Text>
-                  </Button>
-                  <Button active>
-                    <Text style={styles.weekDays}>mie</Text>
-                  </Button>
-                  <Button>
-                    <Text style={styles.weekDays}>jue</Text>
-                  </Button>
-                  <Button>
-                    <Text style={styles.weekDays}>vie</Text>
-                  </Button>
-                </FooterTab>
-              </Body>
-            </Header>
-
-            <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> [Schedule Content] </Text>
-            </View>
+            
+            <Tabs>
+              <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
+                <View style={styles.getStartedContainer}>
+                  <Text style={styles.getStartedText}> [lunes content] </Text>
+                </View>
+              </Tab>
+              <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                <View style={styles.getStartedContainer}>
+                  <Text style={styles.getStartedText}> [martes content] </Text>
+                </View>
+              </Tab>
+              <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
+                <View style={styles.getStartedContainer}>
+                  <Text style={styles.getStartedText}> [miercoles content] </Text>
+                </View>
+              </Tab>
+              <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
+                <View style={styles.getStartedContainer}>
+                  <Text style={styles.getStartedText}> [jueves content] </Text>
+                </View>
+              </Tab>
+              <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
+                <View style={styles.getStartedContainer}>
+                  <Text style={styles.getStartedText}> [viernes content] </Text>
+                </View>
+              </Tab>
+            </Tabs>
 
           </ScrollView>
         </View>
