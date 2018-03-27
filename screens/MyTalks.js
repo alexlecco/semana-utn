@@ -9,10 +9,8 @@ export default class MyTalks extends React.Component {
     headerTintColor: '#ffffff',
     headerStyle: {
       backgroundColor: '#3F51B5',
-      borderBottomColor: '#ffffff',
-    },
-    headerTitleStyle: {
-      fontSize: 18,
+      elevation: 0,
+      shadowOpacity: 0
     },
   };
 

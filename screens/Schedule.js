@@ -12,7 +12,8 @@ export default class Schedule extends React.Component {
     headerTintColor: '#ffffff',
     headerStyle: {
       backgroundColor: '#3F51B5',
-      borderBottomColor: '#ffffff',
+      elevation: 0,
+      shadowOpacity: 0
     },
     headerTitleStyle: {
       fontSize: 18,
