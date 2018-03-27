@@ -7,7 +7,9 @@ export default class TalkCard extends Component {
 	render() {
 		return(
 			<View style={styles.TalkCardContainer}>
+
 				<Text style={styles.TalkCardText}> Soy un TalkCard </Text>
+				
 			</View>
 		);
 	}

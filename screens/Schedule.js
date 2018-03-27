@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, } from 'react-native';
 
+
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
@@ -31,26 +32,8 @@ export default class Schedule extends React.Component {
         <Tabs>
           <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
             <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
           </Tab>
           <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
             <TalkCard />
           </Tab>
           <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
