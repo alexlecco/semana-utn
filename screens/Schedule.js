@@ -23,7 +23,7 @@ export default class Schedule extends React.Component {
     return (
       <Container>
         <View style={styles.container}>
-          <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+          <ScrollView style={styles.container} /*contentContainerStyle={styles.contentContainer}*/>
 
             <Header>
               <Body>
