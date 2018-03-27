@@ -22,19 +22,19 @@ export default class Schedule extends React.Component {
                 <Footer>
                   <FooterTab>
                     <Button>
-                      <Text>lun</Text>
+                      <Text style={styles.weekDays}>lun</Text>
                     </Button>
                     <Button>
-                      <Text>mar</Text>
+                      <Text style={styles.weekDays}>mar</Text>
                     </Button>
                     <Button active>
-                      <Text>mie</Text>
+                      <Text style={styles.weekDays}>mie</Text>
                     </Button>
                     <Button>
-                      <Text>jue</Text>
+                      <Text style={styles.weekDays}>jue</Text>
                     </Button>
                     <Button>
-                      <Text>vie</Text>
+                      <Text style={styles.weekDays}>vie</Text>
                     </Button>
                   </FooterTab>
                 </Footer>
@@ -171,5 +171,8 @@ const styles = StyleSheet.create({
   helpLinkText: {
     fontSize: 14,
     color: '#2e78b7',
+  },
+  weekDays: {
+    color: '#ffffff',
   },
 });
