@@ -19,25 +19,23 @@ export default class Schedule extends React.Component {
 
             <Header>
               <Body>
-                <Footer>
-                  <FooterTab>
-                    <Button>
-                      <Text style={styles.weekDays}>lun</Text>
-                    </Button>
-                    <Button>
-                      <Text style={styles.weekDays}>mar</Text>
-                    </Button>
-                    <Button active>
-                      <Text style={styles.weekDays}>mie</Text>
-                    </Button>
-                    <Button>
-                      <Text style={styles.weekDays}>jue</Text>
-                    </Button>
-                    <Button>
-                      <Text style={styles.weekDays}>vie</Text>
-                    </Button>
-                  </FooterTab>
-                </Footer>
+                <FooterTab>
+                  <Button>
+                    <Text style={styles.weekDays}>lun</Text>
+                  </Button>
+                  <Button>
+                    <Text style={styles.weekDays}>mar</Text>
+                  </Button>
+                  <Button active>
+                    <Text style={styles.weekDays}>mie</Text>
+                  </Button>
+                  <Button>
+                    <Text style={styles.weekDays}>jue</Text>
+                  </Button>
+                  <Button>
+                    <Text style={styles.weekDays}>vie</Text>
+                  </Button>
+                </FooterTab>
               </Body>
             </Header>
 
