@@ -9,6 +9,14 @@ import { MonoText } from '../components/StyledText';
 export default class Schedule extends React.Component {
   static navigationOptions = {
     title: 'Cronograma',
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor: '#3F51B5',
+      borderBottomColor: '#ffffff',
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
   };
 
   render() {

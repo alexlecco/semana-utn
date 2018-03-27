@@ -5,7 +5,15 @@ import { ExpoConfigView } from '@expo/samples';
 
 export default class Information extends React.Component {
   static navigationOptions = {
-    title: 'Informacion',
+    title: 'Informaciones',
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor: '#3F51B5',
+      borderBottomColor: '#ffffff',
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
   };
 
   render() {

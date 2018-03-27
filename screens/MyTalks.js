@@ -6,6 +6,14 @@ import { ExpoLinksView } from '@expo/samples';
 export default class MyTalks extends React.Component {
   static navigationOptions = {
     title: 'Mis charlas',
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor: '#3F51B5',
+      borderBottomColor: '#ffffff',
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
   };
 
   render() {
