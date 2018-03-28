@@ -32,6 +32,11 @@ export default class Schedule extends React.Component {
         <Tabs>
           <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
             <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
+            <TalkCard />
           </Tab>
           <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
             <TalkCard />

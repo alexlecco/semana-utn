@@ -28,17 +28,19 @@ export default TabNavigator(
         let iconName;
         switch (routeName) {
           case 'Cronograma':
-            iconName =
-              Platform.OS === 'ios'
-                ? `ios-information-circle${focused ? '' : '-outline'}`
-                : 'md-calendar';
+            iconName = Platform.OS === 'ios' ?
+              `ios-information-circle${focused ? '' : '-outline'}` :
+              'md-calendar';
             break;
           case 'Links':
-            iconName = Platform.OS === 'ios' ? `ios-link${focused ? '' : '-outline'}` : 'md-heart';
+            iconName = Platform.OS === 'ios' ?
+              `ios-link${focused ? '' : '-outline'}` :
+              'md-heart';
             break;
           case 'Information':
-            iconName =
-              Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-information-circle';
+            iconName = Platform.OS === 'ios' ?
+              `ios-options${focused ? '' : '-outline'}` :
+              'md-information-circle';
         }
         return (
           <Ionicons
