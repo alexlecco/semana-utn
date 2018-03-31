@@ -1,7 +1,6 @@
 import React from 'react';
-import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
+import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
 import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, } from 'react-native';
-
 
 import { WebBrowser } from 'expo';
 
@@ -27,30 +26,33 @@ export default class Schedule extends React.Component {
     return (
       <Container>
         <View style={styles.container}>
-          <ScrollView style={styles.container} /*contentContainerStyle={styles.contentContainer}*/>
+          <ScrollView style={styles.container}>
 
-        <Tabs>
-          <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-            <TalkCard />
-          </Tab>
-          <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-            <TalkCard />
-          </Tab>
-          <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-            <TalkCard />
-          </Tab>
-          <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-            <TalkCard />
-          </Tab>
-          <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-            <TalkCard />
-          </Tab>
-        </Tabs>
+            <Content>
+              <Tabs>
+                <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
+                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                </Tab>
+              </Tabs>
+            </Content>
 
           </ScrollView>
         </View>

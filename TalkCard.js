@@ -1,29 +1,45 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, } from 'react-native'
 
 export default class TalkCard extends Component {
 	render() {
 		return(
 			<View style={styles.TalkCardContainer}>
-
-				<Text style={styles.TalkCardText}> Soy un TalkCard </Text>
-				
-			</View>
+	      <View style={styles.TalkHourContainer}>
+          <Text style={styles.TalkText}> {this.props.talkHour} </Text>
+	      </View>
+	      <View style={styles.TalkTextContainer}>
+					<Text style={styles.TalkText}> {this.props.talkTitle} </Text>
+	      </View>
+	    </View>
 		);
 	}
 }
 
 const styles = StyleSheet.create({
   TalkCardContainer: {
-    justifyContent:'center',
-    alignItems:'center',
-    padding: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  TalkCardText: {
-    fontSize: 17,
-    color: '#6F6F6F',
+	TalkHourContainer: {
+		margin: 10,
+  },
+	TalkTextContainer: {
+		paddingTop: 10,
+		paddingBottom: 10,
+		paddingRight: 10,
+		marginTop: 10,
+		marginBottom: 10,
+		marginRight: 10,
+		flexWrap: 'wrap',
+		flexDirection: 'row',
+		width: Dimensions.get('window').width - 82,
+	},
+	TalkText: {
+		fontSize: 17,
+    color: '#4f4f4f',
     textAlign: 'center',
-  },
+	},
 });
