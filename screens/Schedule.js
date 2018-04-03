@@ -26,24 +26,24 @@ export default class Schedule extends React.Component {
     return (
       <Container>
         <View style={styles.container}>
-          <ScrollView style={styles.container}>
 
+          <ScrollView style={styles.container}>
             <Content>
               <Tabs>
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'The evolution of React and GraphQL at Facebook and Beyond'} />
+                  <TalkCard talkHour={'10:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'11:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'12:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'13:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'15:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <TalkCard talkHour={'13:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
@@ -53,10 +53,9 @@ export default class Schedule extends React.Component {
                 </Tab>
               </Tabs>
             </Content>
-
           </ScrollView>
-        </View>
 
+        </View>
       </Container>
     );
   }

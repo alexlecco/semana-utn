@@ -5,6 +5,8 @@ import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
 
+import TalkInfo from './TalkInfo';
+
 export default class App extends React.Component {
   async componentWillMount() {
     await Expo.Font.loadAsync({
@@ -27,17 +29,32 @@ export default class App extends React.Component {
         />
       );
     } else {
-      return (
-        <Container>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+      const talkInfo = false;
+      if(talkInfo) {
+        return(
+          <Container>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-            <RootNavigation />
+              <TalkInfo />
 
-          </View>
-        </Container>
-      );
+            </View>
+          </Container>
+        );
+      } else {
+        return (
+          <Container>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+
+              <RootNavigation />
+
+            </View>
+          </Container>
+        );
+      }
     }
   }
 

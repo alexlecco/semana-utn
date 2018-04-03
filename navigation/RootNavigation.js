@@ -1,5 +1,7 @@
 import { Notifications } from 'expo';
 import React from 'react';
+import { View } from 'react-native';
+import { Container } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 
 import MainTabNavigator from './MainTabNavigator';
@@ -46,5 +48,5 @@ export default class RootNavigator extends React.Component {
 
   _handleNotification = ({ origin, data }) => {
     console.log(`Push notification ${origin} with data: ${JSON.stringify(data)}`);
-  };
-}
+  }
+};
