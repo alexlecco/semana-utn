@@ -17,6 +17,7 @@ export default class App extends React.Component {
 
   state = {
     isLoadingComplete: false,
+    talkInfo: false,
   };
 
   render() {
@@ -29,8 +30,7 @@ export default class App extends React.Component {
         />
       );
     } else {
-      const talkInfo = false;
-      if(talkInfo) {
+      if(this.state.talkInfo) {
         return(
           <Container>
             <View style={styles.container}>
@@ -38,6 +38,9 @@ export default class App extends React.Component {
               {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
               <TalkInfo />
+                <Button full onPress={() => { this.setState({talkInfo: false}) }}>
+                  <Text>Salir che</Text>
+                </Button>
 
             </View>
           </Container>
@@ -50,6 +53,9 @@ export default class App extends React.Component {
               {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
               <RootNavigation />
+              <Button full onPress={() => { this.setState({talkInfo: true}) }}>
+                <Text>Entrar che</Text>
+              </Button>
 
             </View>
           </Container>
