@@ -2,7 +2,8 @@
   "main": "node_modules/expo/AppEntry.js",
   "private": true,
   "scripts": {
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "postinstall": "rndebugger-open --expo"
   },
   "jest": {
     "preset": "jest-expo"
@@ -17,6 +18,7 @@
     "react-navigation": "^1.0.0-beta.27"
   },
   "devDependencies": {
-    "jest-expo": "^25.0.0"
+    "jest-expo": "^25.0.0",
+    "react-native-debugger-open": "^0.3.17"
   }
 }

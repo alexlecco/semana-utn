@@ -1,6 +1,7 @@
+<script src="http://localhost:8097"></script>
 import React from 'react';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, } from 'react-native';
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, Button, Alert, } from 'react-native';
 
 import { WebBrowser } from 'expo';
 

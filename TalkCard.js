@@ -1,19 +1,21 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, Dimensions, } from 'react-native'
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } from 'react-native'
 
 export default class TalkCard extends Component {
 	render() {
 		return(
-			<View style={styles.TalkCardContainer}>
-	      <View style={styles.TalkHourContainer}>
-          <Text style={styles.TalkText}> {this.props.talkHour} </Text>
-	      </View>
-	      <View style={styles.TalkTextContainer}>
-					<Text style={styles.TalkText}> {this.props.talkTitle} </Text>
-	      </View>
-	    </View>
+			<TouchableWithoutFeedback onPressIn={() => Alert.alert('hi')}>
+				<View style={styles.TalkCardContainer}>
+					<View style={styles.TalkHourContainer}>
+						<Text style={styles.TalkText}> {this.props.talkHour} </Text>
+					</View>
+					<View style={styles.TalkTextContainer}>
+						<Text style={styles.TalkText}> {this.props.talkTitle} </Text>
+					</View>
+				</View>
+			</TouchableWithoutFeedback>
 		);
 	}
 }
