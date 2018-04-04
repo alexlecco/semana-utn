@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } 
 export default class TalkCard extends Component {
 	render() {
 		return(
-			<TouchableWithoutFeedback onPressIn={() => Alert.alert('hi')}>
+			<TouchableWithoutFeedback onPress={() => Alert.alert(this.props.talkTitle)}>
 				<View style={styles.TalkCardContainer}>
 					<View style={styles.TalkHourContainer}>
 						<Text style={styles.TalkText}> {this.props.talkHour} </Text>
