@@ -1,12 +1,12 @@
 'use strict'
 
-import React, { Component } from 'react'
-import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } from 'react-native'
+import React, { Component } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } from 'react-native';
 
 export default class TalkCard extends Component {
 	render() {
 		return(
-			<TouchableWithoutFeedback onPress={ () => {} }>
+			<TouchableWithoutFeedback onPress={() => {}}>
 				<View style={styles.TalkCardContainer}>
 					<View style={styles.TalkHourContainer}>
 						<Text style={styles.TalkText}> {this.props.talkHour} </Text>
@@ -42,6 +42,5 @@ const styles = StyleSheet.create({
 	TalkText: {
 		fontSize: 17,
     color: '#4f4f4f',
-    textAlign: 'center',
 	},
 });

@@ -8,17 +8,20 @@ import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, Foot
 import TalkInfo from './TalkInfo';
 
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingComplete: false,
+      talkInfo: false,
+    };
+  }
+
   async componentWillMount() {
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
   }
-
-  state = {
-    isLoadingComplete: false,
-    talkInfo: false,
-  };
 
   render() {
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
@@ -29,38 +32,34 @@ export default class App extends React.Component {
           onFinish={this._handleFinishLoading}
         />
       );
-    } else {
-      if(this.state.talkInfo) {
-        return(
-          <Container>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+    }
+    
+    if(this.state.talkInfo) {
+      return(
+        <Container>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-              <TalkInfo />
-                <Button full onPress={() => { this.setState({talkInfo: false}) }}>
-                  <Text>Salir che</Text>
-                </Button>
+            <TalkInfo />
 
-            </View>
-          </Container>
-        );
-      } else {
-        return (
-          <Container>
-            <View style={styles.container}>
-              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+          </View>
+        </Container>
+      );
+    }
+    
+    if(!this.state.talkInfo) {
+      return (
+        <Container>
+          <View style={styles.container}>
+            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-              <RootNavigation />
-              <Button full onPress={() => { this.setState({talkInfo: true}) }}>
-                <Text>Entrar che</Text>
-              </Button>
+            <RootNavigation />
 
-            </View>
-          </Container>
-        );
-      }
+          </View>
+        </Container>
+      );
     }
   }
 
@@ -73,7 +72,7 @@ export default class App extends React.Component {
       Font.loadAsync({
         // This is the font that we are using for our tab bar
         ...Ionicons.font,
-        // We include SpaceMono because we use it in HomeScreen.js. Feel free
+        // We include  SpaceMono because we use it in HomeScreen.js. Feel free
         // to remove this if you are not using it in your app
         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       }),

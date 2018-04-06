@@ -25,6 +25,9 @@ export default class TalkInfo extends Component {
             <View style={styles.TalkBodyContainer}>
               <Text style={styles.TalkBody}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora velit totam distinctio sit architecto beatae alias hic, tempore, nostrum odio voluptatum omnis fuga harum placeat, deleniti aspernatur voluptatibus, nemo perspiciatis.  </Text>
             </View>
+            <View style={styles.TalkBodyContainer}>
+              <Text style={styles.TalkBody}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora velit totam distinctio sit architecto beatae alias hic, tempore, nostrum odio voluptatum omnis fuga harum placeat, deleniti aspernatur voluptatibus, nemo perspiciatis.  </Text>
+            </View>
             <View style={styles.TalkOratorContainer}>
               <Text style={styles.TalkOrator}> Orador: Mark Zuckerberg </Text>
             </View>
