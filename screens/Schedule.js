@@ -1,15 +1,58 @@
-<script src="http://localhost:8097"></script>
 import React from 'react';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, Button, Alert, } from 'react-native';
-
+import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, Button, Alert, ListView, ListItem, } from 'react-native';
 import { WebBrowser } from 'expo';
 
 import { MonoText } from '../components/StyledText';
-
 import TalkCard from '../TalkCard';
 
+import * as firebase from 'firebase';
+
+// Initialize Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBkFWsGygllForJ1r4u9x3IcosoqBVCxq0",
+  authDomain: "semana-utn-c9f91.firebaseapp.com",
+  databaseURL: "https://semana-utn-c9f91.firebaseio.com",
+  projectId: "semana-utn-c9f91",
+  storageBucket: "semana-utn-c9f91.appspot.com",
+  messagingSenderId: "385895562914"
+};
+const firebaseApp = firebase.initializeApp(firebaseConfig);
+
 export default class Schedule extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      })
+    };
+    this.itemsRef = firebaseApp.database().ref();
+  }
+
+  componentDidMount() {
+    this.listenForItems(this.itemsRef);
+  }
+
+  listenForItems(itemsRef) {
+    itemsRef.on('value', (snap) => {
+
+      // get children as an array
+      var talks = [];
+      snap.forEach((child) => {
+        talks.push({
+          title: child.val().title,
+          _key: child.key
+        });
+      });
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(talks)
+      });
+
+    });
+  }
+
   static navigationOptions = {
     title: 'Cronograma',
     headerTintColor: '#ffffff',
@@ -23,6 +66,12 @@ export default class Schedule extends React.Component {
     },
   };
 
+  _renderItem(item) {
+    return (
+      <TalkCard talkHour={'09:00'} talkTitle={item.title} />
+    );
+  }
+
   render() {
     return (
       <Container>
@@ -32,19 +81,14 @@ export default class Schedule extends React.Component {
             <Content>
               <Tabs>
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-                  <TalkCard talkHour={'09:00'} talkTitle={'The evolution of React and GraphQL at Facebook and Beyond'} />
-                  <TalkCard talkHour={'10:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'11:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'12:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'13:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'15:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <ListView dataSource={this.state.dataSource} renderRow={this._renderItem.bind(this)} />
+                  <TalkCard talkHour={'09:00'} talkTitle={'The evolutions of React and GraphQL at Facebook and Beyond'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
-                  <TalkCard talkHour={'13:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
