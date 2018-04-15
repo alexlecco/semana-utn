@@ -27,22 +27,31 @@ export default class Schedule extends React.Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       })
     };
-    this.itemsRef = firebaseApp.database().ref();
+    this.talksRef = this.getRef().child('talks');
+    console.ignoredYellowBox = ['Setting a timer', 'Possible Unhandled Promise Rejection'];
+  }
+
+  getRef() {
+    return firebaseApp.database().ref();
   }
 
   componentDidMount() {
-    this.listenForItems(this.itemsRef);
+    this.listenForItems(this.talksRef);
   }
 
-  listenForItems(itemsRef) {
-    itemsRef.on('value', (snap) => {
+  listenForItems(talksRef) {
+    talksRef.on('value', (snap) => {
 
       // get children as an array
       var talks = [];
+
       snap.forEach((child) => {
         talks.push({
+
+          time: child.val().time,
           title: child.val().title,
           _key: child.key
+
         });
       });
 
@@ -51,6 +60,12 @@ export default class Schedule extends React.Component {
       });
 
     });
+  }
+
+  _renderItem(item) {
+    return (
+      <TalkCard talkHour={item.time} talkTitle={item.title} />
+    );
   }
 
   static navigationOptions = {
@@ -66,12 +81,6 @@ export default class Schedule extends React.Component {
     },
   };
 
-  _renderItem(item) {
-    return (
-      <TalkCard talkHour={'09:00'} talkTitle={item.title} />
-    );
-  }
-
   render() {
     return (
       <Container>
@@ -82,7 +91,6 @@ export default class Schedule extends React.Component {
               <Tabs>
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView dataSource={this.state.dataSource} renderRow={this._renderItem.bind(this)} />
-                  <TalkCard talkHour={'09:00'} talkTitle={'The evolutions of React and GraphQL at Facebook and Beyond'} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
