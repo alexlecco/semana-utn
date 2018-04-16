@@ -20,6 +20,20 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class Schedule extends React.Component {
+
+static navigationOptions = {
+    title: 'Cronograma',
+    headerTintColor: '#ffffff',
+    headerStyle: {
+      backgroundColor: '#3F51B5',
+      elevation: 0,
+      shadowOpacity: 0
+    },
+    headerTitleStyle: {
+      fontSize: 18,
+    },
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -27,8 +41,10 @@ export default class Schedule extends React.Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       })
     };
-    this.talksRef = this.getRef().child('talks');
-    console.ignoredYellowBox = ['Setting a timer', 'Possible Unhandled Promise Rejection'];
+    this.talksRef = this.getRef().child('talks').orderByChild('time');
+
+    console.disableYellowBox = true;
+    console.warn('YellowBox is disabled.');
   }
 
   getRef() {
@@ -48,6 +64,8 @@ export default class Schedule extends React.Component {
       snap.forEach((child) => {
         talks.push({
 
+          day: child.val().day,
+          id: child.val().id,
           time: child.val().time,
           title: child.val().title,
           _key: child.key
@@ -63,25 +81,24 @@ export default class Schedule extends React.Component {
   }
 
   _renderItem(item) {
-    return (
-      <TalkCard talkHour={item.time} talkTitle={item.title} />
-    );
+    if (item.day == 'tuesday') {
+      return (
+        <TalkCard talkHour={item.time} talkTitle={item.title} />
+      );
+    }
+    else{
+      return(
+        <View></View>
+      );
+    }
   }
 
-  static navigationOptions = {
-    title: 'Cronograma',
-    headerTintColor: '#ffffff',
-    headerStyle: {
-      backgroundColor: '#3F51B5',
-      elevation: 0,
-      shadowOpacity: 0
-    },
-    headerTitleStyle: {
-      fontSize: 18,
-    },
-  };
-
   render() {
+    const day1 = 'monday';
+    const day2 = 'tuesday';
+    const day3 = 'wednesday';
+    const day4 = 'thursday';
+    const day5 = 'friday';
     return (
       <Container>
         <View style={styles.container}>
@@ -90,19 +107,24 @@ export default class Schedule extends React.Component {
             <Content>
               <Tabs>
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={this._renderItem.bind(this)} />
+                  <ListView 
+                    dataSource={this.state.dataSource}
+                    renderRow={(item) => 
+                                  item.day == day1 ?
+                                    <TalkCard talkHour={item.time} talkTitle={item.title} /> :
+                                    <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day2 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day3 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day4 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-                  <TalkCard talkHour={'09:00'} talkTitle={'Desarrollo de aplicaciones distribuidas con Xamarin'} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day5 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
                 </Tab>
               </Tabs>
             </Content>
