@@ -21,7 +21,7 @@ const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class Schedule extends React.Component {
 
-static navigationOptions = {
+  static navigationOptions = {
     title: 'Cronograma',
     headerTintColor: '#ffffff',
     headerStyle: {

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "semana-utn",
-    "description": "A very interesting project.",
+    "name": "Semana UTN",
+    "description": "Aplicación de la semana de la ingeniería",
     "slug": "semana-utn",
     "privacy": "public",
     "sdkVersion": "25.0.0",
@@ -15,7 +15,11 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.alexlecco.semanautn"
+    },
+    "android": {
+      "package": "com.alexlecco.semanautn"
     }
   }
 }
