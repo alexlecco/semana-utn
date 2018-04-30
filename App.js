@@ -13,6 +13,12 @@ export default class App extends React.Component {
     this.state = {
       isLoadingComplete: false,
       talkInfoVisible: false,
+      talk: {
+        title: '',
+        description: '',
+        time: '',
+        day: '',
+      }
     };
     let showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
   }
@@ -24,9 +30,27 @@ export default class App extends React.Component {
     });
   }
 
-  showOrHideTalkInfo() {
-    this.setState({talkInfoVisible: !this.state.talkInfoVisible})
-    console.log('Estado: ', this.state.talkInfoVisible)
+  showOrHideTalkInfo(talk) {
+    if(!this.state.talkInfoVisible) {
+      this.setState({talkInfoVisible: !this.state.talkInfoVisible,
+                     talk: {
+                      title: talk.title,
+                      description: talk.description,
+                      time: talk.time,
+                      day: talk.day,
+                     }
+      });
+    }
+    else {
+      this.setState({talkInfoVisible: !this.state.talkInfoVisible,
+                     talk: {
+                      title: '',
+                      description: '',
+                      time: '',
+                      day: '',
+                     }
+      });
+    }
   }
 
   render() {
@@ -48,7 +72,9 @@ export default class App extends React.Component {
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-            <TalkInfo talkInfoVisible={this.state.talkInfoVisible} showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)} />
+            <TalkInfo talk={this.state.talk}
+                      talkInfoVisible={this.state.talkInfoVisible}
+                      showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)} />
 
           </View>
         </Container>

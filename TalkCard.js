@@ -6,19 +6,18 @@ import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } 
 export default class TalkCard extends Component {
 	constructor(props) {
 		super(props);
-		console.log("FUNCION EN TalkCard::::", this.props);
 	}
 
 	render() {
     let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
 		return(
-			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo()}>
+			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
 				<View style={styles.TalkCardContainer}>
-					<View style={styles.TalkHourContainer}>
-						<Text style={styles.TalkText}> {this.props.talkHour} </Text>
+					<View style={styles.TalkTimeContainer}>
+						<Text style={styles.TalkText}> {this.props.talk.time} </Text>
 					</View>
 					<View style={styles.TalkTextContainer}>
-						<Text style={styles.TalkText}> {this.props.talkTitle} </Text>
+						<Text style={styles.TalkText}> {this.props.talk.title} </Text>
 					</View>
 				</View>
 			</TouchableWithoutFeedback>
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-	TalkHourContainer: {
+	TalkTimeContainer: {
 		margin: 10,
   },
 	TalkTextContainer: {

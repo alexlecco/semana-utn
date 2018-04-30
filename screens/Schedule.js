@@ -45,8 +45,6 @@ export default class Schedule extends React.Component {
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
-
-    console.log("PROPS en constructor de Schedule", this.props.screenProps);
   }
 
   getRef() {
@@ -70,7 +68,8 @@ export default class Schedule extends React.Component {
           id: child.val().id,
           time: child.val().time,
           title: child.val().title,
-          _key: child.key
+          description: child.val().description,
+          _key: child.key,
 
         });
       });
@@ -85,7 +84,7 @@ export default class Schedule extends React.Component {
   _renderItem(item) {
     if (item.day == 'tuesday') {
       return (
-        <TalkCard talkHour={item.time} talkTitle={item.title}  />
+        <TalkCard talkTime={item.time} talkTitle={item.title}  />
       );
     }
     else{
@@ -101,7 +100,6 @@ export default class Schedule extends React.Component {
     const day3 = 'wednesday';
     const day4 = 'thursday';
     const day5 = 'friday';
-    console.log("PROPS EN render de Schedule::::", this.props);
     let showOrHideTalkInfo = this.props.screenProps;
     return (
       <Container>
@@ -115,23 +113,21 @@ export default class Schedule extends React.Component {
                     dataSource={this.state.dataSource}
                     renderRow={(item) => 
                                   item.day == day1 ?
-                                    <TalkCard talkHour={item.time} 
-                                              talkTitle={item.title} 
-                                              talk={item} 
+                                    <TalkCard talk={item}
                                               showOrHideTalkInfo={this.props.screenProps} /> :
                                     <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day2 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day2 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day3 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day3 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day4 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day4 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day5 ? <TalkCard talkHour={item.time} talkTitle={item.title} /> : <View></View>} />
+                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day5 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
                 </Tab>
               </Tabs>
             </Content>

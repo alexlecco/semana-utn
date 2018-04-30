@@ -12,25 +12,22 @@ export default class TalkInfo extends Component {
       <Container>
         <Header>
           <Left>
-            <Button transparent onPress={() => this.props.showOrHideTalkInfo()}>
+            <Button transparent onPress={() => this.props.showOrHideTalkInfo(this.props.talk)}>
               <Icon name='arrow-back' />
             </Button>
           </Left>
           <Body>
-            <Title> Lunes - 09:00 </Title>
+            <Title> { this.props.talk.day } - { this.props.talk.time } </Title>
             <Text style={{color: 'white'}}> Aula Magna </Text>
           </Body>
         </Header>
         <Content>
           <View style={styles.TalkContainer}>
             <View style={styles.TalkTitleContainer}>
-              <Text style={styles.TalkTitle}> The evolution of React and GraphQL at Facebook and Beyond </Text>
+              <Text style={styles.TalkTitle}> { this.props.talk.title } </Text>
             </View>
             <View style={styles.TalkBodyContainer}>
-              <Text style={styles.TalkBody}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora velit totam distinctio sit architecto beatae alias hic, tempore, nostrum odio voluptatum omnis fuga harum placeat, deleniti aspernatur voluptatibus, nemo perspiciatis.  </Text>
-            </View>
-            <View style={styles.TalkBodyContainer}>
-              <Text style={styles.TalkBody}> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempora velit totam distinctio sit architecto beatae alias hic, tempore, nostrum odio voluptatum omnis fuga harum placeat, deleniti aspernatur voluptatibus, nemo perspiciatis.  </Text>
+              <Text style={styles.TalkBody}> { this.props.talk.description } </Text>
             </View>
             <View style={styles.TalkOratorContainer}>
               <Text style={styles.TalkOrator}> Orador: Mark Zuckerberg </Text>
