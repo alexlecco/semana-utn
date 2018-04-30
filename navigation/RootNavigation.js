@@ -23,6 +23,11 @@ const RootStackNavigator = StackNavigator(
 );
 
 export default class RootNavigator extends React.Component {
+  constructor(props) {
+    super(props);
+    console.log("ES VISIBLE::::::::::::::::::::::::::", this.props.talkInfoVisible);
+  }
+
   componentDidMount() {
     this._notificationSubscription = this._registerForPushNotifications();
   }
@@ -32,7 +37,11 @@ export default class RootNavigator extends React.Component {
   }
 
   render() {
-    return <RootStackNavigator />;
+    let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
+    console.log("PROPS EN render de RootNavigator", this.props);
+    return (
+      <RootStackNavigator screenProps={this.props.showOrHideTalkInfo} />
+    );
   }
 
   _registerForPushNotifications() {

@@ -1,9 +1,9 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, Text} from 'react-native';
+import { Platform, StatusBar, StyleSheet, View,} from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
-import { Container, Header, Left, Right, Button, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
+import { Container, Header, Left, Right, Button,Text, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
 
 import TalkInfo from './TalkInfo';
 
@@ -12,8 +12,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       isLoadingComplete: false,
-      talkInfo: false,
+      talkInfoVisible: false,
     };
+    let showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
   }
 
   async componentWillMount() {
@@ -23,7 +24,13 @@ export default class App extends React.Component {
     });
   }
 
+  showOrHideTalkInfo() {
+    this.setState({talkInfoVisible: !this.state.talkInfoVisible})
+    console.log('Estado: ', this.state.talkInfoVisible)
+  }
+
   render() {
+    let showOrHideTalkInfo = this.showOrHideTalkInfo;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -34,28 +41,28 @@ export default class App extends React.Component {
       );
     }
     
-    if(this.state.talkInfo) {
+    if(this.state.talkInfoVisible) {
       return(
         <Container>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-            <TalkInfo />
+            <TalkInfo talkInfoVisible={this.state.talkInfoVisible} showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)} />
 
           </View>
         </Container>
       );
     }
     
-    if(!this.state.talkInfo) {
+    if(!this.state.talkInfoVisible) {
       return (
         <Container>
           <View style={styles.container}>
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-            <RootNavigation />
+            <RootNavigation talkInfoVisible={this.state.talkInfoVisible} showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)} />
 
           </View>
         </Container>

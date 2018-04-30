@@ -4,9 +4,15 @@ import React, { Component } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } from 'react-native';
 
 export default class TalkCard extends Component {
+	constructor(props) {
+		super(props);
+		console.log("FUNCION EN TalkCard::::", this.props);
+	}
+
 	render() {
+    let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
 		return(
-			<TouchableWithoutFeedback onPress={() => {}}>
+			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo()}>
 				<View style={styles.TalkCardContainer}>
 					<View style={styles.TalkHourContainer}>
 						<Text style={styles.TalkText}> {this.props.talkHour} </Text>

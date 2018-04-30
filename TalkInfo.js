@@ -3,12 +3,16 @@ import { StyleSheet, View, Dimensions, Image, } from 'react-native';
 import { Container, Header, Left, Body, Icon, Title, Right, Content, Footer, FooterTab, Button, Text, Card, CardItem, Thumbnail, } from 'native-base';
 
 export default class TalkInfo extends Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return(
       <Container>
         <Header>
           <Left>
-            <Button transparent>
+            <Button transparent onPress={() => this.props.showOrHideTalkInfo()}>
               <Icon name='arrow-back' />
             </Button>
           </Left>

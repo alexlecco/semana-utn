@@ -20,7 +20,6 @@ const firebaseConfig = {
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 
 export default class Schedule extends React.Component {
-
   static navigationOptions = {
     title: 'Cronograma',
     headerTintColor: '#ffffff',
@@ -42,9 +41,12 @@ export default class Schedule extends React.Component {
       })
     };
     this.talksRef = this.getRef().child('talks').orderByChild('time');
+    let showOrHideTalkInfo = this.props.screenProps;
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
+
+    console.log("PROPS en constructor de Schedule", this.props.screenProps);
   }
 
   getRef() {
@@ -83,7 +85,7 @@ export default class Schedule extends React.Component {
   _renderItem(item) {
     if (item.day == 'tuesday') {
       return (
-        <TalkCard talkHour={item.time} talkTitle={item.title} />
+        <TalkCard talkHour={item.time} talkTitle={item.title}  />
       );
     }
     else{
@@ -99,6 +101,8 @@ export default class Schedule extends React.Component {
     const day3 = 'wednesday';
     const day4 = 'thursday';
     const day5 = 'friday';
+    console.log("PROPS EN render de Schedule::::", this.props);
+    let showOrHideTalkInfo = this.props.screenProps;
     return (
       <Container>
         <View style={styles.container}>
@@ -111,7 +115,10 @@ export default class Schedule extends React.Component {
                     dataSource={this.state.dataSource}
                     renderRow={(item) => 
                                   item.day == day1 ?
-                                    <TalkCard talkHour={item.time} talkTitle={item.title} /> :
+                                    <TalkCard talkHour={item.time} 
+                                              talkTitle={item.title} 
+                                              talk={item} 
+                                              showOrHideTalkInfo={this.props.screenProps} /> :
                                     <View></View>} />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
