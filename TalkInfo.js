@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, Dimensions, Image, } from 'react-native';
-import { Container, Header, Left, Body, Icon, Title, Right, Content, Footer, FooterTab, Button, Text, Card, CardItem, Thumbnail, } from 'native-base';
+import { Container, Header, Left,
+         Body, Icon, Title, Right,
+         Content, Footer, FooterTab,
+         Button, Text, Card, CardItem,
+         Thumbnail,
+} from 'native-base';
 
 export default class TalkInfo extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      buttonText: 'Me interesa',
+    }
+  }
+
+  changeButtonText() {
+    this.state.buttonText === 'Me interesa' ?
+      this.setState({buttonText: 'Ya no me interesa'}) :
+      this.setState({buttonText: 'Me interesa'})
   }
 
   render() {
@@ -41,8 +55,8 @@ export default class TalkInfo extends Component {
         </Content>
         <Footer>
           <FooterTab>
-            <Button>
-              <Text> me interesa </Text>
+            <Button onPress={() => this.changeButtonText()}>
+              <Text> { `${this.state.buttonText}` } </Text>
             </Button>
           </FooterTab>
         </Footer>
