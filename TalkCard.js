@@ -10,18 +10,34 @@ export default class TalkCard extends Component {
 
 	render() {
     let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
-		return(
-			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
-				<View style={styles.TalkCardContainer}>
-					<View style={styles.TalkTimeContainer}>
-						<Text style={styles.TalkText}> {this.props.talk.time} </Text>
+    if (this.props.renderTime) {
+			return(
+				<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
+					<View style={styles.TalkCardContainer}>
+						<View style={styles.TalkTimeContainer}>
+							<Text style={styles.TalkText}> {this.props.talk.time} </Text>
+						</View>
+						<View style={styles.TalkTextContainer}>
+							<Text style={styles.TalkText}> {this.props.talk.title} </Text>
+						</View>
 					</View>
-					<View style={styles.TalkTextContainer}>
-						<Text style={styles.TalkText}> {this.props.talk.title} </Text>
+				</TouchableWithoutFeedback>
+			);
+    } else {
+			return(
+				<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
+					<View style={styles.TalkCardContainer}>
+						<View style={styles.TalkTimeContainer}>
+							<Text style={styles.TalkText}>             </Text>
+						</View>
+						<View style={styles.TalkTextContainer}>
+							<Text style={styles.TalkText}> {this.props.talk.title} </Text>
+						</View>
 					</View>
-				</View>
-			</TouchableWithoutFeedback>
-		);
+				</TouchableWithoutFeedback>
+			);
+    }
+		
 	}
 }
 

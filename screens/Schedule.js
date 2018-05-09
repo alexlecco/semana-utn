@@ -38,7 +38,10 @@ export default class Schedule extends React.Component {
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
-      })
+      }),
+      currentTalkTime: 'perrito',
+      homeLink: "Home",
+      homeMounted: true
     };
     this.talksRef = this.getRef().child('talks').orderByChild('time');
     let showOrHideTalkInfo = this.props.screenProps;
@@ -51,8 +54,17 @@ export default class Schedule extends React.Component {
     return firebaseApp.database().ref();
   }
 
+  componentWillMount() {
+    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
+    //this.changeCurrentTalkTime('09:00');
+    //console.log("Component will mount:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
+  }
+
   componentDidMount() {
+    //console.log("Component did mount:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
     this.listenForItems(this.talksRef);
+    //this.changeCurrentTalkTime('09:00');
+    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource.getRowCount());
   }
 
   listenForItems(talksRef) {
@@ -94,13 +106,43 @@ export default class Schedule extends React.Component {
     }
   }
 
+  changeCurrentTalkTime(time) {
+    this.setState({currentTalkTime: time})
+  }
+
+  renderTimeYesOrNo(item, day) {
+    //console.log("renderTimeYesOrNo THIS.STATE.CURRENTTALKTIME::::::", this.state.currentTalkTime);
+    //console.log("renderTimeYesOrNo STATE._datablob::::::", this.state._dataBlob);
+    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
+    if(item.day == day) {
+      if(item.time == this.state.currentTalkTime) {
+        return(
+          <TalkCard talk={item}
+                    showOrHideTalkInfo={this.props.screenProps}
+                    renderTime={false} />
+        )
+      }
+      else {
+        return(
+          <TalkCard talk={item}
+                    showOrHideTalkInfo={this.props.screenProps}
+                    renderTime={true} />
+        )
+      }
+    }
+    else {
+      return(
+        <View />
+      )
+    }
+  }
+
   render() {
-    const day1 = 'monday';
-    const day2 = 'tuesday';
-    const day3 = 'wednesday';
-    const day4 = 'thursday';
-    const day5 = 'friday';
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     let showOrHideTalkInfo = this.props.screenProps;
+    //console.log("DATASOURCE::::::", this.state.dataSource._cachedRowCount);
+    //console.log("DATASOURCE::::::", this.state.dataSource.rowIdentities[0]);
+    //console.log("DATASOURCE STATE._datablob::::::", this.state.dataSource );
     return (
       <Container>
         <View style={styles.container}>
@@ -108,27 +150,47 @@ export default class Schedule extends React.Component {
           <ScrollView style={styles.container}>
             <Content>
               <Tabs>
+                
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-                  <ListView 
+                  <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => 
-                                  item.day == day1 ?
-                                    <TalkCard talk={item}
-                                              showOrHideTalkInfo={this.props.screenProps} /> :
-                                    <View></View>} />
+                    renderRow={(item) => this.renderTimeYesOrNo(item, days[0]) }
+                    enableEmptySections={true}
+                     />
                 </Tab>
+
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day2 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(item) => this.renderTimeYesOrNo(item, days[1]) }
+                    enableEmptySections={true}
+                     />
                 </Tab>
-                <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day3 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
+
+                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(item) => this.renderTimeYesOrNo(item, days[2]) }
+                    enableEmptySections={true}
+                     />
                 </Tab>
-                <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day4 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
+
+                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(item) => this.renderTimeYesOrNo(item, days[3]) }
+                    enableEmptySections={true}
+                     />
                 </Tab>
-                <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-                  <ListView dataSource={this.state.dataSource} renderRow={(item) => item.day == day5 ? <TalkCard talk={item} showOrHideTalkInfo={this.props.screenProps} /> : <View></View>} />
+
+                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(item) => this.renderTimeYesOrNo(item, days[4]) }
+                    enableEmptySections={true}
+                     />
                 </Tab>
+
               </Tabs>
             </Content>
           </ScrollView>
