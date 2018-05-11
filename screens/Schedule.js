@@ -6,18 +6,7 @@ import { WebBrowser } from 'expo';
 import { MonoText } from '../components/StyledText';
 import TalkCard from '../TalkCard';
 
-import * as firebase from 'firebase';
-
-// Initialize Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyBkFWsGygllForJ1r4u9x3IcosoqBVCxq0",
-  authDomain: "semana-utn-c9f91.firebaseapp.com",
-  databaseURL: "https://semana-utn-c9f91.firebaseio.com",
-  projectId: "semana-utn-c9f91",
-  storageBucket: "semana-utn-c9f91.appspot.com",
-  messagingSenderId: "385895562914"
-};
-const firebaseApp = firebase.initializeApp(firebaseConfig);
+import { firebaseApp } from '../firebase';
 
 export default class Schedule extends React.Component {
   static navigationOptions = {
@@ -41,18 +30,18 @@ export default class Schedule extends React.Component {
       }),
       currentTalkTime: 'perrito',
       homeLink: "Home",
-      homeMounted: true
+      homeMounted: true,
     };
-    this.talksRef = this.getRef().child('talks').orderByChild('time');
+    this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
     let showOrHideTalkInfo = this.props.screenProps;
+
+    //console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIREBASEAPP EN SCHEDULE", firebaseApp);
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
   }
 
-  getRef() {
-    return firebaseApp.database().ref();
-  }
+
 
   componentWillMount() {
     //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
@@ -69,48 +58,34 @@ export default class Schedule extends React.Component {
 
   listenForItems(talksRef) {
     talksRef.on('value', (snap) => {
-
       // get children as an array
       var talks = [];
-
       snap.forEach((child) => {
         talks.push({
-
           day: child.val().day,
           id: child.val().id,
           time: child.val().time,
           title: child.val().title,
           description: child.val().description,
+          site: child.val().site,
           _key: child.key,
-
         });
       });
 
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(talks)
+        dataSource: this.state.dataSource.cloneWithRows(talks),
       });
-
     });
   }
 
-  _renderItem(item) {
-    if (item.day == 'tuesday') {
-      return (
-        <TalkCard talkTime={item.time} talkTitle={item.title}  />
-      );
-    }
-    else{
-      return(
-        <View></View>
-      );
-    }
-  }
+
 
   changeCurrentTalkTime(time) {
     this.setState({currentTalkTime: time})
   }
 
   renderTimeYesOrNo(item, day) {
+    //console.log(" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PUNTO DE ENVIAR this.props.sites", sites);
     //console.log("renderTimeYesOrNo THIS.STATE.CURRENTTALKTIME::::::", this.state.currentTalkTime);
     //console.log("renderTimeYesOrNo STATE._datablob::::::", this.state._dataBlob);
     //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
@@ -140,6 +115,7 @@ export default class Schedule extends React.Component {
   render() {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     let showOrHideTalkInfo = this.props.screenProps;
+    //console.log("EN SCHEDULE SITEEEEEESSSSSS::::::", this.state.sites);
     //console.log("DATASOURCE::::::", this.state.dataSource._cachedRowCount);
     //console.log("DATASOURCE::::::", this.state.dataSource.rowIdentities[0]);
     //console.log("DATASOURCE STATE._datablob::::::", this.state.dataSource );

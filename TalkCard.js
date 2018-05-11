@@ -10,17 +10,28 @@ export default class TalkCard extends Component {
 
 	render() {
     let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
+    let sites = this.props.sites;
     if (this.props.renderTime) {
 			return(
 				<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
+					
 					<View style={styles.TalkCardContainer}>
-						<View style={styles.TalkTimeContainer}>
-							<Text style={styles.TalkText}> {this.props.talk.time} </Text>
+						<View styke={styles.TalCardColumn}>
+							<View style={styles.TalkTimeContainer}>
+								<Text style={styles.TalkText}> {this.props.talk.time} </Text>
+							</View>
 						</View>
-						<View style={styles.TalkTextContainer}>
-							<Text style={styles.TalkText}> {this.props.talk.title} </Text>
+
+						<View styke={styles.TalCardColumn}>
+							<View style={styles.TalkTitleContainer}>
+								<Text style={styles.TalkText}> {this.props.talk.title} </Text>
+							</View>
+							<View style={styles.TalkSiteContainer}>
+								<Text style={[styles.TalkSiteText, {color: 'red'}]}> {this.props.talk.site} </Text>
+							</View>
 						</View>
 					</View>
+
 				</TouchableWithoutFeedback>
 			);
     } else {
@@ -30,7 +41,7 @@ export default class TalkCard extends Component {
 						<View style={styles.TalkTimeContainer}>
 							<Text style={styles.TalkText}>             </Text>
 						</View>
-						<View style={styles.TalkTextContainer}>
+						<View style={styles.TalkTitleContainer}>
 							<Text style={styles.TalkText}> {this.props.talk.title} </Text>
 						</View>
 					</View>
@@ -46,19 +57,30 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
+	TalCardColumn: {
+    flexDirection: 'column',
+	},
 	TalkTimeContainer: {
 		margin: 10,
   },
-	TalkTextContainer: {
+	TalkTitleContainer: {
 		paddingTop: 10,
 		paddingBottom: 10,
 		paddingRight: 10,
 		marginTop: 10,
-		marginBottom: 10,
 		marginRight: 10,
 		flexWrap: 'wrap',
 		flexDirection: 'row',
 		width: Dimensions.get('window').width - 82,
+	},
+	TalkSiteContainer: {
+		flexWrap: 'wrap',
+		paddingBottom: 10,
+		flexDirection: 'row',
+		width: Dimensions.get('window').width - 82,
+	},
+	TalkSiteText: {
+		fontSize: 13,
 	},
 	TalkText: {
 		fontSize: 17,
