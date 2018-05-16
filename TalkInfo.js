@@ -21,7 +21,12 @@ export default class TalkInfo extends Component {
       this.setState({buttonText: 'Me interesa'})
   }
 
+  getObjectOfArray(array, index) {
+    return array[index] = array[index] || {};
+  }
+
   render() {
+    sites = this.props.sites;
     return(
       <Container>
         <Header>
@@ -32,7 +37,9 @@ export default class TalkInfo extends Component {
           </Left>
           <Body>
             <Title> { this.props.talk.day } - { this.props.talk.time } </Title>
-            <Text style={{color: 'white'}}> Aula tanto </Text>
+            <Text style={{color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}}>
+              { this.getObjectOfArray(this.props.sites, this.props.talk.site - 1 ).name }
+            </Text>
           </Body>
         </Header>
         <Content>

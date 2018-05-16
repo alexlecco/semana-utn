@@ -18,9 +18,12 @@ export default class App extends React.Component {
         description: '',
         time: '',
         day: '',
-      }
+        site: '',
+      },
+      sites: [],
     };
     let showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
+    let updateSites = this.updateSites.bind(this);
   }
 
   async componentWillMount() {
@@ -38,6 +41,7 @@ export default class App extends React.Component {
                       description: talk.description,
                       time: talk.time,
                       day: talk.day,
+                      site: talk.site,
                      }
       });
     }
@@ -48,13 +52,19 @@ export default class App extends React.Component {
                       description: '',
                       time: '',
                       day: '',
+                      site: '',
                      }
       });
     }
   }
 
+  updateSites(sites) {
+    this.setState({sites: sites});
+  }
+
   render() {
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
+    let updateSites = this.updateSites;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -74,7 +84,8 @@ export default class App extends React.Component {
 
             <TalkInfo talk={this.state.talk}
                       talkInfoVisible={this.state.talkInfoVisible}
-                      showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)} />
+                      showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
+                      sites={this.state.sites} />
 
           </View>
         </Container>
@@ -88,7 +99,9 @@ export default class App extends React.Component {
             {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
             {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-            <RootNavigation talkInfoVisible={this.state.talkInfoVisible} showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)} />
+            <RootNavigation talkInfoVisible={this.state.talkInfoVisible}
+                            showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
+                            updateSites={this.updateSites.bind(this)} />
 
           </View>
         </Container>

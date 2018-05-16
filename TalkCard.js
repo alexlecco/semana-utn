@@ -6,7 +6,7 @@ import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } 
 export default class TalkCard extends Component {
 	constructor(props) {
 		super(props);
-		//console.log("PROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOPS EN TALKCARD: ", props);
+		console.log("props en TalkCard:::::::: ", props);
 	}
 
 	getObjectOfArray(array, index) {

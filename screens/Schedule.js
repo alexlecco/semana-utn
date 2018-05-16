@@ -46,10 +46,13 @@ export default class Schedule extends React.Component {
     };
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
     this.sitesRef = firebaseApp.database().ref().child('sites');
-    let showOrHideTalkInfo = this.props.screenProps;
+    this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
+    this.updateSites        = this.props.screenProps.updateSites;
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
+
+    console.log("props en SCHEDULE::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.props);
   }
 
   componentWillMount() {
@@ -101,9 +104,12 @@ export default class Schedule extends React.Component {
         });
       });
 
+
       this.setState({
         sites: sites,
       });
+
+      this.props.screenProps.updateSites(sites);
     });
   }
 
@@ -121,7 +127,7 @@ export default class Schedule extends React.Component {
         return(
           <TalkCard talk={talk}
                     sites={this.state.sites}
-                    showOrHideTalkInfo={this.props.screenProps}
+                    showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={false} />
         )
       }
@@ -129,7 +135,7 @@ export default class Schedule extends React.Component {
         return(
           <TalkCard talk={talk}
                     sites={this.state.sites}
-                    showOrHideTalkInfo={this.props.screenProps}
+                    showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={true} />
         )
       }
@@ -143,7 +149,8 @@ export default class Schedule extends React.Component {
 
   render() {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
-    let showOrHideTalkInfo = this.props.screenProps;
+    let showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
+    let updateSites = this.props.screenProps.updateSites;
     //console.log("EN SCHEDULE SITEEEEEESSSSSS::::::", this.state.sites);
     //console.log("DATASOURCE::::::", this.state.dataSource._cachedRowCount);
     //console.log("DATASOURCE::::::", this.state.dataSource.rowIdentities[0]);
