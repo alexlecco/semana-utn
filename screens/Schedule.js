@@ -1,7 +1,18 @@
 import React from 'react';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
-import { Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, Button, Alert, ListView, ListItem, } from 'react-native';
 import { WebBrowser } from 'expo';
+import { 
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Button,
+  Alert,
+  ListView,
+  ListItem,
+} from 'react-native';
 
 import { MonoText } from '../components/StyledText';
 import TalkCard from '../TalkCard';
@@ -28,20 +39,18 @@ export default class Schedule extends React.Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      sites: [],
       currentTalkTime: 'perrito',
       homeLink: "Home",
       homeMounted: true,
     };
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
+    this.sitesRef = firebaseApp.database().ref().child('sites');
     let showOrHideTalkInfo = this.props.screenProps;
-
-    //console.log("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFIREBASEAPP EN SCHEDULE", firebaseApp);
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
   }
-
-
 
   componentWillMount() {
     //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
@@ -51,12 +60,13 @@ export default class Schedule extends React.Component {
 
   componentDidMount() {
     //console.log("Component did mount:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-    this.listenForItems(this.talksRef);
+    this.listenForTalks(this.talksRef);
+    this.listenForSites(this.sitesRef);
     //this.changeCurrentTalkTime('09:00');
     //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource.getRowCount());
   }
 
-  listenForItems(talksRef) {
+  listenForTalks(talksRef) {
     talksRef.on('value', (snap) => {
       // get children as an array
       var talks = [];
@@ -78,28 +88,47 @@ export default class Schedule extends React.Component {
     });
   }
 
+  listenForSites(sitesRef) {
+    sitesRef.on('value', (snap) => {
+      // get children as an array
+      var sites = [];
+      snap.forEach((child) => {
+        sites.push({
+          name: child.val().name,
+          id: child.val().id,
+          color: child.val().color,
+          _key: child.key,
+        });
+      });
 
+      this.setState({
+        sites: sites,
+      });
+    });
+  }
 
   changeCurrentTalkTime(time) {
     this.setState({currentTalkTime: time})
   }
 
-  renderTimeYesOrNo(item, day) {
-    //console.log(" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PUNTO DE ENVIAR this.props.sites", sites);
+  renderTimeYesOrNo(talk, day) {
+    //console.log(" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PUNTO DE ENVIAR this.props.sites", this.state.sites);
     //console.log("renderTimeYesOrNo THIS.STATE.CURRENTTALKTIME::::::", this.state.currentTalkTime);
     //console.log("renderTimeYesOrNo STATE._datablob::::::", this.state._dataBlob);
     //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
-    if(item.day == day) {
-      if(item.time == this.state.currentTalkTime) {
+    if(talk.day == day) {
+      if(talk.time == this.state.currentTalkTime) {
         return(
-          <TalkCard talk={item}
+          <TalkCard talk={talk}
+                    sites={this.state.sites}
                     showOrHideTalkInfo={this.props.screenProps}
                     renderTime={false} />
         )
       }
       else {
         return(
-          <TalkCard talk={item}
+          <TalkCard talk={talk}
+                    sites={this.state.sites}
                     showOrHideTalkInfo={this.props.screenProps}
                     renderTime={true} />
         )
@@ -130,7 +159,7 @@ export default class Schedule extends React.Component {
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => this.renderTimeYesOrNo(item, days[0]) }
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
                     enableEmptySections={true}
                      />
                 </Tab>
@@ -138,7 +167,7 @@ export default class Schedule extends React.Component {
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => this.renderTimeYesOrNo(item, days[1]) }
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
                     enableEmptySections={true}
                      />
                 </Tab>
@@ -146,7 +175,7 @@ export default class Schedule extends React.Component {
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => this.renderTimeYesOrNo(item, days[2]) }
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
                     enableEmptySections={true}
                      />
                 </Tab>
@@ -154,7 +183,7 @@ export default class Schedule extends React.Component {
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => this.renderTimeYesOrNo(item, days[3]) }
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
                     enableEmptySections={true}
                      />
                 </Tab>
@@ -162,7 +191,7 @@ export default class Schedule extends React.Component {
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
-                    renderRow={(item) => this.renderTimeYesOrNo(item, days[4]) }
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
                     enableEmptySections={true}
                      />
                 </Tab>

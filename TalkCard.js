@@ -6,49 +6,43 @@ import { View, Text, StyleSheet, Dimensions, TouchableWithoutFeedback, Alert, } 
 export default class TalkCard extends Component {
 	constructor(props) {
 		super(props);
+		//console.log("PROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOPS EN TALKCARD: ", props);
+	}
+
+	getObjectOfArray(array, index) {
+    return array[index] = array[index] || {};
 	}
 
 	render() {
     let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
     let sites = this.props.sites;
-    if (this.props.renderTime) {
-			return(
-				<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
-					
-					<View style={styles.TalkCardContainer}>
-						<View styke={styles.TalCardColumn}>
-							<View style={styles.TalkTimeContainer}>
-								<Text style={styles.TalkText}> {this.props.talk.time} </Text>
-							</View>
-						</View>
-
-						<View styke={styles.TalCardColumn}>
-							<View style={styles.TalkTitleContainer}>
-								<Text style={styles.TalkText}> {this.props.talk.title} </Text>
-							</View>
-							<View style={styles.TalkSiteContainer}>
-								<Text style={[styles.TalkSiteText, {color: 'red'}]}> {this.props.talk.site} </Text>
-							</View>
+    let space = '             ';
+    //let site = this.getDefaultObjectAt(sites, 0);
+		return(
+			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
+				
+				<View style={styles.TalkCardContainer}>
+					<View styke={styles.TalCardColumn}>
+						<View style={styles.TalkTimeContainer}>
+							<Text style={styles.TalkText}> {this.props.renderTime ? this.props.talk.time : space} </Text>
 						</View>
 					</View>
 
-				</TouchableWithoutFeedback>
-			);
-    } else {
-			return(
-				<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
-					<View style={styles.TalkCardContainer}>
-						<View style={styles.TalkTimeContainer}>
-							<Text style={styles.TalkText}>             </Text>
-						</View>
+					<View style={styles.TalCardColumn}>
 						<View style={styles.TalkTitleContainer}>
 							<Text style={styles.TalkText}> {this.props.talk.title} </Text>
 						</View>
+						<View style={styles.TalkSiteContainer}>
+							<Text style={[styles.TalkSiteText, 
+													 {color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}]}>
+								{ this.getObjectOfArray(sites, this.props.talk.site - 1).name }
+							</Text>
+						</View>
 					</View>
-				</TouchableWithoutFeedback>
-			);
-    }
-		
+				</View>
+
+			</TouchableWithoutFeedback>
+		);	
 	}
 }
 
