@@ -60,17 +60,13 @@ export default class TalkInfo extends Component {
             </Card>
           </View>
         </Content>
-        <Footer>
-          <FooterTab>
-            <Button success={this.state.buttonText === 'Me interesa' ? true : false}
-                    primary={this.state.buttonText === 'Ya no me interesa' ? true : false}
+            <Button full primary={this.state.buttonText === 'Me interesa' ? true : false}
+                    full primary transparent={this.state.buttonText === 'Ya no me interesa' ? true : false}
                     onPress={() => this.changeButtonText()}>
               <Text>
                 { `${this.state.buttonText}` }
               </Text>
             </Button>
-          </FooterTab>
-        </Footer>
       </Container>
     );
   }
