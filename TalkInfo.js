@@ -32,7 +32,7 @@ export default class TalkInfo extends Component {
           </Left>
           <Body>
             <Title> { this.props.talk.day } - { this.props.talk.time } </Title>
-            <Text style={{color: 'white'}}> Aula Magna </Text>
+            <Text style={{color: 'white'}}> Aula tanto </Text>
           </Body>
         </Header>
         <Content>
@@ -55,8 +55,12 @@ export default class TalkInfo extends Component {
         </Content>
         <Footer>
           <FooterTab>
-            <Button onPress={() => this.changeButtonText()}>
-              <Text> { `${this.state.buttonText}` } </Text>
+            <Button success={this.state.buttonText === 'Me interesa' ? true : false}
+                    primary={this.state.buttonText === 'Ya no me interesa' ? true : false}
+                    onPress={() => this.changeButtonText()}>
+              <Text>
+                { `${this.state.buttonText}` }
+              </Text>
             </Button>
           </FooterTab>
         </Footer>
@@ -111,5 +115,5 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#000000',
     textAlign: 'justify',
-  },
+  }
 });
