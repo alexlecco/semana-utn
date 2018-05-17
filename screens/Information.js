@@ -1,7 +1,9 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, } from 'react-native';
+import { ScrollView, StyleSheet, View, Image, } from 'react-native';
 import { Text } from 'native-base';
 import { ExpoConfigView } from '@expo/samples';
+
+import { firebaseApp } from '../firebase';
 
 export default class Information extends React.Component {
   static navigationOptions = {
@@ -17,11 +19,55 @@ export default class Information extends React.Component {
     },
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      infos: [],
+    }
+    this.infosRef = firebaseApp.database().ref().child('infos');
+  }
+
+  componentDidMount() {
+    this.listenForInfos(this.infosRef);
+  }
+
+  listenForInfos(infosRef) {
+    infosRef.on('value', (snap) => {
+      // get children as an array
+      var infos = [];
+      snap.forEach((child) => {
+        infos.push({
+          body: child.val().body,
+          title: child.val().title,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        infos: infos,
+      });
+    });
+  }
+
+  getObjectOfArray(array, index) {
+    return array[index] = array[index] || {};
+  }
+
   render() {
+    let infos = this.state.infos;
     return(
       <ScrollView style={styles.container}>
         <View style={styles.getStartedContainer}>
-          <Text style={styles.getStartedText}> [Information Content] </Text>
+          <Text style={styles.infoTitle}> { this.getObjectOfArray(infos, 0).title } </Text>
+        </View>
+        <View style={styles.infoImageContainer}>
+          <Image
+            source={require('../assets/images/decano.png')}
+            style={styles.infoImage}
+          />
+        </View>
+        <View style={styles.getStartedContainer}>
+          <Text style={styles.infoBody}> { this.getObjectOfArray(infos, 0).body } </Text>
         </View>
       </ScrollView>
     );
@@ -33,16 +79,35 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 0,
     backgroundColor: '#fff',
+    paddingLeft: 10,
+    paddingRight: 10,
   },
-  getStartedContainer: {
-    flex: 1,
+  infoTitle: {
+    fontSize: 20,
+    color: '#4A7AFF',
+    lineHeight: 24,
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  infoImageContainer: {
     justifyContent:'center',
-    alignItems:'center'
+    alignItems:'center',
+    margin: 10,
   },
-  getStartedText: {
+  infoImage: {
+    width: 200,
+    height: 200,
+    borderRadius: 100,
+  },
+  infoBody: {
     fontSize: 17,
     color: 'rgba(96,100,109, 1)',
     lineHeight: 24,
     textAlign: 'center',
+  },
+  getStartedContainer: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
   },
 });

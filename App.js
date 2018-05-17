@@ -164,9 +164,13 @@ export default class App extends React.Component {
                 source={require('./assets/images/loginScreen.png')}
                 style={{width: '100%', height: '100%'}}>
                   <View style={styles.loginContainer}>
-                    <Button rounded block onPress={ () => this.loginWithFacebook() }>
-                      <Text> Ingresa con facebook </Text>
-                    </Button>
+                    {
+                      !this.state.logged ? 
+                        <Button rounded block onPress={ () => this.loginWithFacebook() }>
+                          <Text> Ingresa con facebook </Text>
+                        </Button> :
+                        <View />
+                    }
                   </View>
               </ImageBackground>
               
