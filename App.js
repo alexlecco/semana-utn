@@ -1,11 +1,13 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View,} from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, ImageBackground, } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
 import { Container, Header, Left, Right, Button,Text, Icon, Body, Title, Footer, FooterTab, } from 'native-base';
 
 import TalkInfo from './TalkInfo';
+
+import { firebaseApp } from './firebase';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -21,9 +23,11 @@ export default class App extends React.Component {
         site: '',
       },
       sites: [],
+      logged: null,
     };
-    let showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
-    let updateSites = this.updateSites.bind(this);
+    showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
+    updateSites = this.updateSites.bind(this);
+    logoutWithFacebook = this.logoutWithFacebook.bind(this);
   }
 
   async componentWillMount() {
@@ -31,6 +35,15 @@ export default class App extends React.Component {
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
     });
+  }
+
+  componentDidMount() {
+    firebaseApp.auth().onAuthStateChanged((user) => {
+      if(user != null) {
+        this.setState({logged: true})
+        console.log(user)
+      }
+    })
   }
 
   showOrHideTalkInfo(talk) {
@@ -62,6 +75,32 @@ export default class App extends React.Component {
     this.setState({sites: sites});
   }
 
+  async loginWithFacebook() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1709694409111214',
+      { permissions: ['public_profile'] })
+
+    if(type == 'success') {
+      const credential = firebaseApp.auth.FacebookAuthProvider.credential(token)
+      firebaseApp.auth().signInWithCredential(credential).catch((error) => {
+        console.log(error)
+      })
+    }
+  }
+
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
+  };
+
+  async logoutWithFacebook() {
+    this.setState({ logged: null });
+    firebaseApp.auth().signOut().then(function() {
+      // Sign-out successful.
+      console.log("Sign-out successful");
+    }, function(error) {
+      // An error happened.
+    });
+  }
+
   render() {
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
     let updateSites = this.updateSites;
@@ -75,37 +114,66 @@ export default class App extends React.Component {
       );
     }
     
-    if(this.state.talkInfoVisible) {
+    if(this.state.logged) {
+      if(this.state.talkInfoVisible) {
+        return(
+          <Container>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+
+              <TalkInfo talk={this.state.talk}
+                        talkInfoVisible={this.state.talkInfoVisible}
+                        showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
+                        sites={this.state.sites} />
+
+            </View>
+          </Container>
+        );
+      }
+      
+      if(!this.state.talkInfoVisible) {
+        return (
+          <Container>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+
+              <RootNavigation talkInfoVisible={this.state.talkInfoVisible}
+                              showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
+                              updateSites={this.updateSites.bind(this)} />
+
+              <View>
+                <Button full onPress={ () => this.logoutWithFacebook() }>
+                  <Text> Salir </Text>
+                </Button>
+              </View>
+
+            </View>
+          </Container>
+        );
+      }
+    } else {
       return(
-        <Container>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
+          <Container>
+            <View style={styles.container}>
+              {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+              {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
-            <TalkInfo talk={this.state.talk}
-                      talkInfoVisible={this.state.talkInfoVisible}
-                      showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
-                      sites={this.state.sites} />
+              <ImageBackground
+                source={require('./assets/images/loginScreen.png')}
+                style={{width: '100%', height: '100%'}}>
+                  <View style={styles.loginContainer}>
+                    <Button rounded block onPress={ () => this.loginWithFacebook() }>
+                      <Text> Ingresa con facebook </Text>
+                    </Button>
+                  </View>
+              </ImageBackground>
+              
 
-          </View>
-        </Container>
-      );
-    }
-    
-    if(!this.state.talkInfoVisible) {
-      return (
-        <Container>
-          <View style={styles.container}>
-            {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-            {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
-
-            <RootNavigation talkInfoVisible={this.state.talkInfoVisible}
-                            showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
-                            updateSites={this.updateSites.bind(this)} />
-
-          </View>
-        </Container>
-      );
+            </View>
+          </Container>
+        );
     }
   }
 
@@ -144,5 +212,14 @@ const styles = StyleSheet.create({
   statusBarUnderlay: {
     height: 24,
     backgroundColor: '#3F51B5',
+  },
+  loginContainer: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingBottom: 40,
   },
 });

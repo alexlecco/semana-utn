@@ -1,0 +1,31 @@
+Object {
+	"apiKey": "AIzaSyBkFWsGygllForJ1r4u9x3IcosoqBVCxq0",
+	"appName": "[DEFAULT]",
+	"authDomain": "semana-utn-c9f91.firebaseapp.com",
+	"createdAt": "1526541697000",
+	"displayName": "Alex Villecco",
+	"email": null,
+	"emailVerified": false,
+	"isAnonymous": false,
+	"lastLoginAt": "1526543340000",
+	"phoneNumber": null,
+	"photoURL": "https://graph.facebook.com/1723026564454590/picture",
+	"providerData": Array [
+	Object {
+	 "displayName": "Alex Villecco",
+	 "email": null,
+	 "phoneNumber": null,
+	 "photoURL": "https://graph.facebook.com/1723026564454590/picture",
+	 "providerId": "facebook.com",
+	 "uid": "1723026564454590",
+	},
+	],
+	"redirectEventId": null,
+	"stsTokenManager": Object {
+	"accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjhiZjA2YWU3MGJhMjVkNzZiNWM0ZjMyYTk4YTU0N2JlYjE4YmM0MGUifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vc2VtYW5hLXV0bi1jOWY5MSIsIm5hbWUiOiJBbGV4IFZpbGxlY2NvIiwicGljdHVyZSI6Imh0dHBzOi8vZ3JhcGguZmFjZWJvb2suY29tLzE3MjMwMjY1NjQ0NTQ1OTAvcGljdHVyZSIsImF1ZCI6InNlbWFuYS11dG4tYzlmOTEiLCJhdXRoX3RpbWUiOjE1MjY1NDMzNDAsInVzZXJfaWQiOiJEdFZZNHBWMnRlV1JKcTJPYndRY1hYVnl2NEEzIiwic3ViIjoiRHRWWTRwVjJ0ZVdSSnEyT2J3UWNYWFZ5djRBMyIsImlhdCI6MTUyNjU0MzM0MCwiZXhwIjoxNTI2NTQ2OTQwLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImZhY2Vib29rLmNvbSI6WyIxNzIzMDI2NTY0NDU0NTkwIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZmFjZWJvb2suY29tIn19.GX7kt7zNKHkVzfKzD7QqzayW5o9CVFLpAcFWRntvUTo5qmKEjAhduiqDaGE8fXB9qAr8sqntxGYLPWNyot0_YpxDMrSdNMtBOpsmURdoNrNcYdLUjI-yzuO9D27EAnJeUu_SbQdZFF0BfjwYPAm59MzsSM9mchOnvseslZJeT2OTDjtGI64m5VEj38YyGOAZHyK0RPumVr3hJlU35ybabdtbLAtg_U2N5uMnv6B2TQtw-nfcD6uekkSr8mlHlcJotOMEBzwF2ECVlkANSPa6S-0kXV7XBEEZ4STwMrqUTgDv2N4XncPMS44LsJ62b4qprrI-WUZGbf6PqMSz2hmdsA",
+	"apiKey": "AIzaSyBkFWsGygllForJ1r4u9x3IcosoqBVCxq0",
+	"expirationTime": 1526546940144,
+	"refreshToken": "AK2wQ-zcYI_Zm-TnRfruyK2HwJzS-wpmOQkWf6jYDM2s0jfMqqQRVRXYyY3_tSwwTkOZi3t9CC1xsxC0pxkwGlAu5VKBQ8MX-MFVqHcIJI4aXD3LdbF3ajrfsYli3RTY33bMQU-keqd4-7IhDzjFH1Z32B3ZsZm5IaerMDML8jwzh_27Alvd0V2RDdnKEX6Y6VQfRjm0s7JfiBGkxsBKqI5HaMCwnZ48q4qmltRlbQDrS5fMz95jEwL_B9w_XeNTwoKKujVRxe0Dj4fzoGiBOHFOeuyXyO-GiQ",
+	},
+	"uid": "DtVY4pV2teWRJq2ObwQcXXVyv4A3",
+}
