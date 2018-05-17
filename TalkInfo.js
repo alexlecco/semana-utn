@@ -27,6 +27,27 @@ export default class TalkInfo extends Component {
 
   render() {
     sites = this.props.sites;
+   
+    let day = this.props.talk.day;
+    let dayToShow = 'perrito';
+    switch(day) {
+      case 'monday':
+        dayToShow = 'lunes';
+        break;
+      case 'tuesday':
+        dayToShow = 'martes';
+        break;
+      case 'wednesday':
+        dayToShow = 'miercoles';
+        break;
+      case 'thursday':
+        dayToShow = 'jueves';
+        break;
+      case 'friday':
+        dayToShow = 'viernes';
+        break;
+    }
+
     return(
       <Container>
         <Header>
@@ -36,7 +57,7 @@ export default class TalkInfo extends Component {
             </Button>
           </Left>
           <Body>
-            <Title> { this.props.talk.day } - { this.props.talk.time } </Title>
+            <Title> { dayToShow } - { this.props.talk.time } </Title>
             <Text style={{color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}}>
               { this.getObjectOfArray(this.props.sites, this.props.talk.site - 1 ).name }
             </Text>
@@ -60,13 +81,13 @@ export default class TalkInfo extends Component {
             </Card>
           </View>
         </Content>
-            <Button full primary={this.state.buttonText === 'Me interesa' ? true : false}
-                    full primary transparent={this.state.buttonText === 'Ya no me interesa' ? true : false}
-                    onPress={() => this.changeButtonText()}>
-              <Text>
-                { `${this.state.buttonText}` }
-              </Text>
-            </Button>
+        <Button full primary={this.state.buttonText === 'Me interesa' ? true : false}
+                full primary transparent={this.state.buttonText === 'Ya no me interesa' ? true : false}
+                onPress={() => this.changeButtonText()}>
+          <Text>
+            { `${this.state.buttonText}` }
+          </Text>
+        </Button>
       </Container>
     );
   }

@@ -51,8 +51,6 @@ export default class Schedule extends React.Component {
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
-
-    console.log("props en SCHEDULE::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.props);
   }
 
   componentWillMount() {
@@ -179,7 +177,7 @@ export default class Schedule extends React.Component {
                      />
                 </Tab>
 
-                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
@@ -187,7 +185,7 @@ export default class Schedule extends React.Component {
                      />
                 </Tab>
 
-                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
@@ -195,7 +193,7 @@ export default class Schedule extends React.Component {
                      />
                 </Tab>
 
-                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
                     dataSource={this.state.dataSource}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
