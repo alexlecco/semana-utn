@@ -144,9 +144,12 @@ export default class App extends React.Component {
                               updateSites={this.updateSites.bind(this)} />
 
               <View>
+                {
+                false &&  
                 <Button full onPress={ () => this.logoutWithFacebook() }>
                   <Text> Salir </Text>
                 </Button>
+                }
               </View>
 
             </View>
