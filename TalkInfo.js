@@ -58,7 +58,7 @@ export default class TalkInfo extends Component {
           </Left>
           <Body>
             <Title> { dayToShow } - { this.props.talk.time } </Title>
-            <Text style={{color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}}>
+            <Text style={{marginLeft: 15, color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}}>
               { this.getObjectOfArray(this.props.sites, this.props.talk.site - 1 ).name }
             </Text>
           </Body>

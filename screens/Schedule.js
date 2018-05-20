@@ -102,7 +102,6 @@ export default class Schedule extends React.Component {
         });
       });
 
-
       this.setState({
         sites: sites,
       });

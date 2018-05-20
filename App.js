@@ -23,7 +23,8 @@ export default class App extends React.Component {
         site: '',
       },
       sites: [],
-      logged: null,
+      logged: false,
+      loggedUser: {},
     };
     showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
     updateSites = this.updateSites.bind(this);
@@ -40,10 +41,15 @@ export default class App extends React.Component {
   componentDidMount() {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if(user != null) {
-        this.setState({logged: true})
-        console.log(user)
+        this.setState({
+          logged: true,
+          loggedUser: user,
+        })
+        //console.log(user)
+        
+        this.addUser(user);
       }
-    })
+    });
   }
 
   showOrHideTalkInfo(talk) {
@@ -71,6 +77,10 @@ export default class App extends React.Component {
     }
   }
 
+  _handleFinishLoading = () => {
+    this.setState({ isLoadingComplete: true });
+  };
+
   updateSites(sites) {
     this.setState({sites: sites});
   }
@@ -79,20 +89,25 @@ export default class App extends React.Component {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1709694409111214',
       { permissions: ['public_profile'] })
 
-    if(type == 'success') {
+    if(type === 'success') {
       const credential = firebaseApp.auth.FacebookAuthProvider.credential(token)
       firebaseApp.auth().signInWithCredential(credential).catch((error) => {
         console.log(error)
-      })
+      });
+      this.
+      console.log("Sign-in successful");
     }
   }
 
-  _handleFinishLoading = () => {
-    this.setState({ isLoadingComplete: true });
-  };
+  addUser(loggedUser) {
+     firebaseApp.database().ref('users').push({
+      name: loggedUser.displayName,
+      userId: loggedUser.uid,
+    }).key;
+  }
 
   async logoutWithFacebook() {
-    this.setState({ logged: null });
+    this.setState({ logged: false, loggedUser: {} });
     firebaseApp.auth().signOut().then(function() {
       // Sign-out successful.
       console.log("Sign-out successful");
@@ -142,12 +157,11 @@ export default class App extends React.Component {
               <RootNavigation talkInfoVisible={this.state.talkInfoVisible}
                               showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
                               updateSites={this.updateSites.bind(this)} />
-
               <View>
                 {
-                false &&  
-                <Button full onPress={ () => this.logoutWithFacebook() }>
-                  <Text> Salir </Text>
+                true &&  
+                <Button full onPress={ () => this.logoutWithFacebook(this) }>
+                  <Text> Salir { this.state.loggedUser.displayName } </Text>
                 </Button>
                 }
               </View>
@@ -176,7 +190,6 @@ export default class App extends React.Component {
                     }
                   </View>
               </ImageBackground>
-              
 
             </View>
           </Container>
