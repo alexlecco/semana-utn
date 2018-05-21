@@ -24,9 +24,14 @@ export default class MyTalks extends React.Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      dataSource2: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
       sites: [],
     };
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
+    //cambiar por loggedUser.uid
+    this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo('ocKH7VNdM1SnO1QBERdxXUhj3vn1');
     this.sitesRef = firebaseApp.database().ref().child('sites');
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     this.updateSites        = this.props.screenProps.updateSites;
@@ -36,8 +41,27 @@ export default class MyTalks extends React.Component {
   }
 
   componentDidMount() {
+    this.listenForUserTalks(this.userTalksRef);
     this.listenForTalks(this.talksRef);
     this.listenForSites(this.sitesRef);
+  }
+
+  listenForUserTalks(userTalksRef) {
+    userTalksRef.on('value', (snap) => {
+      // get children as an array
+      var userTalks = [];
+      snap.forEach((child) => {
+        userTalks.push({
+          user: child.val().user,
+          talk: child.val().talk,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        dataSource2: this.state.dataSource2.cloneWithRows(userTalks),
+      });
+    });
   }
 
   listenForTalks(talksRef) {
@@ -84,10 +108,6 @@ export default class MyTalks extends React.Component {
   }
 
   renderTimeYesOrNo(talk, day) {
-    //console.log(" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PUNTO DE ENVIAR this.props.sites", this.state.sites);
-    //console.log("renderTimeYesOrNo THIS.STATE.CURRENTTALKTIME::::::", this.state.currentTalkTime);
-    //console.log("renderTimeYesOrNo STATE._datablob::::::", this.state._dataBlob);
-    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
     if(talk.day == day) {
       if(talk.time == this.state.currentTalkTime) {
         return(
