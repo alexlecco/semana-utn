@@ -29,9 +29,12 @@ export default class App extends React.Component {
     showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
     updateSites = this.updateSites.bind(this);
     logoutWithFacebook = this.logoutWithFacebook.bind(this);
+    this.usersRef = firebaseApp.database().ref().child('mobileUsers');
   }
 
   async componentWillMount() {
+    this.listenForUsers(this.usersRef);
+
     await Expo.Font.loadAsync({
       'Roboto': require('native-base/Fonts/Roboto.ttf'),
       'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
@@ -45,10 +48,25 @@ export default class App extends React.Component {
           logged: true,
           loggedUser: user,
         })
-        //console.log(user)
-        
+
         this.addUser(user);
       }
+    });
+  }
+
+  listenForUsers(usersRef) {
+    usersRef.on('value', (snap) => {
+      // get children as an array
+      var users = [];
+      snap.forEach((child) => {
+        users.push({
+          name: child.val().name,
+          userId: child.val().userId,
+          _key: child.key,
+        });
+      });
+
+      this.setState({ users: users });
     });
   }
 
@@ -100,7 +118,7 @@ export default class App extends React.Component {
   }
 
   addUser(loggedUser) {
-     firebaseApp.database().ref('users').push({
+     firebaseApp.database().ref('mobileUsers').push({
       name: loggedUser.displayName,
       userId: loggedUser.uid,
     }).key;
@@ -117,6 +135,7 @@ export default class App extends React.Component {
   }
 
   render() {
+    console.log("2---------------------------------------------", this.state.loggedUser)
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
     let updateSites = this.updateSites;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
