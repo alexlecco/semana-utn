@@ -21,9 +21,7 @@ export default class MyTalks extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
+      talks: [],
       dataSource2: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -81,7 +79,7 @@ export default class MyTalks extends React.Component {
       });
 
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(talks),
+        talks: talks,
       });
     });
   }
@@ -107,11 +105,13 @@ export default class MyTalks extends React.Component {
     });
   }
 
-  renderTimeYesOrNo(talk, day) {
-    if(talk.day == day) {
-      if(talk.time == this.state.currentTalkTime) {
+  renderTimeYesOrNo(userTalk, talks, day) {
+    let myTalk = talks.find(x => x._key === userTalk.talk);
+    console.log("MYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYTALK:::", myTalk);
+    if(myTalk.day == day) {
+      if(myTalk.time == this.state.currentTalkTime) {
         return(
-          <TalkCard talk={talk}
+          <TalkCard talk={myTalk}
                     sites={this.state.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={false} />
@@ -119,7 +119,7 @@ export default class MyTalks extends React.Component {
       }
       else {
         return(
-          <TalkCard talk={talk}
+          <TalkCard talk={myTalk}
                     sites={this.state.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={true} />
@@ -135,6 +135,7 @@ export default class MyTalks extends React.Component {
 
   render() {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
+    let talks = this.state.talks;
     return (
       <Container>
         <View style={styles.container}>
@@ -145,36 +146,36 @@ export default class MyTalks extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
+                    dataSource={this.state.dataSource2}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[0]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
+                    dataSource={this.state.dataSource2}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[1]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
+                    dataSource={this.state.dataSource2}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[2]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
+                    dataSource={this.state.dataSource2}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[3]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
+                    dataSource={this.state.dataSource2}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[4]) }
                     enableEmptySections={true}
                      />
                 </Tab>
