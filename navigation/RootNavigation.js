@@ -38,9 +38,11 @@ export default class RootNavigator extends React.Component {
   render() {
     let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
     let updateSites = this.props.updateSites;
+    let loggedUser = this.props.loggedUser;
     return (
       <RootStackNavigator screenProps={{showOrHideTalkInfo: this.props.showOrHideTalkInfo,
-                                       updateSites: this.props.updateSites}} />
+                                        updateSites: this.props.updateSites,
+                                        loggedUser: this.props.loggedUser}} />
     );
   }
 

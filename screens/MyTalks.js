@@ -29,10 +29,11 @@ export default class MyTalks extends React.Component {
     };
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
     //cambiar por loggedUser.uid
-    this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo('ocKH7VNdM1SnO1QBERdxXUhj3vn1');
+    this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo(this.props.screenProps.loggedUser.uid);
     this.sitesRef = firebaseApp.database().ref().child('sites');
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     this.updateSites        = this.props.screenProps.updateSites;
+    this.loggedUser         = this.props.screenProps.loggedUser;
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');

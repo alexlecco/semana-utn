@@ -175,7 +175,8 @@ export default class App extends React.Component {
 
               <RootNavigation talkInfoVisible={this.state.talkInfoVisible}
                               showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
-                              updateSites={this.updateSites.bind(this)} />
+                              updateSites={this.updateSites.bind(this)}
+                              loggedUser={this.state.loggedUser} />
               <View>
                 {
                 true &&  
