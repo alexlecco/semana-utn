@@ -1,7 +1,11 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, } from 'react-native';
-import { Container, Header, Tab, Tabs, TabHeading, Icon, Text } from 'native-base';
+import { ScrollView, StyleSheet, View, ListView, ListItem, } from 'react-native';
+import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
 import { ExpoLinksView } from '@expo/samples';
+
+import TalkCard from '../TalkCard';
+
+import { firebaseApp } from '../firebase';
 
 export default class MyTalks extends React.Component {
   static navigationOptions = {
@@ -14,39 +18,156 @@ export default class MyTalks extends React.Component {
     },
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      sites: [],
+    };
+    this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
+    this.sitesRef = firebaseApp.database().ref().child('sites');
+    this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
+    this.updateSites        = this.props.screenProps.updateSites;
+
+    console.disableYellowBox = true;
+    console.warn('YellowBox is disabled.');
+  }
+
+  componentDidMount() {
+    this.listenForTalks(this.talksRef);
+    this.listenForSites(this.sitesRef);
+  }
+
+  listenForTalks(talksRef) {
+    talksRef.on('value', (snap) => {
+      // get children as an array
+      var talks = [];
+      snap.forEach((child) => {
+        talks.push({
+          day: child.val().day,
+          id: child.val().id,
+          time: child.val().time,
+          title: child.val().title,
+          description: child.val().description,
+          site: child.val().site,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(talks),
+      });
+    });
+  }
+
+  listenForSites(sitesRef) {
+    sitesRef.on('value', (snap) => {
+      // get children as an array
+      var sites = [];
+      snap.forEach((child) => {
+        sites.push({
+          name: child.val().name,
+          id: child.val().id,
+          color: child.val().color,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        sites: sites,
+      });
+
+      this.props.screenProps.updateSites(sites);
+    });
+  }
+
+  renderTimeYesOrNo(talk, day) {
+    //console.log(" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PUNTO DE ENVIAR this.props.sites", this.state.sites);
+    //console.log("renderTimeYesOrNo THIS.STATE.CURRENTTALKTIME::::::", this.state.currentTalkTime);
+    //console.log("renderTimeYesOrNo STATE._datablob::::::", this.state._dataBlob);
+    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
+    if(talk.day == day) {
+      if(talk.time == this.state.currentTalkTime) {
+        return(
+          <TalkCard talk={talk}
+                    sites={this.state.sites}
+                    showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
+                    renderTime={false} />
+        )
+      }
+      else {
+        return(
+          <TalkCard talk={talk}
+                    sites={this.state.sites}
+                    showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
+                    renderTime={true} />
+        )
+      }
+    }
+    else {
+      return(
+        <View />
+      )
+    }
+  }
+
   render() {
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     return (
-      <ScrollView style={styles.container}>
+      <Container>
+        <View style={styles.container}>
+          
+          <ScrollView style={styles.container}>
+            <Content>
+              <Tabs>
 
-        <Tabs>
-          <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-            <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> [lunes content] </Text>
-            </View>
-          </Tab>
-          <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-            <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> [martes content] </Text>
-            </View>
-          </Tab>
-          <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-            <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> [miercoles content] </Text>
-            </View>
-          </Tab>
-          <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-            <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> [jueves content] </Text>
-            </View>
-          </Tab>
-          <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-            <View style={styles.getStartedContainer}>
-              <Text style={styles.getStartedText}> [viernes content] </Text>
-            </View>
-          </Tab>
-        </Tabs>
+                <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
+                    enableEmptySections={true}
+                     />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
+                    enableEmptySections={true}
+                     />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
+                    enableEmptySections={true}
+                     />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
+                    enableEmptySections={true}
+                     />
+                </Tab>
+                <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.state.dataSource}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
+                    enableEmptySections={true}
+                     />
+                </Tab>
 
-      </ScrollView>
+              </Tabs>
+            </Content>
+          </ScrollView>
+
+          
+        </View>
+
+        
+      </Container>
     );
   }
 }
