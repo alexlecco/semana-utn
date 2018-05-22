@@ -1,18 +1,7 @@
 import React from 'react';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
 import { WebBrowser } from 'expo';
-import { 
-  Image,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  Button,
-  Alert,
-  ListView,
-  ListItem,
-} from 'react-native';
+import {  Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, Button, Alert, ListView, ListItem, } from 'react-native';
 
 import { MonoText } from '../components/StyledText';
 import TalkCard from '../TalkCard';
@@ -36,18 +25,13 @@ export default class Schedule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
-      sites: [],
       currentTalkTime: 'perrito',
       homeLink: "Home",
       homeMounted: true,
     };
-    this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
-    this.sitesRef = firebaseApp.database().ref().child('sites');
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
-    this.updateSites        = this.props.screenProps.updateSites;
+    this.sites              = this.props.screenProps.sites;
+    this.dataSourceTalks    = this.props.screenProps.dataSourceTalks;
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
@@ -61,53 +45,8 @@ export default class Schedule extends React.Component {
 
   componentDidMount() {
     //console.log("Component did mount:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-    this.listenForTalks(this.talksRef);
-    this.listenForSites(this.sitesRef);
     //this.changeCurrentTalkTime('09:00');
     //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource.getRowCount());
-  }
-
-  listenForTalks(talksRef) {
-    talksRef.on('value', (snap) => {
-      // get children as an array
-      var talks = [];
-      snap.forEach((child) => {
-        talks.push({
-          day: child.val().day,
-          id: child.val().id,
-          time: child.val().time,
-          title: child.val().title,
-          description: child.val().description,
-          site: child.val().site,
-          _key: child.key,
-        });
-      });
-
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(talks),
-      });
-    });
-  }
-
-  listenForSites(sitesRef) {
-    sitesRef.on('value', (snap) => {
-      // get children as an array
-      var sites = [];
-      snap.forEach((child) => {
-        sites.push({
-          name: child.val().name,
-          id: child.val().id,
-          color: child.val().color,
-          _key: child.key,
-        });
-      });
-
-      this.setState({
-        sites: sites,
-      });
-
-      this.props.screenProps.updateSites(sites);
-    });
   }
 
   changeCurrentTalkTime(time) {
@@ -123,7 +62,7 @@ export default class Schedule extends React.Component {
       if(talk.time == this.state.currentTalkTime) {
         return(
           <TalkCard talk={talk}
-                    sites={this.state.sites}
+                    sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={false} />
         )
@@ -131,7 +70,7 @@ export default class Schedule extends React.Component {
       else {
         return(
           <TalkCard talk={talk}
-                    sites={this.state.sites}
+                    sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={true} />
         )
@@ -147,7 +86,7 @@ export default class Schedule extends React.Component {
   render() {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     let showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
-    let updateSites = this.props.screenProps.updateSites;
+    let sites = this.props.screenProps.sites;
     //console.log("EN SCHEDULE SITEEEEEESSSSSS::::::", this.state.sites);
     //console.log("DATASOURCE::::::", this.state.dataSource._cachedRowCount);
     //console.log("DATASOURCE::::::", this.state.dataSource.rowIdentities[0]);
@@ -162,7 +101,7 @@ export default class Schedule extends React.Component {
                 
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
                     enableEmptySections={true}
                      />
@@ -170,7 +109,7 @@ export default class Schedule extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
                     enableEmptySections={true}
                      />
@@ -178,7 +117,7 @@ export default class Schedule extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
                     enableEmptySections={true}
                      />
@@ -186,7 +125,7 @@ export default class Schedule extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
                     enableEmptySections={true}
                      />
@@ -194,7 +133,7 @@ export default class Schedule extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource}
+                    dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
                     enableEmptySections={true}
                      />

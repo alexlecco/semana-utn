@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ImageBackground, } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, ImageBackground, ListView, ListItem, } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
@@ -21,27 +21,28 @@ export default class App extends React.Component {
         time: '',
         day: '',
         site: '',
+        id: '',
       },
+      dataSourceTalks: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
+      dataSourceUserTalks: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
       sites: [],
+      talks: [],
       logged: false,
       loggedUser: {},
     };
     showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
-    updateSites = this.updateSites.bind(this);
     logoutWithFacebook = this.logoutWithFacebook.bind(this);
     this.usersRef = firebaseApp.database().ref().child('mobileUsers');
+    this.sitesRef = firebaseApp.database().ref().child('sites');
+    this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
+    this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo('ocKH7VNdM1SnO1QBERdxXUhj3vn1');
   }
 
   async componentWillMount() {
-    this.listenForUsers(this.usersRef);
-
-    await Expo.Font.loadAsync({
-      'Roboto': require('native-base/Fonts/Roboto.ttf'),
-      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
-    });
-  }
-
-  componentDidMount() {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if(user != null) {
         this.setState({
@@ -52,6 +53,18 @@ export default class App extends React.Component {
         this.addUser(user);
       }
     });
+
+    await Expo.Font.loadAsync({
+      'Roboto': require('native-base/Fonts/Roboto.ttf'),
+      'Roboto_medium': require('native-base/Fonts/Roboto_medium.ttf'),
+    });
+  }
+
+  componentDidMount() {
+    this.listenForSites(this.sitesRef);
+    this.listenForTalks(this.talksRef);
+    this.listenForUserTalks(this.userTalksRef);
+    this.listenForUsers(this.usersRef);
   }
 
   listenForUsers(usersRef) {
@@ -70,27 +83,89 @@ export default class App extends React.Component {
     });
   }
 
+  listenForSites(sitesRef) {
+    sitesRef.on('value', (snap) => {
+      // get children as an array
+      var sites = [];
+      snap.forEach((child) => {
+        sites.push({
+          name: child.val().name,
+          id: child.val().id,
+          color: child.val().color,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        sites: sites,
+      });
+    });
+  }
+
+  listenForTalks(talksRef) {
+    talksRef.on('value', (snap) => {
+      // get children as an array
+      var talks = [];
+      snap.forEach((child) => {
+        talks.push({
+          day: child.val().day,
+          id: child.val().id,
+          time: child.val().time,
+          title: child.val().title,
+          description: child.val().description,
+          site: child.val().site,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        dataSourceTalks: this.state.dataSourceTalks.cloneWithRows(talks),
+        talks: talks,
+      });
+    });
+  }
+
+  listenForUserTalks(userTalksRef) {
+    userTalksRef.on('value', (snap) => {
+      // get children as an array
+      var userTalks = [];
+      snap.forEach((child) => {
+        userTalks.push({
+          user: child.val().user,
+          talk: child.val().talk,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        dataSourceUserTalks: this.state.dataSourceUserTalks.cloneWithRows(userTalks),
+      });
+    });
+  }
+
   showOrHideTalkInfo(talk) {
     if(!this.state.talkInfoVisible) {
       this.setState({talkInfoVisible: !this.state.talkInfoVisible,
                      talk: {
-                      title: talk.title,
-                      description: talk.description,
-                      time: talk.time,
-                      day: talk.day,
-                      site: talk.site,
-                     }
+                     title: talk.title,
+                     description: talk.description,
+                     time: talk.time,
+                     day: talk.day,
+                     site: talk.site,
+                     id: talk._key,
+                    }
       });
     }
     else {
       this.setState({talkInfoVisible: !this.state.talkInfoVisible,
                      talk: {
-                      title: '',
-                      description: '',
-                      time: '',
-                      day: '',
-                      site: '',
-                     }
+                     title: '',
+                     description: '',
+                     time: '',
+                     day: '',
+                     site: '',
+                     id: talk._key,
+                    }
       });
     }
   }
@@ -98,10 +173,6 @@ export default class App extends React.Component {
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
-
-  updateSites(sites) {
-    this.setState({sites: sites});
-  }
 
   async loginWithFacebook() {
     const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('1709694409111214',
@@ -135,9 +206,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log("2---------------------------------------------", this.state.loggedUser)
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
-    let updateSites = this.updateSites;
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -159,7 +228,8 @@ export default class App extends React.Component {
               <TalkInfo talk={this.state.talk}
                         talkInfoVisible={this.state.talkInfoVisible}
                         showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
-                        sites={this.state.sites} />
+                        sites={this.state.sites}
+                        loggedUser={this.state.loggedUser} />
 
             </View>
           </Container>
@@ -175,11 +245,14 @@ export default class App extends React.Component {
 
               <RootNavigation talkInfoVisible={this.state.talkInfoVisible}
                               showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
-                              updateSites={this.updateSites.bind(this)}
-                              loggedUser={this.state.loggedUser} />
+                              loggedUser={this.state.loggedUser}
+                              sites={this.state.sites}
+                              talks={this.state.talks}
+                              dataSourceTalks={this.state.dataSourceTalks}
+                              dataSourceUserTalks={this.state.dataSourceUserTalks} />
               <View>
                 {
-                true &&  
+                false &&
                 <Button full onPress={ () => this.logoutWithFacebook(this) }>
                   <Text> Salir { this.state.loggedUser.displayName } </Text>
                 </Button>

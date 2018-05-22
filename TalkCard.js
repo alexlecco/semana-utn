@@ -32,7 +32,7 @@ export default class TalkCard extends Component {
 							<Text style={styles.TalkText}> {this.props.talk.title} </Text>
 						</View>
 						<View style={styles.TalkSiteContainer}>
-							<Text style={[styles.TalkSiteText, 
+							<Text style={[styles.TalkSiteText,
 													 {color: `${this.getObjectOfArray(sites, this.props.talk.site - 1).color || 'red'}`}]}>
 								{ this.getObjectOfArray(sites, this.props.talk.site - 1).name }
 							</Text>

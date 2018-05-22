@@ -13,11 +13,10 @@ export default class TalkInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      buttonText: '',
+      buttonText: 'Me interesa',
       userTalkId: '',
     }
     this.loggedUser = this.props.loggedUser;
-    this.sites = this.props.sites;
   }
 
   componentDidMount() {
@@ -52,14 +51,14 @@ export default class TalkInfo extends Component {
       this.setState({ buttonText: 'Me interesa' })
   }
 
-  addUserTalk(loggedUser, talk) {
+  addOrRemoveUserTalk(loggedUser, talk) {
     //console.log("talk por param::::::::::::::::::::::::::::::::::::::::::::::::::::::::", talk);
     if(this.state.buttonText === 'Ya no me interesa') {
       var userTalkRef = firebaseApp.database().ref();
-      var query = userTalkRef.child('userTalks').orderByChild('_key').equalTo(talk.id);
+      var query = userTalkRef.child('userTalks').orderByChild('talk').equalTo(talk.id);
       query.once('value', function(snap) {
         snap.ref.remove()
-        //console.log("snap.ref::::::::::::::::::::::::::::::::::::::::::::::::::::::::", snap.ref);
+        //console.log("snap.ref.orderByChild('_key').equalTo(talk.id)::::::::::::::::::::::::::::::::::::::::::::::::::::::::", snap.ref.orderByChild('talk').equalTo(talk.id));
       })
     } else {
       firebaseApp.database().ref('userTalks').push({
@@ -137,7 +136,7 @@ export default class TalkInfo extends Component {
         </Content>
         <Button full primary={this.state.buttonText === 'Me interesa' ? true : false}
                 full primary transparent={this.state.buttonText === 'Ya no me interesa' ? true : false}
-                onPress={() => this.addUserTalk(this.props.loggedUser, this.props.talk)}>
+                onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)}>
           <Text>
             { `${this.state.buttonText}` }
           </Text>

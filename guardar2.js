@@ -17,7 +17,6 @@ export default class TalkInfo extends Component {
       userTalkId: '',
     }
     this.loggedUser = this.props.loggedUser;
-    this.sites = this.props.sites;
   }
 
   componentDidMount() {
@@ -29,43 +28,46 @@ export default class TalkInfo extends Component {
     var userTalkId = '';
 
     firebaseApp.database().ref().child('userTalks')
-      .orderByChild('user')
-      .equalTo(loggedUser.uid)
-      .on('child_added', (snap) => {
+      .orderByChild('talk')
+      .equalTo(talk.id)
+      .on('value', function(snapshot) {
 
-        userTalk = snap.val();
-        if(userTalk.talk == talk.id) {
+        userTalk = snapshot.val();
+        if(userTalk && userTalk.talk == talk.id) {
           text = 'Ya no me interesa';
           userTalkId = userTalk._key
-          //console.log("userTalk:::::::::::::::::::::::::::::::::::::::::::::::::", userTalk._key);
         } else {
           text = 'Me interesa';
           userTalkId = userTalk._key
-          //console.log("userTalk:::::::::::::::::::::::::::::::::::::::::::::::::", userTalk._key);
         }
 
       });
 
 
-    text === 'Ya no me interesa' ?
+    text === 'Me interesa' ?
       this.setState({ buttonText: 'Ya no me interesa' }) :
       this.setState({ buttonText: 'Me interesa' })
   }
 
-  addUserTalk(loggedUser, talk) {
-    //console.log("talk por param::::::::::::::::::::::::::::::::::::::::::::::::::::::::", talk);
+  addOrRemoveUserTalk(loggedUser, talk) {
+    console.log("talk por param::::::::::::::::::::::::::::::::::::::::::::::::::::::::", talk);
     if(this.state.buttonText === 'Ya no me interesa') {
-      var userTalkRef = firebaseApp.database().ref();
-      var query = userTalkRef.child('userTalks').orderByChild('_key').equalTo(talk.id);
-      query.once('value', function(snap) {
-        snap.ref.remove()
-        //console.log("snap.ref::::::::::::::::::::::::::::::::::::::::::::::::::::::::", snap.ref);
-      })
+
+      firebaseApp.database().ref().child('userTalks').orderByChild('talk').equalTo(talk.id)
+        .on("value", function(snapshot) {
+          snapshot.forEach(function(data) {
+            console.log("snapshot.ref:::::::::::::::::::::::::::::::", snapshot.ref)
+            snapshot.ref.child(data.key).remove()
+          });
+      });
+
     } else {
+
       firebaseApp.database().ref('userTalks').push({
         user: loggedUser.uid,
         talk: talk.id,
       }).key;
+
     }
 
     this.state.buttonText === 'Ya no me interesa' ?
@@ -137,7 +139,7 @@ export default class TalkInfo extends Component {
         </Content>
         <Button full primary={this.state.buttonText === 'Me interesa' ? true : false}
                 full primary transparent={this.state.buttonText === 'Ya no me interesa' ? true : false}
-                onPress={() => this.addUserTalk(this.props.loggedUser, this.props.talk)}>
+                onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)}>
           <Text>
             { `${this.state.buttonText}` }
           </Text>
@@ -151,29 +153,29 @@ const styles = StyleSheet.create({
   TalkContainer: {
     flexDirection: 'column',
   },
-	TalkTitleContainer: {
-		marginTop: 10,
-		marginRight: 15,
-		marginLeft: 15,
+  TalkTitleContainer: {
     marginTop: 10,
-		flexWrap: 'wrap',
-		flexDirection: 'row',
-	},
-	TalkBodyContainer: {
-		marginTop: 10,
-		marginRight: 15,
-		marginLeft: 15,
+    marginRight: 15,
+    marginLeft: 15,
     marginTop: 10,
-		flexWrap: 'wrap',
-		flexDirection: 'row',
-	},
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
+  TalkBodyContainer: {
+    marginTop: 10,
+    marginRight: 15,
+    marginLeft: 15,
+    marginTop: 10,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+  },
   TalkOratorContainer: {
-		marginTop: 10,
-		marginRight: 15,
-		marginLeft: 15,
     marginTop: 10,
-		flexWrap: 'wrap',
-		flexDirection: 'row',
+    marginRight: 15,
+    marginLeft: 15,
+    marginTop: 10,
+    flexWrap: 'wrap',
+    flexDirection: 'row',
   },
   TalkMapContainer: {
     marginTop: 10,
@@ -182,13 +184,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   TalkTitle: {
-		fontSize: 20,
+    fontSize: 20,
     color: '#3F51B5',
-	},
+  },
   TalkBody: {
-		fontSize: 17,
+    fontSize: 17,
     color: '#4f4f4f',
-	},
+  },
   TalkOrator: {
     fontSize: 17,
     color: '#000000',

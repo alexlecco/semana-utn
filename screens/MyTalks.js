@@ -20,100 +20,36 @@ export default class MyTalks extends React.Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
-      talks: [],
-      dataSource2: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
-      sites: [],
+      currentTalkTime: 'perrito',
     };
+
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
-    //cambiar por loggedUser.uid
-    this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo(this.props.screenProps.loggedUser.uid);
     this.sitesRef = firebaseApp.database().ref().child('sites');
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
-    this.updateSites        = this.props.screenProps.updateSites;
+    this.sites              = this.props.screenProps.sites;
+    this.talks              = this.props.screenProps.talks;
     this.loggedUser         = this.props.screenProps.loggedUser;
+    this.dataSourceUserTalks    = this.props.screenProps.dataSourceUserTalks;
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
   }
 
   componentDidMount() {
-    this.listenForUserTalks(this.userTalksRef);
-    this.listenForTalks(this.talksRef);
-    this.listenForSites(this.sitesRef);
-  }
-
-  listenForUserTalks(userTalksRef) {
-    userTalksRef.on('value', (snap) => {
-      // get children as an array
-      var userTalks = [];
-      snap.forEach((child) => {
-        userTalks.push({
-          user: child.val().user,
-          talk: child.val().talk,
-          _key: child.key,
-        });
-      });
-
-      this.setState({
-        dataSource2: this.state.dataSource2.cloneWithRows(userTalks),
-      });
-    });
-  }
-
-  listenForTalks(talksRef) {
-    talksRef.on('value', (snap) => {
-      // get children as an array
-      var talks = [];
-      snap.forEach((child) => {
-        talks.push({
-          day: child.val().day,
-          id: child.val().id,
-          time: child.val().time,
-          title: child.val().title,
-          description: child.val().description,
-          site: child.val().site,
-          _key: child.key,
-        });
-      });
-
-      this.setState({
-        talks: talks,
-      });
-    });
-  }
-
-  listenForSites(sitesRef) {
-    sitesRef.on('value', (snap) => {
-      // get children as an array
-      var sites = [];
-      snap.forEach((child) => {
-        sites.push({
-          name: child.val().name,
-          id: child.val().id,
-          color: child.val().color,
-          _key: child.key,
-        });
-      });
-
-      this.setState({
-        sites: sites,
-      });
-
-      this.props.screenProps.updateSites(sites);
-    });
   }
 
   renderTimeYesOrNo(userTalk, talks, day) {
+    console.log("userTalk-----------------------------------------------------", userTalk);
     let myTalk = talks.find(x => x._key === userTalk.talk);
-    console.log("MYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYTALK:::", myTalk);
+    //console.log("MYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYTALK:::", myTalk);
+    //console.log("UserTalk::::::::::::::::::::::::::::::::::::::::::::::::::", userTalk);
     if(myTalk.day == day) {
       if(myTalk.time == this.state.currentTalkTime) {
         return(
           <TalkCard talk={myTalk}
-                    sites={this.state.sites}
+                    sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={false} />
         )
@@ -121,7 +57,7 @@ export default class MyTalks extends React.Component {
       else {
         return(
           <TalkCard talk={myTalk}
-                    sites={this.state.sites}
+                    sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
                     renderTime={true} />
         )
@@ -136,7 +72,7 @@ export default class MyTalks extends React.Component {
 
   render() {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
-    let talks = this.state.talks;
+    let talks = this.props.screenProps.talks;
     return (
       <Container>
         <View style={styles.container}>
@@ -147,36 +83,36 @@ export default class MyTalks extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource2}
-                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[0]) }
+                    dataSource={this.props.screenProps.dataSourceUserTalks}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[0]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource2}
-                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[1]) }
+                    dataSource={this.props.screenProps.dataSourceUserTalks}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[1]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource2}
-                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[2]) }
+                    dataSource={this.props.screenProps.dataSourceUserTalks}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[2]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource2}
-                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[3]) }
+                    dataSource={this.props.screenProps.dataSourceUserTalks}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[3]) }
                     enableEmptySections={true}
                      />
                 </Tab>
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.state.dataSource2}
-                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, talks, days[4]) }
+                    dataSource={this.props.screenProps.dataSourceUserTalks}
+                    renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[4]) }
                     enableEmptySections={true}
                      />
                 </Tab>
