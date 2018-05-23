@@ -31,6 +31,7 @@ export default class App extends React.Component {
       }),
       sites: [],
       talks: [],
+      userTalks: [],
       logged: false,
       loggedUser: {},
     };
@@ -65,22 +66,6 @@ export default class App extends React.Component {
     this.listenForTalks(this.talksRef);
     this.listenForUserTalks(this.userTalksRef);
     this.listenForUsers(this.usersRef);
-  }
-
-  listenForUsers(usersRef) {
-    usersRef.on('value', (snap) => {
-      // get children as an array
-      var users = [];
-      snap.forEach((child) => {
-        users.push({
-          name: child.val().name,
-          userId: child.val().userId,
-          _key: child.key,
-        });
-      });
-
-      this.setState({ users: users });
-    });
   }
 
   listenForSites(sitesRef) {
@@ -139,7 +124,24 @@ export default class App extends React.Component {
 
       this.setState({
         dataSourceUserTalks: this.state.dataSourceUserTalks.cloneWithRows(userTalks),
+        userTalks: userTalks,
       });
+    });
+  }
+
+  listenForUsers(usersRef) {
+    usersRef.on('value', (snap) => {
+      // get children as an array
+      var users = [];
+      snap.forEach((child) => {
+        users.push({
+          name: child.val().name,
+          userId: child.val().userId,
+          _key: child.key,
+        });
+      });
+
+      this.setState({ users: users });
     });
   }
 
@@ -183,17 +185,10 @@ export default class App extends React.Component {
       firebaseApp.auth().signInWithCredential(credential).catch((error) => {
         console.log(error)
       });
-      this.
       console.log("Sign-in successful");
     }
   }
 
-  addUser(loggedUser) {
-     firebaseApp.database().ref('mobileUsers').push({
-      name: loggedUser.displayName,
-      userId: loggedUser.uid,
-    }).key;
-  }
 
   async logoutWithFacebook() {
     this.setState({ logged: false, loggedUser: {} });
@@ -205,8 +200,15 @@ export default class App extends React.Component {
     });
   }
 
+  addUser(loggedUser) {
+     firebaseApp.database().ref('mobileUsers').push({
+      name: loggedUser.displayName,
+      userId: loggedUser.uid,
+    }).key;
+  }
+
   render() {
-    let showOrHideTalkInfo = this.showOrHideTalkInfo;
+    let showOrHideTalkInfo = this.showOrHideTalkInfo;    
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -226,6 +228,7 @@ export default class App extends React.Component {
               {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
               <TalkInfo talk={this.state.talk}
+                        userTalks={this.state.userTalks}
                         talkInfoVisible={this.state.talkInfoVisible}
                         showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
                         sites={this.state.sites}

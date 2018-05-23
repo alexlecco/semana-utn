@@ -18,6 +18,7 @@ export default class TalkInfo extends Component {
     }
     this.loggedUser = this.props.loggedUser;
     this.sites = this.props.sites;
+    this.userTalks = this.props.userTalks;
   }
 
   componentDidMount() {
@@ -32,22 +33,14 @@ export default class TalkInfo extends Component {
       .orderByChild('user')
       .equalTo(loggedUser.uid)
       .on('child_added', (snap) => {
-
         userTalk = snap.val();
         if(userTalk.talk == talk.id) {
           text = 'Ya no me interesa';
-          userTalkId = userTalk._key
-          //console.log("userTalk:::::::::::::::::::::::::::::::::::::::::::::::::", userTalk._key);
-        } else {
-          text = 'Me interesa';
-          userTalkId = userTalk._key
-          //console.log("userTalk:::::::::::::::::::::::::::::::::::::::::::::::::", userTalk._key);
+          console.log(userTalk);
         }
-
       });
 
-
-    text === 'Ya no me interesa' ?
+    text == 'Ya no me interesa' ?
       this.setState({ buttonText: 'Ya no me interesa' }) :
       this.setState({ buttonText: 'Me interesa' })
   }
@@ -80,7 +73,10 @@ export default class TalkInfo extends Component {
 
   render() {
     sites = this.props.sites;
+    userTalks = this.props.userTalks;
     loggedUser = this.props.loggedUser;
+
+    //console.log("this.props.userTalks___________________________________________", this.props.userTalks);
    
     let day = this.props.talk.day;
     let dayToShow = 'perrito';

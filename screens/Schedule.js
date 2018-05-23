@@ -1,7 +1,19 @@
 import React from 'react';
+import {
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Button,
+  Alert,
+  ListView,
+  ListItem,
+  YellowBox,
+} from 'react-native';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
 import { WebBrowser } from 'expo';
-import {  Image, Platform, ScrollView, StyleSheet, TouchableOpacity, View, Button, Alert, ListView, ListItem, } from 'react-native';
 
 import { MonoText } from '../components/StyledText';
 import TalkCard from '../TalkCard';
@@ -28,6 +40,7 @@ export default class Schedule extends React.Component {
       currentTalkTime: 'perrito',
       homeLink: "Home",
       homeMounted: true,
+      sites: [],
     };
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     this.sites              = this.props.screenProps.sites;
@@ -35,18 +48,13 @@ export default class Schedule extends React.Component {
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
+    YellowBox.ignoreWarnings(['Warning: ...']);
   }
 
   componentWillMount() {
-    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
-    //this.changeCurrentTalkTime('09:00');
-    //console.log("Component will mount:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
   }
 
   componentDidMount() {
-    //console.log("Component did mount:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::");
-    //this.changeCurrentTalkTime('09:00');
-    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource.getRowCount());
   }
 
   changeCurrentTalkTime(time) {
@@ -54,10 +62,6 @@ export default class Schedule extends React.Component {
   }
 
   renderTimeYesOrNo(talk, day) {
-    //console.log(" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA PUNTO DE ENVIAR this.props.sites", this.state.sites);
-    //console.log("renderTimeYesOrNo THIS.STATE.CURRENTTALKTIME::::::", this.state.currentTalkTime);
-    //console.log("renderTimeYesOrNo STATE._datablob::::::", this.state._dataBlob);
-    //console.log("COMPONENTDIDMOUNT TIME:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.state.dataSource._dataBlob.s1[0].time.toString() );
     if(talk.day == day) {
       if(talk.time == this.state.currentTalkTime) {
         return(
@@ -87,10 +91,7 @@ export default class Schedule extends React.Component {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     let showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     let sites = this.props.screenProps.sites;
-    //console.log("EN SCHEDULE SITEEEEEESSSSSS::::::", this.state.sites);
-    //console.log("DATASOURCE::::::", this.state.dataSource._cachedRowCount);
-    //console.log("DATASOURCE::::::", this.state.dataSource.rowIdentities[0]);
-    //console.log("DATASOURCE STATE._datablob::::::", this.state.dataSource );
+    //console.log("sites_____________________________________________", this.state.sites);
     return (
       <Container>
         <View style={styles.container}>
