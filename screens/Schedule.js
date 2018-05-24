@@ -39,10 +39,11 @@ export default class Schedule extends React.Component {
       currentTalkTime: 'perrito',
       homeLink: "Home",
       homeMounted: true,
-      sites: [],
+      talks: [],
     };
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     this.sites              = this.props.screenProps.sites;
+    this.talks              = this.props.screenProps.talks;
     this.dataSourceTalks    = this.props.screenProps.dataSourceTalks;
   }
 
@@ -50,6 +51,11 @@ export default class Schedule extends React.Component {
   }
 
   componentDidMount() {
+    this.readTalks(this.props.screenProps.talks);
+  }
+
+  readTalks(talks) {
+    this.setState({ talks: talks });
   }
 
   changeCurrentTalkTime(time) {
@@ -86,7 +92,7 @@ export default class Schedule extends React.Component {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     let showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     let sites = this.props.screenProps.sites;
-    //console.log("sites_____________________________________________", this.state.sites);
+    let talks = this.props.screenProps.talks;
     return (
       <Container>
         <View style={styles.container}>

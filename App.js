@@ -216,7 +216,8 @@ export default class App extends React.Component {
   }
 
   render() {
-    let showOrHideTalkInfo = this.showOrHideTalkInfo;    
+    let showOrHideTalkInfo = this.showOrHideTalkInfo;
+    
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
