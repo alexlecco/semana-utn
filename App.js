@@ -1,5 +1,5 @@
 import React from 'react';
-import { Platform, StatusBar, StyleSheet, View, ImageBackground, ListView, ListItem, } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View, ImageBackground, ListView, ListItem, YellowBox, } from 'react-native';
 import { AppLoading, Asset, Font } from 'expo';
 import { Ionicons } from '@expo/vector-icons';
 import RootNavigation from './navigation/RootNavigation';
@@ -41,6 +41,11 @@ export default class App extends React.Component {
     this.sitesRef = firebaseApp.database().ref().child('sites');
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
     this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo('ocKH7VNdM1SnO1QBERdxXUhj3vn1');
+
+    console.disableYellowBox = true;
+    console.warn('YellowBox is disabled.');
+    YellowBox.ignoreWarnings(['Warning: ...']);
+    console.ignoredYellowBox = ['Setting a timer'];
   }
 
   async componentWillMount() {
@@ -254,6 +259,7 @@ export default class App extends React.Component {
                               loggedUser={this.state.loggedUser}
                               sites={this.state.sites}
                               talks={this.state.talks}
+                              userTalks={this.state.userTalks}
                               dataSourceTalks={this.state.dataSourceTalks}
                               dataSourceUserTalks={this.state.dataSourceUserTalks} />
               <View>

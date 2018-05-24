@@ -10,7 +10,6 @@ import {
   Alert,
   ListView,
   ListItem,
-  YellowBox,
 } from 'react-native';
 import { Container, Header, Tab, Tabs, TabHeading, Icon, Text, Content, } from 'native-base';
 import { WebBrowser } from 'expo';
@@ -45,10 +44,6 @@ export default class Schedule extends React.Component {
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     this.sites              = this.props.screenProps.sites;
     this.dataSourceTalks    = this.props.screenProps.dataSourceTalks;
-
-    console.disableYellowBox = true;
-    console.warn('YellowBox is disabled.');
-    YellowBox.ignoreWarnings(['Warning: ...']);
   }
 
   componentWillMount() {

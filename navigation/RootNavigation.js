@@ -39,7 +39,8 @@ export default class RootNavigator extends React.Component {
     let showOrHideTalkInfo  = this.props.showOrHideTalkInfo;
     let loggedUser          = this.props.loggedUser;
     let sites               = this.props.sites;
-    let talks               = this.props.sites;
+    let talks               = this.props.talks;
+    let userTalks           = this.props.userTalks;
     let dataSourceTalks     = this.props.dataSourceTalks;
     let dataSourceUserTalks = this.props.dataSourceUserTalks;
     return (
@@ -47,6 +48,7 @@ export default class RootNavigator extends React.Component {
                                         loggedUser: this.props.loggedUser,
                                         sites: this.props.sites,
                                         talks: this.props.talks,
+                                        userTalks: this.props.userTalks,
                                         dataSourceTalks: this.props.dataSourceTalks,
                                         dataSourceUserTalks: this.props.dataSourceUserTalks, }} />
     );
