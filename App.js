@@ -40,7 +40,7 @@ export default class App extends React.Component {
     this.usersRef = firebaseApp.database().ref().child('mobileUsers');
     this.sitesRef = firebaseApp.database().ref().child('sites');
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
-    this.userTalksRef = firebaseApp.database().ref().child('userTalks').orderByChild('user').equalTo('ocKH7VNdM1SnO1QBERdxXUhj3vn1');
+    this.userTalksRef = firebaseApp.database().ref().child('userTalks');
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
@@ -51,12 +51,15 @@ export default class App extends React.Component {
   async componentWillMount() {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if(user != null) {
+
         this.setState({
           logged: true,
           loggedUser: user,
         })
 
         this.addUser(user);
+    
+        this.listenForUserTalks(this.userTalksRef.orderByChild('user').equalTo(user.uid));
       }
     });
 
@@ -69,11 +72,7 @@ export default class App extends React.Component {
   componentDidMount() {
     this.listenForSites(this.sitesRef);
     this.listenForTalks(this.talksRef);
-    this.listenForUserTalks(this.userTalksRef);
     this.listenForUsers(this.usersRef);
-    //console.log("=============");
-    //console.log("Data was read");
-    //console.log("=============");
   }
 
   listenForSites(sitesRef) {
@@ -145,7 +144,7 @@ export default class App extends React.Component {
         users.push({
           name: child.val().name,
           userId: child.val().userId,
-          _key: child.key,
+          _key: child.val().userId,
         });
       });
 
@@ -209,13 +208,16 @@ export default class App extends React.Component {
   }
 
   addUser(loggedUser) {
-     firebaseApp.database().ref('mobileUsers').push({
-      name: loggedUser.displayName,
-      userId: loggedUser.uid,
+      var ref =  firebaseApp.database().ref();
+      var userRef = ref.child('mobileUsers');
+      userRef.child(loggedUser.uid).set({
+        name: loggedUser.displayName,
+        userId: loggedUser.uid,
     }).key;
   }
 
   render() {
+
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
     
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
