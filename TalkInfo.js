@@ -50,9 +50,11 @@ export default class TalkInfo extends Component {
       firebaseApp.database().ref().child('userTalks')
         .orderByChild('user')
         .equalTo(loggedUser.uid)
-        .on('child_added', (snap) => {
+        .once('child_added', (snap) => {
           console.log("222222222222222222222222222222222222222222222222222222222222222222222222222222");
           userTalk = snap.val();
+          console.log("userTalk.talk::::", userTalk.talk);
+          console.log("talk.id::::", talk.id);
           if(userTalk.talk == talk.id) {
             text = 'Me interesa';
             console.log("DESTRUIMO");
