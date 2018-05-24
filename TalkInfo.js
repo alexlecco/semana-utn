@@ -14,7 +14,6 @@ export default class TalkInfo extends Component {
     super(props);
     this.state = {
       buttonText: '',
-      userTalkId: '',
     }
     this.loggedUser = this.props.loggedUser;
     this.sites = this.props.sites;
@@ -26,8 +25,7 @@ export default class TalkInfo extends Component {
   }
 
   askButtonText(loggedUser, talk) {
-    var text = '';
-    var userTalkId = '';
+    var text = 'Me interesa';
 
     firebaseApp.database().ref().child('userTalks')
       .orderByChild('user')
@@ -36,7 +34,6 @@ export default class TalkInfo extends Component {
         userTalk = snap.val();
         if(userTalk.talk == talk.id) {
           text = 'Ya no me interesa';
-          console.log(userTalk);
         }
       });
 
@@ -45,27 +42,46 @@ export default class TalkInfo extends Component {
       this.setState({ buttonText: 'Me interesa' })
   }
 
-  addUserTalk(loggedUser, talk) {
-    //console.log("talk por param::::::::::::::::::::::::::::::::::::::::::::::::::::::::", talk);
-    if(this.state.buttonText === 'Ya no me interesa') {
-      var userTalkRef = firebaseApp.database().ref();
-      var query = userTalkRef.child('userTalks').orderByChild('_key').equalTo(talk.id);
-      query.once('value', function(snap) {
-        snap.ref.remove()
-        //console.log("snap.ref::::::::::::::::::::::::::::::::::::::::::::::::::::::::", snap.ref);
-      })
+  addOrRemoveUserTalk(loggedUser, talk) {
+    var text = 'Me interesa';
+
+    console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
+    if(this.state.buttonText == 'Ya no me interesa') {
+      firebaseApp.database().ref().child('userTalks')
+        .orderByChild('user')
+        .equalTo(loggedUser.uid)
+        .on('child_added', (snap) => {
+          console.log("222222222222222222222222222222222222222222222222222222222222222222222222222222");
+          userTalk = snap.val();
+          if(userTalk.talk == talk.id) {
+            text = 'Me interesa';
+            console.log("DESTRUIMO");
+            snap.ref.remove();
+          }
+          console.log("222222222222222222222222222222222222222222222222222222222222222222222222222222");
+        })
     } else {
-      firebaseApp.database().ref('userTalks').push({
+      console.log("3333333333333333333333333333333333333333333333333333333333333333333333333333");
+      text = 'Ya no me interesa';
+      console.log("CREAMO");
+      console.log("444444444444444444444444444444444444444444444444444444444444");
+      firebaseApp.database().ref().child('userTalks').push({
         user: loggedUser.uid,
         talk: talk.id,
       }).key;
+      console.log("444444444444444444444444444444444444444444444444444444444444");
+      console.log("3333333333333333333333333333333333333333333333333333333333333333333333333333");
     }
+    console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
 
-    this.state.buttonText === 'Ya no me interesa' ?
+
+
+    console.log("text en addOrRemoveUserTalk________________________________________________", text);
+
+    text == 'Me interesa' ?
       this.setState({ buttonText: 'Me interesa' }) :
       this.setState({ buttonText: 'Ya no me interesa' })
   }
-
 
   getObjectOfArray(array, index) {
     return array[index] = array[index] || {};
@@ -75,8 +91,6 @@ export default class TalkInfo extends Component {
     sites = this.props.sites;
     userTalks = this.props.userTalks;
     loggedUser = this.props.loggedUser;
-
-    //console.log("this.props.userTalks___________________________________________", this.props.userTalks);
    
     let day = this.props.talk.day;
     let dayToShow = 'perrito';
@@ -131,9 +145,9 @@ export default class TalkInfo extends Component {
             </Card>
           </View>
         </Content>
-        <Button full primary={this.state.buttonText === 'Me interesa' ? true : false}
-                full primary transparent={this.state.buttonText === 'Ya no me interesa' ? true : false}
-                onPress={() => this.addUserTalk(this.props.loggedUser, this.props.talk)}>
+        <Button full primary={this.state.buttonText == 'Me interesa' ? true : false}
+                full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
+                onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)}>
           <Text>
             { `${this.state.buttonText}` }
           </Text>

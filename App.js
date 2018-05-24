@@ -66,6 +66,9 @@ export default class App extends React.Component {
     this.listenForTalks(this.talksRef);
     this.listenForUserTalks(this.userTalksRef);
     this.listenForUsers(this.usersRef);
+    //console.log("=============");
+    //console.log("Data was read");
+    //console.log("=============");
   }
 
   listenForSites(sitesRef) {
