@@ -45,40 +45,30 @@ export default class TalkInfo extends Component {
   addOrRemoveUserTalk(loggedUser, talk) {
     var text = 'Me interesa';
 
-    console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
     if(this.state.buttonText == 'Ya no me interesa') {
       firebaseApp.database().ref().child('userTalks')
         .orderByChild('user')
         .equalTo(loggedUser.uid)
         .once('child_added', (snap) => {
-          console.log("222222222222222222222222222222222222222222222222222222222222222222222222222222");
           userTalk = snap.val();
-          console.log("userTalk.talk::::", userTalk.talk);
-          console.log("talk.id::::", talk.id);
+          console.log("snap.val()___________________________", snap.val());
+          //console.log("talk.id en TalkInfo______________________________________", talk.id)
+          //console.log("userTalk.talk en TalkInfo______________________________________", userTalk.talk)
           if(userTalk.talk == talk.id) {
             text = 'Me interesa';
             console.log("DESTRUIMO");
             snap.ref.remove();
           }
-          console.log("222222222222222222222222222222222222222222222222222222222222222222222222222222");
         })
     } else {
-      console.log("3333333333333333333333333333333333333333333333333333333333333333333333333333");
       text = 'Ya no me interesa';
       console.log("CREAMO");
-      console.log("444444444444444444444444444444444444444444444444444444444444");
+      console.log("talk.id en TalkInfo______________________________________", talk.id)
       firebaseApp.database().ref().child('userTalks').push({
         user: loggedUser.uid,
         talk: talk.id,
       }).key;
-      console.log("444444444444444444444444444444444444444444444444444444444444");
-      console.log("3333333333333333333333333333333333333333333333333333333333333333333333333333");
     }
-    console.log("11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-
-
-
-    console.log("text en addOrRemoveUserTalk________________________________________________", text);
 
     text == 'Me interesa' ?
       this.setState({ buttonText: 'Me interesa' }) :
@@ -93,7 +83,8 @@ export default class TalkInfo extends Component {
     sites = this.props.sites;
     userTalks = this.props.userTalks;
     loggedUser = this.props.loggedUser;
-   
+    talk = this.props.talk
+
     let day = this.props.talk.day;
     let dayToShow = 'perrito';
     switch(day) {

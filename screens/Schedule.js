@@ -93,6 +93,7 @@ export default class Schedule extends React.Component {
     let showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     let sites = this.props.screenProps.sites;
     let talks = this.props.screenProps.talks;
+    
     return (
       <Container>
         <View style={styles.container}>

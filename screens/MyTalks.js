@@ -86,10 +86,8 @@ export default class MyTalks extends React.Component {
   }
 
   renderTimeYesOrNo(userTalk, talks, day) {
-    //console.log("userTalk-----------------------------------------------------", userTalk);
-    let myTalk = talks.find(x => x._key === userTalk.talk);
-    //console.log("MYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYTALK:::", myTalk);
-    //console.log("UserTalk::::::::::::::::::::::::::::::::::::::::::::::::::", userTalk);
+    let myTalk = talks.find(x => x._key == userTalk.talk);
+
     if(myTalk.day == day) {
       if(myTalk.time == this.state.currentTalkTime) {
         return(

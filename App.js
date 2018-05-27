@@ -51,14 +51,11 @@ export default class App extends React.Component {
   async componentWillMount() {
     firebaseApp.auth().onAuthStateChanged((user) => {
       if(user != null) {
-
         this.setState({
           logged: true,
           loggedUser: user,
         })
-
         this.addUser(user);
-    
         this.listenForUserTalks(this.userTalksRef.orderByChild('user').equalTo(user.uid));
       }
     });
@@ -73,11 +70,11 @@ export default class App extends React.Component {
     this.listenForSites(this.sitesRef);
     this.listenForTalks(this.talksRef);
     this.listenForUsers(this.usersRef);
+    console.log("Los datos fueron leidos");
   }
 
   listenForSites(sitesRef) {
     sitesRef.on('value', (snap) => {
-      // get children as an array
       var sites = [];
       snap.forEach((child) => {
         sites.push({
@@ -96,7 +93,6 @@ export default class App extends React.Component {
 
   listenForTalks(talksRef) {
     talksRef.on('value', (snap) => {
-      // get children as an array
       var talks = [];
       snap.forEach((child) => {
         talks.push({
@@ -119,7 +115,6 @@ export default class App extends React.Component {
 
   listenForUserTalks(userTalksRef) {
     userTalksRef.on('value', (snap) => {
-      // get children as an array
       var userTalks = [];
       snap.forEach((child) => {
         userTalks.push({
@@ -138,7 +133,6 @@ export default class App extends React.Component {
 
   listenForUsers(usersRef) {
     usersRef.on('value', (snap) => {
-      // get children as an array
       var users = [];
       snap.forEach((child) => {
         users.push({
@@ -217,9 +211,7 @@ export default class App extends React.Component {
   }
 
   render() {
-
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
-    
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
