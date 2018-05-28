@@ -34,6 +34,7 @@ export default class App extends React.Component {
       userTalks: [],
       logged: false,
       loggedUser: {},
+      backTo: '',
     };
     showOrHideTalkInfo = this.showOrHideTalkInfo.bind(this);
     logoutWithFacebook = this.logoutWithFacebook.bind(this);
@@ -146,9 +147,10 @@ export default class App extends React.Component {
     });
   }
 
-  showOrHideTalkInfo(talk) {
+  showOrHideTalkInfo(talk, backTo) {
     if(!this.state.talkInfoVisible) {
       this.setState({talkInfoVisible: !this.state.talkInfoVisible,
+                     backTo: backTo,
                      talk: {
                      title: talk.title,
                      description: talk.description,
@@ -161,6 +163,7 @@ export default class App extends React.Component {
     }
     else {
       this.setState({talkInfoVisible: !this.state.talkInfoVisible,
+                     backTo: backTo,
                      talk: {
                      title: '',
                      description: '',
@@ -232,6 +235,7 @@ export default class App extends React.Component {
 
               <TalkInfo talk={this.state.talk}
                         userTalks={this.state.userTalks}
+                        backTo={this.state.backTo}
                         talkInfoVisible={this.state.talkInfoVisible}
                         showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
                         sites={this.state.sites}

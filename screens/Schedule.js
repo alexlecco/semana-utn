@@ -69,7 +69,8 @@ export default class Schedule extends React.Component {
           <TalkCard talk={talk}
                     sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
-                    renderTime={false} />
+                    renderTime={false}
+                    backTo={'Schedule'} />
         )
       }
       else {
@@ -77,7 +78,8 @@ export default class Schedule extends React.Component {
           <TalkCard talk={talk}
                     sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
-                    renderTime={true} />
+                    renderTime={true}
+                    backTo={'Schedule'} />
         )
       }
     }

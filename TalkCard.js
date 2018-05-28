@@ -15,10 +15,11 @@ export default class TalkCard extends Component {
 	render() {
     let showOrHideTalkInfo = this.props.showOrHideTalkInfo;
     let sites = this.props.sites;
+    let backTo = this.props.backTo;
     let space = '             ';
-    //let site = this.getDefaultObjectAt(sites, 0);
+
 		return(
-			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk)} >
+			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk, this.props.backTo)} >
 				
 				<View style={styles.TalkCardContainer}>
 					<View styke={styles.TalCardColumn}>

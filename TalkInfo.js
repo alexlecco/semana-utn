@@ -14,10 +14,16 @@ export default class TalkInfo extends Component {
     super(props);
     this.state = {
       buttonText: '',
+      backTo: '',
     }
     this.loggedUser = this.props.loggedUser;
     this.sites = this.props.sites;
     this.userTalks = this.props.userTalks;
+    this.backTo = this.props.backTo;
+  }
+
+  componentWillMount() {
+    this.setBackTo();
   }
 
   componentDidMount() {
@@ -40,6 +46,11 @@ export default class TalkInfo extends Component {
     text == 'Ya no me interesa' ?
       this.setState({ buttonText: 'Ya no me interesa' }) :
       this.setState({ buttonText: 'Me interesa' })
+  }
+
+  setBackTo() {
+    //this.setState({ backTo: this.props.backTo });
+    console.log("VolVER A:::::::::::::::::::::::::::::::::::::::::::::::::::::::::", this.props.backTo);
   }
 
   getObjectOfArray(array, index) {
@@ -80,7 +91,7 @@ export default class TalkInfo extends Component {
               }
             });
           }
-          
+
           snap.ref.child(keyToRemove).remove();
         })
     } else {

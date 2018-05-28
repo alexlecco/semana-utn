@@ -94,7 +94,8 @@ export default class MyTalks extends React.Component {
           <TalkCard talk={myTalk}
                     sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
-                    renderTime={false} />
+                    renderTime={false}
+                    backTo={'MyTalks'} />
         )
       }
       else {
@@ -102,7 +103,8 @@ export default class MyTalks extends React.Component {
           <TalkCard talk={myTalk}
                     sites={this.props.screenProps.sites}
                     showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
-                    renderTime={true} />
+                    renderTime={true}
+                    backTo={'MyTalks'} />
         )
       }
     }
@@ -117,6 +119,7 @@ export default class MyTalks extends React.Component {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
     const message = 'Aún no tenés charlas agregadas este día';
     let talks = this.props.screenProps.talks;
+
     return (
       <Container>
         <View style={styles.container}>
