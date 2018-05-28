@@ -42,28 +42,50 @@ export default class TalkInfo extends Component {
       this.setState({ buttonText: 'Me interesa' })
   }
 
+  getObjectOfArray(array, index) {
+    return array[index] = array[index] || {};
+  }
+
   addOrRemoveUserTalk(loggedUser, talk) {
     var text = 'Me interesa';
 
     if(this.state.buttonText == 'Ya no me interesa') {
-      firebaseApp.database().ref().child('userTalks')
+      var databaseRef = firebaseApp.database().ref().child('userTalks')
         .orderByChild('user')
         .equalTo(loggedUser.uid)
-        .once('child_added', (snap) => {
-          userTalk = snap.val();
-          console.log("snap.val()___________________________", snap.val());
-          //console.log("talk.id en TalkInfo______________________________________", talk.id)
-          //console.log("userTalk.talk en TalkInfo______________________________________", userTalk.talk)
+        .once('value', (snap) => {
+          
+          var userTalks = [];
+          snap.forEach((child) => {
+            userTalks.push({
+              user: child.val().user,
+              talk: child.val().talk,
+              _key: child.key,
+            })
+          });
+
+          for(var i = userTalks.length; i >= 0 ; i-- ) {
+            if( this.getObjectOfArray(userTalks, i).talk == talk.id) {
+              userTalk = userTalks[i];
+            }
+          }
+
           if(userTalk.talk == talk.id) {
             text = 'Me interesa';
+            keyToRemove = ''
             console.log("DESTRUIMO");
-            snap.ref.remove();
+            snap.forEach((child) => {
+              if(child.child('talk').val() == userTalk.talk) {
+                keyToRemove = child.key
+              }
+            });
           }
+          
+          snap.ref.child(keyToRemove).remove();
         })
     } else {
       text = 'Ya no me interesa';
       console.log("CREAMO");
-      console.log("talk.id en TalkInfo______________________________________", talk.id)
       firebaseApp.database().ref().child('userTalks').push({
         user: loggedUser.uid,
         talk: talk.id,
