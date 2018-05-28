@@ -31,6 +31,7 @@ export default class App extends React.Component {
       }),
       sites: [],
       talks: [],
+      speakers: [],
       userTalks: [],
       logged: false,
       loggedUser: {},
@@ -42,6 +43,7 @@ export default class App extends React.Component {
     this.sitesRef = firebaseApp.database().ref().child('sites');
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
     this.userTalksRef = firebaseApp.database().ref().child('userTalks');
+    this.speakersRef = firebaseApp.database().ref().child('speakers');
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
@@ -71,6 +73,7 @@ export default class App extends React.Component {
     this.listenForSites(this.sitesRef);
     this.listenForTalks(this.talksRef);
     this.listenForUsers(this.usersRef);
+    this.listenForSpeakers(this.speakersRef);
     console.log("Los datos fueron leidos");
   }
 
@@ -92,6 +95,26 @@ export default class App extends React.Component {
     });
   }
 
+  listenForSpeakers(speakersRef) {
+    speakersRef.on('value', (snap) => {
+      var speakers = [];
+      snap.forEach((child) => {
+        speakers.push({
+          name: child.val().name,
+          bio: child.val().bio,
+          photo: child.val().photo,
+          degree: child.val().degree,
+          id: child.val().id,
+          _key: child.key,
+        });
+      });
+
+      this.setState({
+        speakers: speakers,
+      });
+    });
+  }
+
   listenForTalks(talksRef) {
     talksRef.on('value', (snap) => {
       var talks = [];
@@ -103,6 +126,7 @@ export default class App extends React.Component {
           title: child.val().title,
           description: child.val().description,
           site: child.val().site,
+          speaker: child.val().speaker,
           _key: child.key,
         });
       });
@@ -157,6 +181,7 @@ export default class App extends React.Component {
                      time: talk.time,
                      day: talk.day,
                      site: talk.site,
+                     speaker: talk.speaker,
                      id: talk._key,
                     }
       });
@@ -170,6 +195,7 @@ export default class App extends React.Component {
                      time: '',
                      day: '',
                      site: '',
+                     speaker: '',
                      id: talk._key,
                     }
       });
@@ -215,6 +241,7 @@ export default class App extends React.Component {
 
   render() {
     let showOrHideTalkInfo = this.showOrHideTalkInfo;
+
     if (!this.state.isLoadingComplete && !this.props.skipLoadingScreen) {
       return (
         <AppLoading
@@ -239,6 +266,7 @@ export default class App extends React.Component {
                         talkInfoVisible={this.state.talkInfoVisible}
                         showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
                         sites={this.state.sites}
+                        speakers={this.state.speakers}
                         loggedUser={this.state.loggedUser} />
 
             </View>

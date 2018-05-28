@@ -18,6 +18,7 @@ export default class TalkInfo extends Component {
     }
     this.loggedUser = this.props.loggedUser;
     this.sites = this.props.sites;
+    this.speakers = this.props.speakers;
     this.userTalks = this.props.userTalks;
     this.backTo = this.props.backTo;
   }
@@ -114,9 +115,12 @@ export default class TalkInfo extends Component {
 
   render() {
     sites = this.props.sites;
+    speakers = this.props.speakers;
     userTalks = this.props.userTalks;
     loggedUser = this.props.loggedUser;
     talk = this.props.talk
+
+    console.log("this.props.talk:::::::::::::::::::::::::::::::::::", this.props.talk);
 
     let day = this.props.talk.day;
     let dayToShow = 'perrito';
@@ -161,8 +165,13 @@ export default class TalkInfo extends Component {
             <View style={styles.TalkBodyContainer}>
               <Text style={styles.TalkBody}> { this.props.talk.description } </Text>
             </View>
-            <View style={styles.TalkOratorContainer}>
-              <Text style={styles.TalkOrator}> Orador: Mark Zuckerberg </Text>
+            <View style={styles.TalkSpeakerContainer}>
+              <Text style={styles.TalkSpeaker}>
+              {
+                this.props.talk.speaker ?
+                  `Disertante: ${this.getObjectOfArray(speakers, this.props.talk.speaker - 1).name}` : ""
+              }
+              </Text>
             </View>
             <Card>
               <CardItem cardBody>
@@ -203,7 +212,7 @@ const styles = StyleSheet.create({
 		flexWrap: 'wrap',
 		flexDirection: 'row',
 	},
-  TalkOratorContainer: {
+  TalkSpeakerContainer: {
 		marginTop: 10,
 		marginRight: 15,
 		marginLeft: 15,
@@ -225,7 +234,7 @@ const styles = StyleSheet.create({
 		fontSize: 17,
     color: '#4f4f4f',
 	},
-  TalkOrator: {
+  TalkSpeaker: {
     fontSize: 17,
     color: '#000000',
     textAlign: 'justify',
