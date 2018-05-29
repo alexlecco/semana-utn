@@ -1,6 +1,6 @@
 import React from 'react';
-import { ScrollView, StyleSheet, View, Image, } from 'react-native';
-import { Text } from 'native-base';
+import { ScrollView, StyleSheet, View, Image, TouchableHighlight, } from 'react-native';
+import { Text, Textarea, Form, Content, Container, Button, } from 'native-base';
 import { ExpoConfigView } from '@expo/samples';
 
 import { firebaseApp } from '../firebase';
@@ -23,6 +23,7 @@ export default class Information extends React.Component {
     super(props);
     this.state = {
       infos: [],
+      feedbackVisible: false,
     }
     this.infosRef = firebaseApp.database().ref().child('infos');
   }
@@ -53,24 +54,60 @@ export default class Information extends React.Component {
     return array[index] = array[index] || {};
   }
 
+  showOrHideFeedback() {
+    this.setState({feedbackVisible: !this.state.feedbackVisible});
+  }
+
   render() {
     let infos = this.state.infos;
-    return(
-      <ScrollView style={styles.container}>
-        <View style={styles.getStartedContainer}>
-          <Text style={styles.infoTitle}> { this.getObjectOfArray(infos, 0).title } </Text>
-        </View>
-        <View style={styles.infoImageContainer}>
-          <Image
-            source={require('../assets/images/decano.png')}
-            style={styles.infoImage}
-          />
-        </View>
-        <View style={styles.getStartedContainer}>
-          <Text style={styles.infoBody}> { this.getObjectOfArray(infos, 0).body } </Text>
-        </View>
-      </ScrollView>
-    );
+    let showOrHideFeedback = this.showOrHideFeedback;
+
+    if(!this.state.feedbackVisible) {
+      return(
+        <ScrollView style={styles.container}>
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.infoTitle}> { this.getObjectOfArray(infos, 0).title } </Text>
+          </View>
+          <View style={styles.infoImageContainer}>
+            <Image
+              source={require('../assets/images/decano.png')}
+              style={styles.infoImage}
+            />
+          </View>
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.infoBody}> { this.getObjectOfArray(infos, 0).body } </Text>
+          </View>
+          <View >
+            <TouchableHighlight style={styles.feedbackButtonContainer} onPress={() => this.showOrHideFeedback()}>
+              <Text style={styles.feedbackButton}> dejanos tu comentario sobre nuestra app </Text>
+            </TouchableHighlight>
+          </View>
+        </ScrollView>
+      );
+    } else {
+      return(
+        <Container>
+          <View style={styles.container}>
+            <Text> Gracias por colaborar.</Text>
+            <Text>
+              Contanos que te pareció la aplicación. Dejanos alguna sugerencia que se te ocurra.
+            </Text>
+            
+            <Content padder>
+              <Form>
+                <Textarea rowSpan={5} bordered placeholder="opinión, comentarios y sugerencias" />
+              </Form>
+            </Content>
+
+            <Button full primary onPress={() => this.showOrHideFeedback()} >
+              <Text>
+                Enviar
+              </Text>
+            </Button>
+          </View>
+        </Container>
+      )
+    }
   }
 }
 
@@ -81,6 +118,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     paddingLeft: 10,
     paddingRight: 10,
+  },
+  feedbackText: {
+    fontSize: 30,
+    color: '#F5FCFF',
+    margin: 10,
   },
   infoTitle: {
     fontSize: 20,
@@ -109,5 +151,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent:'center',
     alignItems:'center',
+  },
+  feedbackButtonContainer: {
+    flex: 1,
+    justifyContent:'center',
+    alignItems:'center',
+    marginTop: 30,
+    marginBottom: 20,
+  },
+  feedbackButton: {
+    color: '#3F51B5',
   },
 });

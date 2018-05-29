@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions, Image, } from 'react-native';
-import { Container, Header, Left,
-         Body, Icon, Title, Right,
-         Content, Footer, FooterTab,
-         Button, Text, Card, CardItem,
-         Thumbnail,
+import { StyleSheet, View, Dimensions, Image, ScrollView, } from 'react-native';
+import {
+  Container,
+  Header,
+  Left,
+  Body,
+  Icon,
+  Title,
+  Right,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Text,
+  Card,
+  CardItem,
+  Thumbnail,
 } from 'native-base';
 
 import { firebaseApp } from './firebase';
@@ -209,7 +220,7 @@ export default class TalkInfo extends Component {
                 <View><Text>Ubicación: </Text></View>
                 <Card>
                   <CardItem cardBody>
-                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
+                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />  
                   </CardItem>
                 </Card>
               </View> : <Text />
