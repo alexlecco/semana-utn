@@ -125,6 +125,8 @@ export default class TalkInfo extends Component {
     talk = this.props.talk;
     speaker = this.getObjectOfArray(speakers, this.props.talk.speaker - 1);
 
+    console.log("speaker:::::::::::::::::", speaker);
+
     let day = this.props.talk.day;
     let dayToShow = 'perrito';
     switch(day) {
@@ -179,11 +181,19 @@ export default class TalkInfo extends Component {
               </View>
               <View>
                 {
-                  this.props.talk.speaker ?
+                  speaker.photo ?
                     <Image source={{uri: this.getPhoto(speaker.photo)}}
                            style={{height: 200, width: null, flex: 1}}
                            style={styles.infoImage} /> : <Text />
                 }
+              </View>
+              <View>
+                <Text style={styles.TalkSpeakerBio}>
+                  {
+                    speaker.bio ?
+                      speaker.bio : ""
+                  }
+                </Text>
               </View>
             </View>
           </View>
@@ -253,6 +263,12 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#000000',
     textAlign: 'justify',
+  },
+  TalkSpeakerBio: {
+    fontSize: 17,
+    color: '#727272',
+    textAlign: 'justify',
+    fontStyle: 'italic',
   },
   infoImage: {
     width: 150,
