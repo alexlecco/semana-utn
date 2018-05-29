@@ -91,11 +91,11 @@ export default class Schedule extends React.Component {
   }
 
   render() {
-    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] ;
     let showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     let sites = this.props.screenProps.sites;
     let talks = this.props.screenProps.talks;
-    
+
     return (
       <Container>
         <View style={styles.container}>
@@ -108,40 +108,42 @@ export default class Schedule extends React.Component {
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
-                    enableEmptySections={true}
-                     />
+                    enableEmptySections={true} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
-                    enableEmptySections={true}
-                     />
+                    enableEmptySections={true} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
-                    enableEmptySections={true}
-                     />
+                    enableEmptySections={true} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
-                    enableEmptySections={true}
-                     />
+                    enableEmptySections={true} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
-                    enableEmptySections={true}
-                     />
+                    enableEmptySections={true} />
+                </Tab>
+
+                <Tab heading={ <TabHeading><Text>sab</Text></TabHeading> }>
+                  <ListView
+                    dataSource={this.props.screenProps.dataSourceTalks}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[5]) }
+                    enableEmptySections={true} />
                 </Tab>
 
               </Tabs>

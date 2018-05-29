@@ -28,6 +28,7 @@ export default class MyTalks extends React.Component {
       userTalksWed: [],
       userTalksThu: [],
       userTalksFri: [],
+      userTalksSat: [],
     };
 
     this.talksRef = firebaseApp.database().ref().child('talks').orderByChild('time');
@@ -53,6 +54,8 @@ export default class MyTalks extends React.Component {
     var arrayUserTalksWed = [];
     var arrayUserTalksThu = [];
     var arrayUserTalksFri = [];
+    var arrayUserTalksSat = [];
+
     for (var i = talks.length - 1; i >= 0; i--) {
       for (var j = userTalks.length - 1; j >= 0; j--) {
         if(talks[i]._key == userTalks[j].talk) {
@@ -72,6 +75,8 @@ export default class MyTalks extends React.Component {
             case 'friday':
               arrayUserTalksFri.push(talks[i]);
               break;
+            case 'saturday':
+              arrayUserTalksSat.push(talks[i]);
           }
         }
       }
@@ -80,13 +85,18 @@ export default class MyTalks extends React.Component {
         userTalksTue: arrayUserTalksTue,
         userTalksWed: arrayUserTalksWed,
         userTalksThu: arrayUserTalksThu,
-        userTalksFri: arrayUserTalksMon,
+        userTalksFri: arrayUserTalksFri,
+        userTalksSat: arrayUserTalksSat,
       });
     }
   }
 
   renderTimeYesOrNo(userTalk, talks, day) {
     let myTalk = talks.find(x => x._key == userTalk.talk);
+
+    console.log("userTalk((((((((((((((((((((((((((((((((((((((((((((((((((((((((((", userTalk);
+    console.log("myTalk???????????????????????????????????????????????????????", myTalk);
+    console.log("day)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))", day);
 
     if(myTalk.day == day) {
       if(myTalk.time == this.state.currentTalkTime) {
@@ -116,9 +126,11 @@ export default class MyTalks extends React.Component {
   }
 
   render() {
-    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'] ;
-    const message = 'Aún no tenés charlas agregadas este día';
+    const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] ;
+    const message = 'Aún no tenés charlas/eventos agregados este día';
     let talks = this.props.screenProps.talks;
+
+    console.log("this.state.userTalksSat.length_____________________________________________________", this.state.userTalksSat.length);
 
     return (
       <Container>
@@ -176,6 +188,17 @@ export default class MyTalks extends React.Component {
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[4]) }
                         enableEmptySections={true} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
+                  }
+                </Tab>
+
+                <Tab heading={ <TabHeading><Text>sab</Text></TabHeading> }>
+                  {
+                    this.state.userTalksSat.length != 0 ?
+                      <ListView
+                        dataSource={this.props.screenProps.dataSourceUserTalks}
+                        renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[5]) }
+                        enableEmptySections={true} /> :
+                      <View style={styles.empty}><Text style={styles.emptyText}> que corno pasa aca?</Text></View>
                   }
                 </Tab>
 

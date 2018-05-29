@@ -161,6 +161,9 @@ export default class TalkInfo extends Component {
       case 'friday':
         dayToShow = 'viernes';
         break;
+      case 'saturday':
+        dayToShow = 'sabado';
+        break;
     }
 
     return(

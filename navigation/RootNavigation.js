@@ -43,6 +43,7 @@ export default class RootNavigator extends React.Component {
     let userTalks           = this.props.userTalks;
     let dataSourceTalks     = this.props.dataSourceTalks;
     let dataSourceUserTalks = this.props.dataSourceUserTalks;
+
     return (
       <RootStackNavigator screenProps={{showOrHideTalkInfo: this.props.showOrHideTalkInfo,
                                         loggedUser: this.props.loggedUser,
