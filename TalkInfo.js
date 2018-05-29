@@ -113,14 +113,17 @@ export default class TalkInfo extends Component {
     return array[index] = array[index] || {};
   }
 
+  getPhoto(photo) {
+    return `https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/speakers%2F${photo}.png?alt=media`
+  }
+
   render() {
     sites = this.props.sites;
     speakers = this.props.speakers;
     userTalks = this.props.userTalks;
     loggedUser = this.props.loggedUser;
-    talk = this.props.talk
-
-    console.log("this.props.talk:::::::::::::::::::::::::::::::::::", this.props.talk);
+    talk = this.props.talk;
+    speaker = this.getObjectOfArray(speakers, this.props.talk.speaker - 1);
 
     let day = this.props.talk.day;
     let dayToShow = 'perrito';
@@ -165,24 +168,36 @@ export default class TalkInfo extends Component {
             <View style={styles.TalkBodyContainer}>
               <Text style={styles.TalkBody}> { this.props.talk.description } </Text>
             </View>
-            <View style={styles.TalkSpeakerContainer}>
-              <Text style={styles.TalkSpeaker}>
-              {
-                this.props.talk.speaker ?
-                  `Disertante: ${this.getObjectOfArray(speakers, this.props.talk.speaker - 1).name}` : ""
-              }
-              </Text>
+            <View style={styles.speakerContainer}>
+              <View style={styles.TalkSpeakerContainer}>
+                <Text style={styles.TalkSpeaker}>
+                {
+                  this.props.talk.speaker ?
+                    `Disertante: ${speaker.name}` : ""
+                }
+                </Text>
+              </View>
+              <View>
+                {
+                  this.props.talk.speaker ?
+                    <Image source={{uri: this.getPhoto(speaker.photo)}}
+                           style={{height: 200, width: null, flex: 1}}
+                           style={styles.infoImage} /> : <Text />
+                }
+              </View>
             </View>
+          </View>
+          <View>
             <Card>
               <CardItem cardBody>
-                <Image source={require('./assets/images/map.png')} style={{height: 200, width: null, flex: 1}}/>
+                <Image source={require('./assets/images/map.png')} style={{height: 200, width: null, flex: 1}} />
               </CardItem>
             </Card>
           </View>
         </Content>
         <Button full primary={this.state.buttonText == 'Me interesa' ? true : false}
                 full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
-                onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)}>
+                onPress={() => this.addOrRemoveUserTalk(this.props.loggedUser, this.props.talk)} >
           <Text>
             { `${this.state.buttonText}` }
           </Text>
@@ -238,5 +253,15 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: '#000000',
     textAlign: 'justify',
-  }
+  },
+  infoImage: {
+    width: 150,
+    height: 150,
+    borderRadius: 100,
+  },
+  speakerContainer: {
+    justifyContent:'center',
+    alignItems:'center',
+    margin: 10,
+  },
 });
