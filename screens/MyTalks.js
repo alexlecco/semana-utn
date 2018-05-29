@@ -94,10 +94,6 @@ export default class MyTalks extends React.Component {
   renderTimeYesOrNo(userTalk, talks, day) {
     let myTalk = talks.find(x => x._key == userTalk.talk);
 
-    console.log("userTalk((((((((((((((((((((((((((((((((((((((((((((((((((((((((((", userTalk);
-    console.log("myTalk???????????????????????????????????????????????????????", myTalk);
-    console.log("day)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))", day);
-
     if(myTalk.day == day) {
       if(myTalk.time == this.state.currentTalkTime) {
         return(
@@ -129,8 +125,6 @@ export default class MyTalks extends React.Component {
     const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'] ;
     const message = 'Aún no tenés charlas/eventos agregados este día';
     let talks = this.props.screenProps.talks;
-
-    console.log("this.state.userTalksSat.length_____________________________________________________", this.state.userTalksSat.length);
 
     return (
       <Container>
