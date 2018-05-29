@@ -113,8 +113,14 @@ export default class TalkInfo extends Component {
     return array[index] = array[index] || {};
   }
 
-  getPhoto(photo) {
+  getSpeakerPhoto(photo) {
     return `https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/speakers%2F${photo}.png?alt=media`
+  }
+
+  getMapPhoto(photo) {
+    return photo != undefined ?
+      `https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/maps%2F${photo}.png?alt=media` :
+      "https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/maps%2Fno-map.png?alt=media"
   }
 
   render() {
@@ -124,8 +130,7 @@ export default class TalkInfo extends Component {
     loggedUser = this.props.loggedUser;
     talk = this.props.talk;
     speaker = this.getObjectOfArray(speakers, this.props.talk.speaker - 1);
-
-    console.log("speaker:::::::::::::::::", speaker);
+    site = this.getObjectOfArray(sites, this.props.talk.site - 1);
 
     let day = this.props.talk.day;
     let dayToShow = 'perrito';
@@ -182,12 +187,12 @@ export default class TalkInfo extends Component {
               <View>
                 {
                   speaker.photo ?
-                    <Image source={{uri: this.getPhoto(speaker.photo)}}
+                    <Image source={{uri: this.getSpeakerPhoto(speaker.photo)}}
                            style={{height: 200, width: null, flex: 1}}
                            style={styles.infoImage} /> : <Text />
                 }
               </View>
-              <View>
+              <View style={styles.TalkSpeakerBioContainer}>
                 <Text style={styles.TalkSpeakerBio}>
                   {
                     speaker.bio ?
@@ -198,11 +203,17 @@ export default class TalkInfo extends Component {
             </View>
           </View>
           <View>
-            <Card>
-              <CardItem cardBody>
-                <Image source={require('./assets/images/map.png')} style={{height: 200, width: null, flex: 1}} />
-              </CardItem>
-            </Card>
+            {
+              site.photo ?
+              <View>
+                <View><Text>Ubicación: </Text></View>
+                <Card>
+                  <CardItem cardBody>
+                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
+                  </CardItem>
+                </Card>
+              </View> : <Text />
+            }
           </View>
         </Content>
         <Button full primary={this.state.buttonText == 'Me interesa' ? true : false}
@@ -269,6 +280,10 @@ const styles = StyleSheet.create({
     color: '#727272',
     textAlign: 'justify',
     fontStyle: 'italic',
+  },
+  TalkSpeakerBioContainer: {
+    marginLeft: 10,
+    marginRight: 10,
   },
   infoImage: {
     width: 150,

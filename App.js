@@ -85,6 +85,7 @@ export default class App extends React.Component {
           name: child.val().name,
           id: child.val().id,
           color: child.val().color,
+          photo: child.val().photo,
           _key: child.key,
         });
       });
