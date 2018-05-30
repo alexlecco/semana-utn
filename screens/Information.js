@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, View, Image, TouchableHighlight, } from 'react-
 import { Text, Textarea, Form, Content, Container, Button, } from 'native-base';
 import { ExpoConfigView } from '@expo/samples';
 
+import Feedback from '../Feedback';
+
 import { firebaseApp } from '../firebase';
 
 export default class Information extends React.Component {
@@ -86,26 +88,7 @@ export default class Information extends React.Component {
       );
     } else {
       return(
-        <Container>
-          <View style={styles.container}>
-            <Text> Gracias por colaborar.</Text>
-            <Text>
-              Contanos que te pareció la aplicación. Dejanos alguna sugerencia que se te ocurra.
-            </Text>
-            
-            <Content padder>
-              <Form>
-                <Textarea rowSpan={5} bordered placeholder="opinión, comentarios y sugerencias" />
-              </Form>
-            </Content>
-
-            <Button full primary onPress={() => this.showOrHideFeedback()} >
-              <Text>
-                Enviar
-              </Text>
-            </Button>
-          </View>
-        </Container>
+        <Feedback showOrHideFeedback={this.showOrHideFeedback.bind(this)} />
       )
     }
   }
