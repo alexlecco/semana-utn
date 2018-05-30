@@ -77,7 +77,7 @@ export default class TalkInfo extends Component {
         .orderByChild('user')
         .equalTo(loggedUser.uid)
         .once('value', (snap) => {
-          
+
           var userTalks = [];
           snap.forEach((child) => {
             userTalks.push({
@@ -96,7 +96,6 @@ export default class TalkInfo extends Component {
           if(userTalk.talk == talk.id) {
             text = 'Me interesa';
             keyToRemove = ''
-            console.log("DESTRUIMO");
             snap.forEach((child) => {
               if(child.child('talk').val() == userTalk.talk) {
                 keyToRemove = child.key
@@ -105,14 +104,43 @@ export default class TalkInfo extends Component {
           }
 
           snap.ref.child(keyToRemove).remove();
+          console.log("DESTRUIMO");
         })
     } else {
       text = 'Ya no me interesa';
-      console.log("CREAMO");
+
       firebaseApp.database().ref().child('userTalks').push({
         user: loggedUser.uid,
         talk: talk.id,
       }).key;
+      console.log("CREAMO");
+
+      var userTalksSorted = this.props.userTalks;
+      userTalksSorted.push({
+        user: loggedUser.uid,
+        talk: talk.id,
+      });
+
+      var talksSorted = [];
+      this.props.talks.forEach((talk) => {
+        for(var i = userTalksSorted.length; i > 0; i--) {
+          if(talk._key == this.getObjectOfArray(userTalksSorted, i - 1).talk) {
+            talksSorted.push({
+              _key: talk._key,
+            })
+          }
+        }
+      });
+
+      userTalksSorted = [];
+      talksSorted.forEach((talk) => {
+        userTalksSorted.push({
+          user: loggedUser.uid,
+          talk: talk._key,
+        });
+      });
+
+      this.props.sortUserTalks(userTalksSorted);
     }
 
     text == 'Me interesa' ?
@@ -223,7 +251,7 @@ export default class TalkInfo extends Component {
                 <View><Text>Ubicación: </Text></View>
                 <Card>
                   <CardItem cardBody>
-                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />  
+                    <Image source={{uri: this.getMapPhoto(site.photo)}} style={{height: 200, width: null, flex: 1}} />
                   </CardItem>
                 </Card>
               </View> : <Text />

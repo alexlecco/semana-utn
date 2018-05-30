@@ -203,6 +203,13 @@ export default class App extends React.Component {
     }
   }
 
+  sortUserTalks(userTalksSorted) {
+    this.setState({
+      dataSourceUserTalks: this.state.dataSourceUserTalks.cloneWithRows(userTalksSorted),
+      userTalks: userTalksSorted,
+    });
+  }
+
   _handleFinishLoading = () => {
     this.setState({ isLoadingComplete: true });
   };
@@ -252,7 +259,7 @@ export default class App extends React.Component {
         />
       );
     }
-    
+
     if(this.state.logged) {
       if(this.state.talkInfoVisible) {
         return(
@@ -262,10 +269,13 @@ export default class App extends React.Component {
               {Platform.OS === 'android' && <View style={styles.statusBarUnderlay} />}
 
               <TalkInfo talk={this.state.talk}
+                        talks={this.state.talks}
                         userTalks={this.state.userTalks}
                         backTo={this.state.backTo}
                         talkInfoVisible={this.state.talkInfoVisible}
                         showOrHideTalkInfo={this.showOrHideTalkInfo.bind(this)}
+                        sortUserTalks={this.sortUserTalks.bind(this)}
+                        dataSourceUserTalks={this.state.dataSourceUserTalks}
                         sites={this.state.sites}
                         speakers={this.state.speakers}
                         loggedUser={this.state.loggedUser} />
@@ -274,7 +284,7 @@ export default class App extends React.Component {
           </Container>
         );
       }
-      
+
       if(!this.state.talkInfoVisible) {
         return (
           <Container>
@@ -315,7 +325,7 @@ export default class App extends React.Component {
                 style={{width: '100%', height: '100%'}}>
                   <View style={styles.loginContainer}>
                     {
-                      !this.state.logged ? 
+                      !this.state.logged ?
                         <Button rounded block onPress={ () => this.loginWithFacebook() }>
                           <Text> Ingresa con facebook </Text>
                         </Button> :
