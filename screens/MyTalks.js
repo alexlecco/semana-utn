@@ -56,8 +56,8 @@ export default class MyTalks extends React.Component {
     console.log("userTalks==========================================", userTalks);
     console.log("dataSourceUserTalks))))))))))))))))))))))))))))))))", dataSourceUserTalks);
 
-    crear un array temporal vacio para las userTalks, con la info de las talk correspondientes
-    
+    //crear un array temporal vacio para las userTalks, con la info de las talk correspondientes
+
 
   }
 
@@ -142,7 +142,7 @@ export default class MyTalks extends React.Component {
     return (
       <Container>
         <View style={styles.container}>
-          
+
           <ScrollView style={styles.container}>
             <Content>
               <Tabs>
@@ -153,7 +153,8 @@ export default class MyTalks extends React.Component {
                       <ListView
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[0]) }
-                        enableEmptySections={true} /> :
+                        enableEmptySections={true}
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -163,7 +164,8 @@ export default class MyTalks extends React.Component {
                       <ListView
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[1]) }
-                        enableEmptySections={true} /> :
+                        enableEmptySections={true}
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -173,7 +175,8 @@ export default class MyTalks extends React.Component {
                       <ListView
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[2]) }
-                        enableEmptySections={true} /> :
+                        enableEmptySections={true}
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -183,7 +186,8 @@ export default class MyTalks extends React.Component {
                       <ListView
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[3]) }
-                        enableEmptySections={true} /> :
+                        enableEmptySections={true}
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -193,7 +197,8 @@ export default class MyTalks extends React.Component {
                       <ListView
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[4]) }
-                        enableEmptySections={true} /> :
+                        enableEmptySections={true}
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -204,8 +209,9 @@ export default class MyTalks extends React.Component {
                       <ListView
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[5]) }
-                        enableEmptySections={true} /> :
-                      <View style={styles.empty}><Text style={styles.emptyText}> que corno pasa aca?</Text></View>
+                        enableEmptySections={true}
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
+                      <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
 
@@ -213,10 +219,10 @@ export default class MyTalks extends React.Component {
             </Content>
           </ScrollView>
 
-          
+
         </View>
 
-        
+
       </Container>
     );
   }
@@ -255,5 +261,10 @@ const styles = StyleSheet.create({
   emptyText: {
     textAlign: 'center',
     color: '#575757',
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
   },
 });

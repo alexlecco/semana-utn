@@ -103,33 +103,37 @@ export default class Schedule extends React.Component {
           <ScrollView style={styles.container}>
             <Content>
               <Tabs>
-                
+
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
-                    enableEmptySections={true} />
+                    enableEmptySections={true}
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
-                    enableEmptySections={true} />
+                    enableEmptySections={true}
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
-                    enableEmptySections={true} />
+                    enableEmptySections={true}
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
-                    enableEmptySections={true} />
+                    enableEmptySections={true}
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
@@ -143,7 +147,8 @@ export default class Schedule extends React.Component {
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[5]) }
-                    enableEmptySections={true} />
+                    enableEmptySections={true}
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
               </Tabs>
@@ -268,5 +273,10 @@ const styles = StyleSheet.create({
   },
   weekDays: {
     color: '#ffffff',
+  },
+  separator: {
+    flex: 1,
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: '#8E8E8E',
   },
 });
