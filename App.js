@@ -139,6 +139,10 @@ export default class App extends React.Component {
     });
   }
 
+  getObjectOfArray(array, index) {
+    return array[index] = array[index] || {};
+  }
+
   listenForUserTalks(userTalksRef) {
     userTalksRef.on('value', (snap) => {
       var userTalks = [];
@@ -150,9 +154,30 @@ export default class App extends React.Component {
         });
       });
 
+      var userTalksSorted = userTalks;
+
+      var talksSorted = [];
+      this.state.talks.forEach((talk) => {
+        for(var i = userTalksSorted.length; i > 0; i--) {
+          if(talk._key == this.getObjectOfArray(userTalksSorted, i - 1).talk) {
+            talksSorted.push({
+              _key: talk._key,
+            })
+          }
+        }
+      });
+
+      userTalksSorted = [];
+      talksSorted.forEach((talk) => {
+        userTalksSorted.push({
+          user: this.state.loggedUser.uid,
+          talk: talk._key,
+        });
+      });
+
       this.setState({
-        dataSourceUserTalks: this.state.dataSourceUserTalks.cloneWithRows(userTalks),
-        userTalks: userTalks,
+        dataSourceUserTalks: this.state.dataSourceUserTalks.cloneWithRows(userTalksSorted),
+        userTalks: userTalksSorted,
       });
     });
   }
