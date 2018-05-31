@@ -28,6 +28,7 @@ export default class Information extends React.Component {
       feedbackVisible: false,
     }
     this.infosRef = firebaseApp.database().ref().child('infos');
+    this.loggedUser = this.props.screenProps.loggedUser;
   }
 
   componentDidMount() {
@@ -79,16 +80,19 @@ export default class Information extends React.Component {
           <View style={styles.getStartedContainer}>
             <Text style={styles.infoBody}> { this.getObjectOfArray(infos, 0).body } </Text>
           </View>
-          <View >
-            <TouchableHighlight style={styles.feedbackButtonContainer} onPress={() => this.showOrHideFeedback()}>
-              <Text style={styles.feedbackButton}> dejanos tu comentario sobre nuestra app </Text>
-            </TouchableHighlight>
+          <View style={styles.feedbackButtonContainer}>
+            <Button full primary onPress={() => this.showOrHideFeedback()} >
+              <Text>
+                comentarios y sugerencias
+              </Text>
+            </Button>
           </View>
         </ScrollView>
       );
     } else {
       return(
-        <Feedback showOrHideFeedback={this.showOrHideFeedback.bind(this)} />
+        <Feedback showOrHideFeedback={this.showOrHideFeedback.bind(this)}
+                  loggedUser={this.props.screenProps.loggedUser} />
       )
     }
   }
