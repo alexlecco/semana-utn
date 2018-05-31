@@ -46,21 +46,8 @@ export default class MyTalks extends React.Component {
 
   componentDidMount() {
     this.readUserTalksByDay(this.props.screenProps.talks, this.props.screenProps.userTalks);
-    this.orderUserTalksByTime(this.props.screenProps.talks,
-                              this.props.screenProps.userTalks,
-                              this.props.screenProps.dataSourceUserTalks);
   }
-
-  orderUserTalksByTime(talks, userTalks, dataSourceUserTalks) {
-    console.log("talks((((((((((((((((((((((((((((((((((((((((((((((", talks);
-    console.log("userTalks==========================================", userTalks);
-    console.log("dataSourceUserTalks))))))))))))))))))))))))))))))))", dataSourceUserTalks);
-
-    //crear un array temporal vacio para las userTalks, con la info de las talk correspondientes
-
-
-  }
-
+  
   readUserTalksByDay(talks, userTalks) {
     var arrayUserTalksMon = [];
     var arrayUserTalksTue = [];

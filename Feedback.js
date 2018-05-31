@@ -2,7 +2,9 @@
 
 import React, { Component } from 'react';
 import { View, StyleSheet, TextInput, } from 'react-native';
-import { Container, Text, Content, Form, Textarea, Button, Input,  } from 'native-base'
+import { Container, Text, Content, Form, Textarea, Button, Input,  } from 'native-base';
+
+import StarRating from 'react-native-star-rating';
 
 import { firebaseApp } from './firebase';
 
@@ -11,14 +13,22 @@ export default class Feedback extends Component {
     super(props);
     this.state = {
       body: '',
+      starCounts: 2.5,
     }
     this.loggedUser = this.props.loggedUser;
+  }
+
+  onStarRatingPress(rating) {
+    this.setState({
+      starCount: rating
+    });
   }
 
   sendFeedback() {
     firebaseApp.database().ref().child('feedbacks').push({
       body: this.state.body,
       user: this.props.loggedUser.uid,
+      starCount: this.state.starCount,
     }).key;
 
     this.setState({ body: '' });
@@ -29,8 +39,8 @@ export default class Feedback extends Component {
     return(
       <Container>
         <View style={styles.container}>
-          <Text style={{ fontSize: 20, textAlign: 'center', marginBottom: 10, marginTop: 7 }}>Gracias por colaborar</Text>
-          <Text>
+          <Text style={[styles.centerText, { fontSize: 20, marginBottom: 10, marginTop: 7 }]}>Gracias por colaborar</Text>
+          <Text style={styles.centerText}>
             ¿Que te parece la app de la Semana de la Ingeniería 2018? Dejanos alguna sugerencia que se te ocurra para mejorarla.
           </Text>
 
@@ -41,6 +51,20 @@ export default class Feedback extends Component {
                          placeholder="opinión, comentarios y sugerencias"
                          value={ this.state.body }
                          onChangeText={(text) => this.setState({body: text})} />
+
+              <View><Text style={styles.centerText}> Calificación: </Text></View>
+
+              <StarRating
+                disabled={false}
+                emptyStar={'ios-star-outline'}
+                fullStar={'ios-star'}
+                halfStar={'ios-star-half'}
+                iconSet={'Ionicons'}
+                maxStars={5}
+                rating={this.state.starCount}
+                selectedStar={(rating) => this.onStarRatingPress(rating)}
+                fullStarColor={'#3F51B5'}
+              />
             </Form>
           </Content>
 
@@ -70,6 +94,9 @@ const styles = StyleSheet.create({
   },
   feedbackButtonText: {
     flex: 1,
-    textAlign: 'justify',
+    textAlign: 'center',
   },
+  centerText: {
+    textAlign: 'center',
+  }
 })
