@@ -41,7 +41,12 @@ export default class RootNavigator extends React.Component {
     let sites               = this.props.sites;
     let talks               = this.props.talks;
     let userTalks           = this.props.userTalks;
-    let dataSourceTalks     = this.props.dataSourceTalks;
+    let dataSourceTalksMon     = this.props.dataSourceTalksMon;
+    let dataSourceTalksTue     = this.props.dataSourceTalksTue;
+    let dataSourceTalksWed     = this.props.dataSourceTalksWed;
+    let dataSourceTalksThu     = this.props.dataSourceTalksThu;
+    let dataSourceTalksFri     = this.props.dataSourceTalksFri;
+    let dataSourceTalksSat     = this.props.dataSourceTalksSat;
     let dataSourceUserTalks = this.props.dataSourceUserTalks;
 
     return (
@@ -50,7 +55,12 @@ export default class RootNavigator extends React.Component {
                                         sites: this.props.sites,
                                         talks: this.props.talks,
                                         userTalks: this.props.userTalks,
-                                        dataSourceTalks: this.props.dataSourceTalks,
+                                        dataSourceTalksMon: this.props.dataSourceTalksMon,
+                                        dataSourceTalksTue: this.props.dataSourceTalksTue,
+                                        dataSourceTalksWed: this.props.dataSourceTalksWed,
+                                        dataSourceTalksThu: this.props.dataSourceTalksThu,
+                                        dataSourceTalksFri: this.props.dataSourceTalksFri,
+                                        dataSourceTalksSat: this.props.dataSourceTalksSat,
                                         dataSourceUserTalks: this.props.dataSourceUserTalks, }} />
     );
   }

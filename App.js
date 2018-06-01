@@ -23,9 +23,12 @@ export default class App extends React.Component {
         site: '',
         id: '',
       },
-      dataSourceTalks: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      }),
+      dataSourceTalksMon: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataSourceTalksTue: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataSourceTalksWed: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataSourceTalksThu: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataSourceTalksFri: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
+      dataSourceTalksSat: new ListView.DataSource({rowHasChanged: (row1, row2) => row1 !== row2,}),
       dataSourceUserTalks: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -117,23 +120,168 @@ export default class App extends React.Component {
   }
 
   listenForTalks(talksRef) {
+    var days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    var talksMon = [];
+    var talksTue = [];
+    var talksWed = [];
+    var talksThu = [];
+    var talksFri = [];
+    var talksSat = [];
+    var talks = [];
+
     talksRef.on('value', (snap) => {
-      var talks = [];
       snap.forEach((child) => {
-        talks.push({
-          day: child.val().day,
-          id: child.val().id,
-          time: child.val().time,
-          title: child.val().title,
-          description: child.val().description,
-          site: child.val().site,
-          speaker: child.val().speaker,
-          _key: child.key,
-        });
+        switch(child.val().day){
+          case 'monday':
+            talksMon.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            talks.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            break;
+          case 'tuesday':
+            talksTue.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            talks.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            break;
+          case 'wednesday':
+            talksWed.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            talks.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            break;
+          case 'thursday':
+            talksThu.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            talks.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            break;
+          case 'friday':
+            talksFri.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            talks.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            break;
+          case 'saturday':
+            talksSat.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            talks.push({
+              day: child.val().day,
+              id: child.val().id,
+              time: child.val().time,
+              title: child.val().title,
+              description: child.val().description,
+              site: child.val().site,
+              speaker: child.val().speaker,
+              _key: child.key,
+            });
+            break;
+        }
       });
 
+      console.log("talksMon///////////////////////////////////", talksMon);
+      console.log("talksTue(((((((((((((((((())))))))))))))))))", talksTue);
+      console.log("talksWed=====================================", talksWed);
+      console.log("talksThu???????????????????????????????????????", talksThu);
+      console.log("talksFri¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿", talksFri);
+      console.log("talksSatÇçççççÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇ", talksSat);
+      console.log("talks*************************************************", talks);
+
       this.setState({
-        dataSourceTalks: this.state.dataSourceTalks.cloneWithRows(talks),
+        dataSourceTalksMon: this.state.dataSourceTalksMon.cloneWithRows(talksMon),
+        dataSourceTalksTue: this.state.dataSourceTalksTue.cloneWithRows(talksTue),
+        dataSourceTalksWed: this.state.dataSourceTalksWed.cloneWithRows(talksWed),
+        dataSourceTalksThu: this.state.dataSourceTalksThu.cloneWithRows(talksThu),
+        dataSourceTalksFri: this.state.dataSourceTalksFri.cloneWithRows(talksFri),
+        dataSourceTalksSat: this.state.dataSourceTalksSat.cloneWithRows(talksSat),
         talks: talks,
       });
     });
@@ -323,7 +471,12 @@ export default class App extends React.Component {
                               sites={this.state.sites}
                               talks={this.state.talks}
                               userTalks={this.state.userTalks}
-                              dataSourceTalks={this.state.dataSourceTalks}
+                              dataSourceTalksMon={this.state.dataSourceTalksMon}
+                              dataSourceTalksTue={this.state.dataSourceTalksTue}
+                              dataSourceTalksWed={this.state.dataSourceTalksWed}
+                              dataSourceTalksThu={this.state.dataSourceTalksThu}
+                              dataSourceTalksFri={this.state.dataSourceTalksFri}
+                              dataSourceTalksSat={this.state.dataSourceTalksSat}
                               dataSourceUserTalks={this.state.dataSourceUserTalks} />
               <View>
                 {

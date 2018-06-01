@@ -20,7 +20,7 @@ export default class TalkCard extends Component {
 
 		return(
 			<TouchableWithoutFeedback onPress={() => this.props.showOrHideTalkInfo(this.props.talk, this.props.backTo)} >
-				
+
 				<View style={styles.TalkCardContainer}>
 					<View styke={styles.TalCardColumn}>
 						<View style={styles.TalkTimeContainer}>
@@ -42,7 +42,7 @@ export default class TalkCard extends Component {
 				</View>
 
 			</TouchableWithoutFeedback>
-		);	
+		);
 	}
 }
 

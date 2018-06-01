@@ -56,8 +56,8 @@ export default class MyTalks extends React.Component {
     var arrayUserTalksFri = [];
     var arrayUserTalksSat = [];
 
-    for (var i = talks.length - 1; i >= 0; i--) {
-      for (var j = userTalks.length - 1; j >= 0; j--) {
+    for (var i = 0; i < talks.length ; i++) {
+      for (var j = 0; j < userTalks.length; j++) {
         if(talks[i]._key == userTalks[j].talk) {
           switch(talks[i].day) {
             case 'monday':
@@ -141,7 +141,7 @@ export default class MyTalks extends React.Component {
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[0]) }
                         enableEmptySections={true}
-                        /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ /> :
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -152,7 +152,7 @@ export default class MyTalks extends React.Component {
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[1]) }
                         enableEmptySections={true}
-                        /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ /> :
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -163,7 +163,7 @@ export default class MyTalks extends React.Component {
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[2]) }
                         enableEmptySections={true}
-                        /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ /> :
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -174,7 +174,7 @@ export default class MyTalks extends React.Component {
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[3]) }
                         enableEmptySections={true}
-                        /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ /> :
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -185,7 +185,7 @@ export default class MyTalks extends React.Component {
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[4]) }
                         enableEmptySections={true}
-                        /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ /> :
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>
@@ -197,7 +197,7 @@ export default class MyTalks extends React.Component {
                         dataSource={this.props.screenProps.dataSourceUserTalks}
                         renderRow={(userTalk) => this.renderTimeYesOrNo(userTalk, this.props.screenProps.talks, days[5]) }
                         enableEmptySections={true}
-                        /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ /> :
+                        renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} /> :
                       <View style={styles.empty}><Text style={styles.emptyText}> { message } </Text></View>
                   }
                 </Tab>

@@ -44,7 +44,12 @@ export default class Schedule extends React.Component {
     this.showOrHideTalkInfo = this.props.screenProps.showOrHideTalkInfo;
     this.sites              = this.props.screenProps.sites;
     this.talks              = this.props.screenProps.talks;
-    this.dataSourceTalks    = this.props.screenProps.dataSourceTalks;
+    this.dataSourceTalksMon    = this.props.screenProps.dataSourceTalksMon;
+    this.dataSourceTalksTue    = this.props.screenProps.dataSourceTalksTue;
+    this.dataSourceTalksWed    = this.props.screenProps.dataSourceTalksWed;
+    this.dataSourceTalksThu    = this.props.screenProps.dataSourceTalksThu;
+    this.dataSourceTalksFri    = this.props.screenProps.dataSourceTalksFri;
+    this.dataSourceTalksSat    = this.props.screenProps.dataSourceTalksSat;
 
     console.disableYellowBox = true;
     console.warn('YellowBox is disabled.');
@@ -65,30 +70,23 @@ export default class Schedule extends React.Component {
     this.setState({currentTalkTime: time})
   }
 
-  renderTimeYesOrNo(talk, day) {
-    if(talk.day == day) {
-      if(talk.time == this.state.currentTalkTime) {
-        return(
-          <TalkCard talk={talk}
-                    sites={this.props.screenProps.sites}
-                    showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
-                    renderTime={false}
-                    backTo={'Schedule'} />
-        )
-      }
-      else {
-        return(
-          <TalkCard talk={talk}
-                    sites={this.props.screenProps.sites}
-                    showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
-                    renderTime={true}
-                    backTo={'Schedule'} />
-        )
-      }
+  renderTimeYesOrNo(talk) {
+    if(talk.time == this.state.currentTalkTime) {
+      return(
+        <TalkCard talk={talk}
+                  sites={this.props.screenProps.sites}
+                  showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
+                  renderTime={false}
+                  backTo={'Schedule'} />
+      )
     }
     else {
       return(
-        <View />
+        <TalkCard talk={talk}
+                  sites={this.props.screenProps.sites}
+                  showOrHideTalkInfo={this.props.screenProps.showOrHideTalkInfo}
+                  renderTime={true}
+                  backTo={'Schedule'} />
       )
     }
   }
@@ -109,48 +107,48 @@ export default class Schedule extends React.Component {
 
                 <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.props.screenProps.dataSourceTalks}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
+                    dataSource={this.props.screenProps.dataSourceTalksMon}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                     enableEmptySections={true}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.props.screenProps.dataSourceTalks}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
+                    dataSource={this.props.screenProps.dataSourceTalksTue}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                     enableEmptySections={true}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.props.screenProps.dataSourceTalks}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
+                    dataSource={this.props.screenProps.dataSourceTalksWed}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                     enableEmptySections={true}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.props.screenProps.dataSourceTalks}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
+                    dataSource={this.props.screenProps.dataSourceTalksThu}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                     enableEmptySections={true}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.props.screenProps.dataSourceTalks}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
+                    dataSource={this.props.screenProps.dataSourceTalksFri}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                     enableEmptySections={true}
-                  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>sab</Text></TabHeading> }>
                   <ListView
-                    dataSource={this.props.screenProps.dataSourceTalks}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk, days[5]) }
+                    dataSource={this.props.screenProps.dataSourceTalksSat}
+                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
                     enableEmptySections={true}
                     renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
@@ -201,7 +199,7 @@ export default class Schedule extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#acacac',
   },
   developmentModeText: {
     marginBottom: 20,
