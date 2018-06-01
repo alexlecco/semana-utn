@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions, Image, ScrollView, } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, ScrollView, BackHandler, } from 'react-native';
 import {
   Container,
   Header,
@@ -40,6 +40,15 @@ export default class TalkInfo extends Component {
 
   componentDidMount() {
     this.askButtonText(this.props.loggedUser, this.props.talk);
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  }
+
+  handleBackButton() {
+    return true;
   }
 
   askButtonText(loggedUser, talk) {
