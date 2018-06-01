@@ -267,14 +267,6 @@ export default class App extends React.Component {
         }
       });
 
-      console.log("talksMon///////////////////////////////////", talksMon);
-      console.log("talksTue(((((((((((((((((())))))))))))))))))", talksTue);
-      console.log("talksWed=====================================", talksWed);
-      console.log("talksThu???????????????????????????????????????", talksThu);
-      console.log("talksFri¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿¿", talksFri);
-      console.log("talksSatÇçççççÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇÇ", talksSat);
-      console.log("talks*************************************************", talks);
-
       this.setState({
         dataSourceTalksMon: this.state.dataSourceTalksMon.cloneWithRows(talksMon),
         dataSourceTalksTue: this.state.dataSourceTalksTue.cloneWithRows(talksTue),

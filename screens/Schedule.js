@@ -99,65 +99,55 @@ export default class Schedule extends React.Component {
 
     return (
       <Container>
-        <View style={styles.container}>
+          <Tabs>
+            <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
+              <ListView
+                dataSource={this.props.screenProps.dataSourceTalksMon}
+                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+            </Tab>
 
-          <ScrollView style={styles.container}>
-            <Content>
-              <Tabs>
+            <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
+              <ListView
+                dataSource={this.props.screenProps.dataSourceTalksTue}
+                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+            </Tab>
 
-                <Tab heading={ <TabHeading><Text>lun</Text></TabHeading> }>
-                  <ListView
-                    dataSource={this.props.screenProps.dataSourceTalksMon}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                    enableEmptySections={true}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-                </Tab>
+            <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
+              <ListView
+                dataSource={this.props.screenProps.dataSourceTalksWed}
+                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+            </Tab>
 
-                <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
-                  <ListView
-                    dataSource={this.props.screenProps.dataSourceTalksTue}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                    enableEmptySections={true}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-                </Tab>
+            <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
+              <ListView
+                dataSource={this.props.screenProps.dataSourceTalksThu}
+                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+            </Tab>
 
-                <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
-                  <ListView
-                    dataSource={this.props.screenProps.dataSourceTalksWed}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                    enableEmptySections={true}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-                </Tab>
+            <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
+              <ListView
+                dataSource={this.props.screenProps.dataSourceTalksFri}
+                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+            </Tab>
 
-                <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
-                  <ListView
-                    dataSource={this.props.screenProps.dataSourceTalksThu}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                    enableEmptySections={true}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-                </Tab>
-
-                <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
-                  <ListView
-                    dataSource={this.props.screenProps.dataSourceTalksFri}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                    enableEmptySections={true}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-                </Tab>
-
-                <Tab heading={ <TabHeading><Text>sab</Text></TabHeading> }>
-                  <ListView
-                    dataSource={this.props.screenProps.dataSourceTalksSat}
-                    renderRow={(talk) => this.renderTimeYesOrNo(talk) }
-                    enableEmptySections={true}
-                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
-                </Tab>
-
-              </Tabs>
-            </Content>
-          </ScrollView>
-
-        </View>
+            <Tab heading={ <TabHeading><Text>sab</Text></TabHeading> }>
+              <ListView
+                dataSource={this.props.screenProps.dataSourceTalksSat}
+                renderRow={(talk) => this.renderTimeYesOrNo(talk) }
+                enableEmptySections={true}
+                renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
+            </Tab>
+          </Tabs>
       </Container>
     );
   }
@@ -199,7 +189,7 @@ export default class Schedule extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#acacac',
+    backgroundColor: '#fff',
   },
   developmentModeText: {
     marginBottom: 20,
