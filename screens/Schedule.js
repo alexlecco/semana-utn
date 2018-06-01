@@ -45,6 +45,9 @@ export default class Schedule extends React.Component {
     this.sites              = this.props.screenProps.sites;
     this.talks              = this.props.screenProps.talks;
     this.dataSourceTalks    = this.props.screenProps.dataSourceTalks;
+
+    console.disableYellowBox = true;
+    console.warn('YellowBox is disabled.');
   }
 
   componentWillMount() {
@@ -109,7 +112,7 @@ export default class Schedule extends React.Component {
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[0]) }
                     enableEmptySections={true}
-                    /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ />
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mar</Text></TabHeading> }>
@@ -117,7 +120,7 @@ export default class Schedule extends React.Component {
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[1]) }
                     enableEmptySections={true}
-                    /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ />
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>mie</Text></TabHeading> }>
@@ -125,7 +128,7 @@ export default class Schedule extends React.Component {
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[2]) }
                     enableEmptySections={true}
-                    /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ />
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>jue</Text></TabHeading> }>
@@ -133,14 +136,15 @@ export default class Schedule extends React.Component {
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[3]) }
                     enableEmptySections={true}
-                    /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ />
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>vie</Text></TabHeading> }>
                   <ListView
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[4]) }
-                    enableEmptySections={true} />
+                    enableEmptySections={true}
+                  renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
                 <Tab heading={ <TabHeading><Text>sab</Text></TabHeading> }>
@@ -148,7 +152,7 @@ export default class Schedule extends React.Component {
                     dataSource={this.props.screenProps.dataSourceTalks}
                     renderRow={(talk) => this.renderTimeYesOrNo(talk, days[5]) }
                     enableEmptySections={true}
-                    /*renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />}*/ />
+                    renderSeparator={(sectionId, rowId) => <View key={rowId} style={styles.separator} />} />
                 </Tab>
 
               </Tabs>
