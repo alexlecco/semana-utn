@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Dimensions, Image, ScrollView, BackHandler, } from 'react-native';
+import { StyleSheet, View, Dimensions, Image, ScrollView, BackHandler, Share, Platform, } from 'react-native';
 import {
   Container,
   Header,
@@ -171,6 +171,34 @@ export default class TalkInfo extends Component {
       "https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/maps%2Fno-map.png?alt=media"
   }
 
+  shareOnFacebook() {
+    Share.share({
+      ...Platform.select({
+        ios: {
+          message: 'Have a look on : ',
+          url: this.props.url,
+        },
+        android: {
+          message: `Voy a asistir a: "${this.props.talk.title}"\n\n#semanaUTNFRT #UTNFRT\n\nhttps://www.facebook.com/utntucuman/photos/gm.511321442616344/1824107630986891/?type=3&theater`
+        }
+      }),
+      title: 'Semana de la Ingniería 2018'
+    }, {
+      ...Platform.select({
+        ios: {
+          // iOS only:
+          excludedActivityTypes: [
+            'com.apple.UIKit.activity.PostToTwitter'
+          ]
+        },
+        android: {
+          // Android only:
+          dialogTitle: 'Compartir: ' + this.props.talk.title
+        }
+      })
+    });
+  }
+
   render() {
     sites = this.props.sites;
     speakers = this.props.speakers;
@@ -221,17 +249,17 @@ export default class TalkInfo extends Component {
         <Content>
           <View style={styles.TalkContainer}>
             <View style={styles.TalkTitleContainer}>
-              <Text style={styles.TalkTitle}> { this.props.talk.title } </Text>
+              <Text style={styles.TalkTitle}>{ this.props.talk.title }</Text>
             </View>
             <View style={styles.TalkBodyContainer}>
-              <Text style={styles.TalkBody}> { this.props.talk.description } </Text>
+              <Text style={styles.TalkBody}>{ this.props.talk.description }</Text>
             </View>
             <View style={styles.speakerContainer}>
               <View style={styles.TalkSpeakerContainer}>
                 <Text style={styles.TalkSpeaker}>
                 {
                   this.props.talk.speaker ?
-                    `Disertante: ${speaker.name}` : ""
+                    `${speaker.name}` : ""
                 }
                 </Text>
               </View>
@@ -266,6 +294,12 @@ export default class TalkInfo extends Component {
               </View> : <Text />
             }
           </View>
+
+          <Button transparent full primary onPress={() => this.shareOnFacebook()} >
+            <Text>
+              Compartir
+            </Text>
+          </Button>
         </Content>
         <Button full primary={this.state.buttonText == 'Me interesa' ? true : false}
                 full primary transparent={this.state.buttonText == 'Ya no me interesa' ? true : false}
@@ -346,4 +380,13 @@ const styles = StyleSheet.create({
     alignItems:'center',
     margin: 10,
   },
+  shareContainer: {
+    justifyContent:'center',
+    alignItems:'center',
+    marginBottom: 25,
+    marginTop: 10,
+  },
+  shareText: {
+    color: '#3F51B5',
+  }
 });

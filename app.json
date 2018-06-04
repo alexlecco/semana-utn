@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Semana UTN",
-    "description": "Aplicación de la semana de la ingeniería",
+    "name": "Semana UTN FRT 2018",
+    "description": "Aplicación de la semana de la ingeniería 2018",
     "slug": "semana-utn",
     "privacy": "public",
     "sdkVersion": "25.0.0",
@@ -16,10 +16,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.alexlecco.semanautn"
+      "bundleIdentifier": "com.alexlecco.semanautn2"
     },
     "android": {
-      "package": "com.alexlecco.semanautn"
+      "package": "com.alexlecco.semanautn2"
     }
   }
 }
