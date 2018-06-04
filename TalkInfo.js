@@ -173,16 +173,8 @@ export default class TalkInfo extends Component {
 
   shareOnFacebook() {
     Share.share({
-      ...Platform.select({
-        ios: {
-          message: 'Have a look on : ',
-          url: this.props.url,
-        },
-        android: {
-          message: `Voy a asistir a: "${this.props.talk.title}"\n\n#semanaUTNFRT #UTNFRT\n\nhttps://www.facebook.com/utntucuman/photos/gm.511321442616344/1824107630986891/?type=3&theater`
-        }
-      }),
-      title: 'Semana de la Ingniería 2018'
+      message: `Semana de la Ingeniería 2018\nMe interesa asistir a: "${this.props.talk.title}"\n\n#SemanaUTNFRT #UTNFRT`,
+      title: 'Semana de la Ingeniería 2018'
     }, {
       ...Platform.select({
         ios: {
@@ -358,12 +350,12 @@ const styles = StyleSheet.create({
   TalkSpeaker: {
     fontSize: 17,
     color: '#000000',
-    textAlign: 'justify',
+    textAlign: 'center',
   },
   TalkSpeakerBio: {
     fontSize: 17,
     color: '#727272',
-    textAlign: 'justify',
+    textAlign: 'center',
     fontStyle: 'italic',
   },
   TalkSpeakerBioContainer: {
