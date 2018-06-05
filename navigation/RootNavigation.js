@@ -1,6 +1,6 @@
 import { Notifications } from 'expo';
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text, Image, StyleSheet, } from 'react-native';
 import { Container } from 'native-base';
 import { StackNavigator } from 'react-navigation';
 
@@ -18,6 +18,7 @@ const RootStackNavigator = StackNavigator(
       headerTitleStyle: {
         fontWeight: 'normal',
       },
+      headerRight: <View style={styles.iconContainer}><Image style={styles.icon} source={require('../assets/images/logo-blanco.png')}/></View>,
     }),
   }
 );
@@ -80,3 +81,13 @@ export default class RootNavigator extends React.Component {
     console.log(`Push notification ${origin} with data: ${JSON.stringify(data)}`);
   }
 };
+
+const styles = StyleSheet.create({
+  icon: {
+    width: 100,
+    height: 100,
+  },
+  iconContainer: {
+    paddingRight: 15,
+  },
+})

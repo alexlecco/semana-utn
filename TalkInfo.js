@@ -171,7 +171,7 @@ export default class TalkInfo extends Component {
       "https://firebasestorage.googleapis.com/v0/b/semana-utn-c9f91.appspot.com/o/maps%2Fno-map.png?alt=media"
   }
 
-  shareOnFacebook() {
+  shareOnSocial() {
     Share.share({
       message: `Semana de la Ingeniería 2018\nMe interesa asistir a: "${this.props.talk.title}"\n\n#SemanaUTNFRT #UTNFRT`,
       title: 'Semana de la Ingeniería 2018'
@@ -287,7 +287,7 @@ export default class TalkInfo extends Component {
             }
           </View>
 
-          <Button transparent full primary onPress={() => this.shareOnFacebook()} >
+          <Button transparent full primary onPress={() => this.shareOnSocial()} >
             <Text>
               Compartir
             </Text>

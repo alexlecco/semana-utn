@@ -19,7 +19,8 @@
       "bundleIdentifier": "com.alexlecco.semanautn2"
     },
     "android": {
-      "package": "com.alexlecco.semanautn2"
+      "package": "com.alexlecco.semanautn2",
+      "versionCode": 2,
     }
   }
 }
